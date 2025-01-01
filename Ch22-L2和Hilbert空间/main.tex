@@ -1,0 +1,121 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#22.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 22: \(L^2\)和hilbert空间}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+
+\begin{framed}
+\begin{exercise}
+用\((a - b)^2 \geq 0\), 证明\((a+b)^2 \leq 2a^2 + 2b^2\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+2a^2 + 2b^2 - (a+b)^2 = a^2 + b^2 - 2ab = (a-b)^2 \geq 0.
+$$
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(x,y \in \mathcal{H}\)是Hilbert空间, 满足\(\langle x, y \rangle = 0\). 证明勾股定理: \(\|x + y\|^2 = \|x\|^2 + \|y\|^2\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+\|x + y\|^2 &= \langle x + y, x + y \rangle = \langle x, x \rangle + \langle x, y \rangle + \langle y, x \rangle + \langle y, y \rangle \\
+&= \|x\|^2 + 0 + 0 + \|y\|^2 = \|x\|^2 + \|y\|^2.
+\end{aligned}
+$$
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+证明\(\mathbb{R}^n\)是Hilbert空间. 它的内积是点积, 即若\(x = (x_1, ..., x_n), y = (y_1, ..., y_n)\), 则\(\langle x, y \rangle = \sum_{i=1}^{n}x_iy_i\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+首先, 点积是内积. 
+\begin{enumerate}
+    \item 正定性: \(\langle x, x \rangle = \sum_{i=1}^{n}x_i^2 \geq 0\), 且\(\langle x, x \rangle = 0\)当且仅当\(x = \mathbf{0}\).
+    \item (共轭)对称性: \(\langle x, y \rangle = \sum_{i=1}^{n}x_iy_i = \sum_{i=1}^{n}y_ix_i = \langle y, x \rangle\).
+    \item (共轭)双线性: \(\langle  y + z, x \rangle = \sum_{i=1}^{n}(y_i + z_i)x_i = \sum_{i=1}^{n}y_ix_i + \sum_{i=1}^{n}z_ix_i = \langle  y, x \rangle + \langle z, x \rangle\).
+\end{enumerate}
+
+其次, \(\mathbb{R}^n\)在内积诱导的距离下是完备的.
+设\(X = (x_1,...,x_n), Y = (y_1,...,y_n), X,Y \in \mathbb{R}^n\).
+则\(d(X,Y) = {\|X - Y\|} = \sqrt{\sum_{j=1}^{n}x_j y_j}\).
+设\(\{X_k\}\)是\(\mathbb{R}^n\)中的柯西列, 
+记\(X_k = (x^{(k)}_1, ..., x^{(k)}_n)\), 
+则对于任意\(\epsilon > 0\), 存在\(N\)使得当\(m,n > N\)时, 有\(|x^{(m)}_i - x^{(n)}_i| \leq \sqrt{\sum_{j=1}^{n}(x^{(m)}_j - x^{(n)}_j)^2} < \epsilon, \forall i = 1,..., n\).
+因此, \(\{x^{(k)}_i\}\)是\(\mathbb{R}\)中的柯西列, 根据\(\mathbb{R}^1\)的完备性收敛于\(x_i^* \in \mathbb{R}^1, \forall i = 1,...,n\).
+因此, \(\{X_k\}\)收敛于\(X^* = (x_1^*, ..., x_n^*) \in \mathbb{R}^n\).
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\mathcal{L}\)是Hilbert空间\(\mathcal{H}\)的线性子空间, \(\Pi\)是投影到\(\mathcal{L}\)的算子. 证明\(\Pi y\)是\(\mathcal{L}\)中唯一的元素满足\(\langle \Pi y, z\rangle = \langle y, z \rangle, \forall z \in \mathcal{L}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+对\(y\)应用正交分解定理, \(y = \Pi y + y - \Pi y\), 其中\(\Pi y \in \mathcal{L}, y - \Pi y \in \mathcal{L}^{\perp}\).
+
+对于任意\(z \in \mathcal{L}\), 有
+$$
+\begin{aligned}
+\langle y, z \rangle &= \langle \Pi y + y - \Pi y, z \rangle = \langle \Pi y, z \rangle + \langle y - \Pi y, z \rangle \\
+&= \langle \Pi y, z \rangle + 0 = \langle \Pi y, z \rangle.
+\end{aligned}
+$$
+
+若还有另一个元素\(t\in \mathcal{L} \subset \mathcal{H}\), 使得 
+$$
+\langle t, z \rangle = \langle y, z \rangle, \forall z \in \mathcal{L},
+$$
+% 则考察
+% $$
+% \langle t - \Pi y, t- \Pi y \rangle.
+% $$
+由于\(t, \Pi y \in \mathcal{L}\), 则\(t - \Pi y \in \mathcal{L}\).
+因此, 对\(\langle t - \Pi y, z\rangle, z\in \mathcal{L}\), 取\(z = t - \Pi y\), 
+$$
+\langle t - \Pi y, t - \Pi y \rangle = 0.
+$$
+这表明\(t = \Pi y\), 即\(\Pi y\)是唯一的.
+\end{proof}
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

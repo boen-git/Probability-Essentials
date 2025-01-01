@@ -1,0 +1,118 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{framed}
+\newtheorem{exercise}{Exercise \#4.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注记}
+\everymath{\displaystyle}
+\title{Exercise 4: 可数空间上的概率}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}[二项概率的Poisson近似]
+    设\(P\)是一个二项概率, 相应成功的概率为\(p\), 实验次数是\(n\), 令\(\lambda = pn\), 证明: 
+$$
+\begin{aligned}
+& P(k \text { 个成功})=\frac{\lambda^k}{k!}\left(1-\frac{\lambda}{n}\right)^n\left\{\left(\frac{n}{n}\right)\left(\frac{n-1}{n}\right) \cdots\left(\frac{n-k+1}{n}\right)\right\}\left(1-\frac{\lambda}{n}\right)^{-k} .
+\end{aligned}
+$$
+令\(n\to \infty\), 且\(p\)变化使得\(\lambda\)保持不变. 证明对充分小的\(p\)和充分大的\(n\), 
+$$
+P(k \text { 个成功}) \approx \frac{\lambda^k}{k!} e^{-\lambda}, \quad \text { 其中 } \lambda=p n.
+$$
+\end{exercise}
+\end{framed}
+
+
+\begin{remark}
+一般来说, 这个近似技巧是一个好的近似需要\(n\)大, \(p\)小, 而且\(\lambda = np\)要在一个合适的大小, 比如\(\lambda \leq 20\).
+\end{remark}
+
+\begin{proof}
+由于\(P\)是一个二项概率, 那么
+$$
+\begin{aligned}
+    P(k \text { 个成功})&=\binom{n}{k} p^k(1-p)^{n-k} = \frac{n!}{k!(n-k)!} \left(\frac{\lambda}{n}\right)^k\left(1 - \frac{\lambda}{n}\right)^{n-k} \\
+    &= \frac{\lambda^k}{k!}\left(1-\frac{\lambda}{n}\right)^n\left\{\left(\frac{n}{n}\right)\left(\frac{n-1}{n}\right) \cdots\left(\frac{n-k+1}{n}\right)\right\}\left(1-\frac{\lambda}{n}\right)^{-k},
+\end{aligned}
+$$
+当\(n\to\infty, \lambda\)是常数时, 由于\(\lim_{n\to \infty} \left(1 - \frac{\lambda}{n}\right)^n = e^{-\lambda}\), \(\lim_{n\to \infty} \left(1 - \frac{\lambda}{n}\right)^{-k} = 1\),
+$$
+\lim_{n\to\infty} \prod_{i=0}^{k-1} \left(1 - \frac{i}{n}\right) = \prod_{i=0}^{k-1} \lim_{n\to\infty} \left(1 - \frac{i}{n}\right)= 1,
+$$
+有
+$$
+\lim_{n\to\infty}P(k \text { 个成功}) = \frac{\lambda^k}{k!} e^{-\lambda}.
+$$
+于是对充分小的\(p\)和充分大的\(n\), 
+$$
+P(k \text { 个成功}) \approx \frac{\lambda^k}{k!} e^{-\lambda}, \quad \text { 其中 } \lambda=p n.
+$$
+\end{proof}
+
+
+
+
+
+
+\begin{framed}
+\begin{exercise}[二项概率的Poisson近似(续)]
+    在上一题的基础上, 记\(p_k = P(\{k\})\), \(q_k = 1-p_k\). 证明\(q_k\)是二项分布\(B(1-p, n)\)一个单元的概率.
+    推导出当\(n\)充分大和\(p\)接近\(1\)时二项分布的Poisson近似.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+% 这里先写清楚\(p_k\)的定义, 这里\(P(\{k\})\)应当被认为是\(P(\text{第 }k \text{ 次成功})\), 第\(k\)次试验成功的概率, 
+这里题目可能出现了问题, 事实上, 若对于有限样本空间\(|\Omega| = n + 1> 1\)上的\(q_k = 1 - p_k\), 则\(P(\Omega) = \sum_{k=0}^{n}q_k = n+1-1 = n \neq 1\), 不是这个样本空间中的概率测度.
+
+为使\(q_k\)是二项分布\(B(1-p, n)\)一个样本点的概率, 我们可以定义\(q_k =p_{n-k}\), 即\(q_{n - k}\)是\(P(\{n-k\})\), 即有\(n-k\)次试验成功的概率. 于是\(q_{n - k} = \binom{n}{k}p^k(1-p)^{n-k} = \binom{n}{n-k}(1-p)^{n-k}p^{k}\), 是\(B(1-p, n)\)一个样本点的概率.
+
+于是, 对充分接近\(1\)的\(p\), \(1-p\)充分接近\(0\), 因此对\(q_k\)应用Poisson近似, 有
+$$
+q_k \approx \frac{\lambda^k}{k!}e^{-\lambda}, \quad \text{其中} \lambda = (1-p)n.
+$$
+于是, 原本的二项概率测度的Poisson近似是
+$$
+p_k = q_{n-k} \approx \frac{\lambda^{n-k}}{(n-k)!}e^{-\lambda}, \quad \text{其中} \lambda = (1-p)n.
+$$
+
+
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+    考虑一个超几何分布. 我们有\(m\)种颜色, 且对于颜色\(i\), 我们有\(N_i\)个球.
+    令\(N = N_1 +\cdots + N_m\), 称\(X_i\)是抽出的\(n\)个球中颜色为\(i\)的球的个数. 显然\(X_1 + \cdots + X_m = n\). 证明:
+$$
+P\left(X_1=x_1, \ldots, X_m=x_m\right)= \begin{cases}\frac{\binom{N_1}{x_1} \ldots\binom{N_m}{x_m}}{\binom{N}{n}} & \text { if } x_1+\ldots+x_m=n \\ 0 & \text { otherwise }\end{cases}
+$$
+\end{exercise}
+\end{framed}
+
+
+
+\begin{proof}
+证明只需要用排列组合. 事实上, 
+分子中, 组合数\(\binom{N_i}{x_i}\)表示从第\(i\)种颜色的球中(不记顺序地)抽取\(x_i\)个球出来, 
+分母组合数\(\binom{N}{n}\)表示从\(N\)个球中, (不计顺序地)抽取\(n\)个球出来.
+根据无序样本的均匀分布和乘法原理, 既有
+$$
+P\left(X_1=x_1, \ldots, X_m=x_m\right)= \begin{cases}\frac{\binom{N_1}{x_1} \ldots\binom{N_m}{x_m}}{\binom{N}{n}}, & \text { 若 } x_1+\ldots+x_m=n \\ 0, & \text { 其它. }\end{cases}
+$$
+\end{proof}
+
+
+
+
+\end{document}

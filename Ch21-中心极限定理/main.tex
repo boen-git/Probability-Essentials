@@ -1,0 +1,592 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#21.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 21: 中心极限定理}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)是独立同分布的, \(P(X_j = 1) = P(X_j =  0) = \frac{1}{2}\).
+设\(S_n = \sum_{j=1}^{n}X_j\), 令\(Z_n = 2S_n - n\). (投\(n\)次硬币时, 若记第\(j\)次投掷\(X_j = 1\)为正面向上, \(X_j = 0\)为反面向上, 则\(Z_n\)是正面超过反面向上的次数.)
+证明: 
+$$
+\lim _{n \rightarrow \infty} P\left(\frac{Z_n}{\sqrt{n}}<x\right)=\Phi(x)
+$$
+其中 
+$$
+\Phi(x)=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^x e^{-u^2 / 2} d u
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+只需证\(\frac{Z_n}{\sqrt{n}} \xrightarrow{\mathcal{D}} \mathcal{N}(0, 1)\).
+事实上, 由于\(X_j\)是独立同分布的, 且\(\mathbb{E}\{X_j\} = \frac{1}{2}\), \(\mathbb{E}\{X_j^2\} = \frac{1}{4}\), 根据期望方差存在的独立同分布场合的中心极限定理, 有
+$$
+\frac{S_n - \frac{1}{2}n}{\frac{1}{2}\sqrt{n}} = \frac{2S_n - n}{\sqrt{n}} \xrightarrow{\mathcal{D}} \mathcal{N}(0, 1), 
+$$
+即\(\frac{Z_n}{\sqrt{n}} \xrightarrow{\mathcal{D}} \mathcal{N}(0, 1)\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)是独立同参数为\(1\)的双指数分布的, 密度为\(\frac{1}{2}e^{-|x|}, -\infty < x < \infty\).
+证明: 
+$$
+\lim _{n \rightarrow \infty} \sqrt{n}\left(\frac{\sum_{j=1}^n X_j}{\sum_{j=1}^n X_j^2}\right)=Z
+$$
+其中\(Z\)服从\(\mathcal{N}\left(0, \frac{1}{2}\right)\).
+且收敛是依分布收敛.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+可以用Slutsky定理和习题18.14的结论证明. 这是Laplace分布, 不是Cauchy分布.
+\end{remark}
+
+
+\begin{proof}
+由于\(\{X_j\}_{j\geq 1}\)是独立同参数为\(1\)的双指数分布的, 密度为\(\frac{1}{2}e^{-|x|}, -\infty < x < \infty\).
+期望和二阶矩:
+\begin{align*}
+    \mathbb{E}\{X_j\} &= \int_{-\infty}^{\infty} x \frac{1}{2}e^{-|x|}dx  = 0,\\
+    \mathbb{E}\{X_j^2\} &= \int_{-\infty}^{\infty} x^2 \frac{1}{2}e^{-|x|}dx = \int_{0}^{\infty} x^2 e^{-x} \,dx = \Gamma(3) = 2.
+\end{align*}
+于是, 方差也是\(2\), 为有限数.
+根据方差有限独立同分布场合的中心极限定理, 有
+$$
+\frac{\sum_{i = 1}^{n}X_i - n \times 0}{\sqrt{2n}} = \frac{\sum_{i = 1}^{n}X_i}{\sqrt{2n}} \xrightarrow{\mathcal{D}} Z,
+$$
+其中\(Z\)服从标准正态分布.
+
+令\(Y_n = \frac{1}{n}\sum_{i = 1}^{n}X_i^2\), 
+由于\(\{X_i^2\}_{i = 1}^n\)独立同分布, 且\(\mathbb{E}\{X_i^2\} = 2\), 根据Kolmogorov强大数定律, 有
+$$
+Y_n = \frac{1}{n}\sum_{i = 1}^{n}X_i^2 \xrightarrow{a.s.} 2 \quad \Rightarrow \quad Y_n \xrightarrow{P} 2.
+$$
+
+最后, 由Slutsky定理, 有
+$$
+\sqrt{n}\left(\frac{\sum_{j=1}^n X_j}{\sum_{j=1}^n X_j^2}\right) = \sqrt{2}\cdot \frac{\frac{\sum_{j=1}^{n}X_j}{\sqrt{2n}}}{Y_n} \xrightarrow{\mathcal{D}} \sqrt{2}Z \cdot \frac{1}{2} = Z \sim \mathcal{N}\left(0, \frac{1}{2}\right).
+$$
+\end{proof}
+
+
+
+
+
+\begin{framed}
+\begin{exercise}
+构造一列独立随机变量\(\{X_n\}_{n\geq 1}\), 使得\(X_j\)依概率收敛于\(1\), 且\(\mathbb{E}\{X_j^2\} \geq j\).
+设\(Y\)是独立于序列\(\{X_j\}_{j\geq 1}\), \(Y\)分布是\(\mathcal{N}(0,1)\).
+设\(Z_j = YX_j, j\geq 1\). 证明: 
+\begin{enumerate}[a)]
+    \item \(\mathbb{E}\{Z_j\} = 0\)
+    \item \(\lim_{j\to \infty} \sigma_{Z_j}^2 = \infty\)
+    \item \( Z_j \)依分布收敛于\(Z\), 其中\(Z\)服从标准正态分布.
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+为构造\(X_j\), 设\((\Omega_j, \mathcal{A}_j, P_j)\)是\(([0,1], \mathcal{B}[0,1], m(ds))\), 其中\(m\)是\([0,1]\)上的Lebesgue测度, \(\mathcal{B}[0,1]\)是\([0,1]\)上的Borel集族.
+设 
+$$
+X_j(\omega)=(j+1) 1_{[0,1 / j]}(\omega)+1_{(1 / j, 1]}(\omega),
+$$
+取定理10.4中的无穷乘积. 证明(c)可以用Slusky定理证明. 注意此时中心极限定理的条件不满足. 因为中心极限定理给出的是充分条件, 而不是必要条件.
+\end{remark}
+
+\begin{proof}
+按照提示中的构造, 在概率空间\((\Omega_j, \mathcal{A}_j, P_j)\)上定义随机变量\(X_j\). 在\((\Omega_0, \mathcal{A}_0, P_0)\)上定义随机变量\(Y\)服从标准正态分布.
+定义\(\Omega = \prod_{n=0}^{\infty} \Omega_n, \mathcal{A} = \otimes_{n=0}^\infty \mathcal{A}_n\), 则根据定理10.4, 存在唯一测度\(P\)使得\((\Omega, \mathcal{A}, P)\)是概率空间. 将\(Y, X_n\)延拓到概率空间\((\Omega, \mathcal{A}, P)\)上, 记为\(\tilde{Y}, \tilde{X}_n\), 根据推论10.2, \(\tilde{Y}, \tilde{X}_n\)之间相互独立, 且\(\tilde{X}_n\)与原来的\(X_n\)同分布, \(\tilde{Y}\)也服从标准正态分布.
+
+不失一般性, 为使记号与题干中记号相同, 记上述定义出的独立随机变量为\(Y, \{X_n\}_{n\geq 1}\).
+此时, 
+$$
+\mathbb{E}\{X_j\} = (j+1) \times \frac{1}{j} + 1 \times \frac{j-1}{j} = 2, \quad \mathbb{E}\{X_j^2\} = (j+1)^2 \times \frac{1}{j} + 1^2 \times \frac{j-1}{j} = j+3 \geq j.
+$$
+且有
+$$
+{P}(|X_n - 1| > \varepsilon) = \frac{1}{n} \to 0, \quad (n \to \infty), \quad \forall \varepsilon > 0.
+$$
+所以\(X_n\)依概率收敛于\(1\). 如此定义的\(X_n\)满足题干条件.
+
+\begin{enumerate}[a)]
+    \item \(\mathbb{E}\{Z_j\} = \mathbb{E}\{YX_j\} \overset{(\text{独立性})}{=} \mathbb{E}\{Y\} \mathbb{E}\{X_j\} = 0 \times 2 = 0.\)
+    \item \(\operatorname{Var}(Z_j) = \mathbb{E}\{Z_j^2\} = \mathbb{E}\{Y^2X_j^2\} = \mathbb{E}\{Y^2\} \mathbb{E}\{X_j^2\} = 1 \times (j+3) = j+3 \to \infty, \quad (j \to \infty).\)
+    \item 根据Slutsky定理, 根据\(X_j\)依概率收敛于\(1\), \(Y\)依分布收敛于标准正态分布, 从而\(Z_j = YX_j\)依分布收敛于\(Z = Y \times 1 = Y\), 其中\(Z\)服从标准正态分布.
+\end{enumerate}
+
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)是独立同分布的非负随机变量, 且\(\mathbb{E}\{X_j\} = 1\), \(\sigma_{X_1}^2 = \sigma^2 \in(0, \infty)\).
+证明: 
+$$
+\frac{2}{\sigma}\left(\sqrt{S_n}-\sqrt{n}\right) \xrightarrow{\mathcal{D}} Z,
+$$
+其中\(Z\)服从标准正态分布.
+\end{exercise}
+\end{framed}
+\begin{remark}
+$$
+\frac{S_n-n}{\sqrt{n}}=\frac{\left(\sqrt{S_n}+\sqrt{n}\right)}{\sqrt{n}}\left(\sqrt{S_n}-\sqrt{n}\right) .
+$$
+\end{remark}
+
+\begin{proof}
+根据方差有限独立同分布场合的中心极限定理, 有
+$$
+\frac{S_n - n}{\sqrt{n} \sigma} \xrightarrow{\mathcal{D}} Z,
+$$
+而由于
+$$
+\frac{2}{\sigma}\left(\sqrt{S_n}-\sqrt{n}\right) = 2\cdot \frac{\frac{S_n - n}{\sqrt{n} \sigma}}{1+ \sqrt{\frac{S_n}{n}}},
+$$
+根据独立同分布场合下, 期望存在的Kolmorogov强大数定律, 有
+$$
+\sqrt{\frac{S_n}{n}} \xrightarrow{a.s.} 1 \quad \Rightarrow \quad \sqrt{\frac{S_n}{n}} \xrightarrow{P} 1,
+$$
+从而根据Slutsky定理, 有
+$$
+\frac{2}{\sigma}\left(\sqrt{S_n}-\sqrt{n}\right) \xrightarrow{\mathcal{D}} 2Z = Z,
+$$
+其中\(Z\)服从标准正态分布.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是独立同分布的Poi(\(1\))的随机变量. 设\(S_n = \sum_{j=1}^{n}X_j\), 证明:
+$$
+\lim_{n\to\infty}\frac{S_n - n}{\sqrt{n}} = Z, 
+$$
+其中\(Z\)服从标准正态分布.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+设\(X\)服从Poi(\(\lambda\)), 则\(\mathbb{E}X = \lambda\), \(\operatorname{Var}(X) = \lambda\).
+根据独立同分布场合的中心极限定理, 有
+$$
+\frac{S_n - n\lambda}{\sqrt{n\lambda}} \xrightarrow{\mathcal{D}} Z,
+$$
+当\(\lambda = 1\)时, 即得结论.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(Y^\lambda\)是服从\(Poi(\lambda), \lambda > 0\). 证明: 
+$$
+\lim _{\lambda \rightarrow \infty} \frac{Y^\lambda-\lambda}{\sqrt{\lambda}}=Z
+$$
+其中\(Z\)服从标准正态分布. 收敛是依分布收敛.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+使用习题21.5的结论. 比较\(Y^\lambda\)和\(S_{\lfloor n \rfloor}, S_{\lfloor n \rfloor + 1}\).
+\end{remark}
+
+\begin{proof}
+用特征函数. 参数为\(\lambda\)的Poisson分布的特征函数为
+$$
+\varphi_{Y^\lambda}(t) = \mathbb{E}\{e^{itY^\lambda}\} = \sum_{k = 0}^{\infty}e^{itk}P(X = k) = e^{\lambda(e^{it} - 1)}.
+$$
+记\(Z^\lambda =  \frac{Y^\lambda-\lambda}{\sqrt{\lambda}}\),
+则\(Z^\lambda\)的特征函数为 
+$$
+\varphi_{Z^\lambda}(t) = \mathbb{E}\left\{e^{it\cdot \frac{Y^\lambda-\lambda}{\sqrt{\lambda}}}\right\} = e^{-it\sqrt{\lambda}} \varphi_{Y^\lambda}\left(\frac{t}{\sqrt{\lambda}}\right) = e^{-g_\lambda(t)},
+$$
+其中, 
+$$
+g_\lambda(t) = it\sqrt{\lambda} - \lambda( e^{i\frac{t}{\sqrt{\lambda}}} - 1).
+$$
+由于当\(\lambda \to \infty\)时, \(\left|\frac{it}{\sqrt{\lambda}}\right| \to 0\), 于是考虑带Peano余项的Taylor展开, 有
+$$
+g_\lambda(t) = it\sqrt{\lambda} - \lambda \left(i \frac{t}{\sqrt{\lambda}} - \frac{t^2}{2\lambda} + O\left(\frac{t^3}{\lambda^{3/2}}\right)\right) = \frac{t^2}{2} + O\left(\frac{t^3}{\lambda^{1/2}}\right).
+$$
+于是, 
+$$
+\lim_{\lambda\to\infty} \varphi_{Z^\lambda}(t) = e^{-\frac{t^2}{2}}.
+$$
+且\(e^{-\frac{t^2}{2}}\)在\(t = 0\)处连续, 且是标准正态分布的特征函数, 根据逆极限定理, 
+$$
+Z^\lambda \xrightarrow{\mathcal{D}} Z,
+$$
+其中, \(Z\)服从标准正态分布.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明: 
+$$
+\lim _{n \rightarrow \infty} e^{-n}\left(\sum_{k=0}^n \frac{n^k}{k!}\right)=\frac{1}{2}
+$$
+\end{exercise}
+\end{framed}
+\begin{remark}
+    使用习题21.5的结论.
+\end{remark}
+
+\begin{proof}
+用习题21.5中的记号, 记 
+$$
+Y_n = \frac{S_n - n}{\sqrt{n}}, 
+$$
+由21.5, \(Y_n \xrightarrow{\mathcal{D}} Z\), 于是, 根据弱收敛的定义, 有
+$$
+P(Y_n \leq 0) \to P(Z \leq 0) = \frac{1}{2} \quad ( n\to \infty).
+$$
+而 
+$$
+P(Y_n \leq 0) = P\left(\frac{S_n - n}{\sqrt{n}} \leq 0\right) = P\left(S_n \leq n\right) = e^{-n}\sum_{k=0}^n \frac{n^k}{k!}.
+$$
+这就完成了证明.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)是独立同分布的随机变量, 且\(\mathbb{E}\{X_j\} = 0\), \(\sigma_{X_j}^2 = \sigma^2 < \infty\).
+设\(S_n = \sum_{j=1}^{n}X_j\), 证明:
+\(\frac{S_n}{\sigma \sqrt{n}}\)不是依概率收敛的.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+若不然, 则根据期望方差存在的中心极限定理\(\frac{S_n}{\sigma \sqrt{n}} \xrightarrow{D} \mathcal{N}(0,1 )\), 必有
+$$
+\frac{S_n}{\sigma \sqrt{n}} \xrightarrow{P} Z, \quad (n \to \infty).
+$$
+其中\(Z \sim \mathcal{N}(0, 1)\),
+则还有
+$$
+\frac{S_{2n}}{\sigma \sqrt{2n}} \xrightarrow{P} Z, \quad (n \to \infty) \quad \Rightarrow \quad \frac{S_{2n}}{\sigma \sqrt{n}} \xrightarrow{P} \sqrt{2} Z.
+$$
+于是, 
+$$
+\frac{S_{2n} - S_n}{\sigma \sqrt{n}} \xrightarrow{P} (\sqrt{2} - 1)Z \sim \mathcal{N}(0, 3 - 2\sqrt{2}).
+$$
+而这与
+$$
+\frac{S_{2n} - S_n}{\sigma \sqrt{n}} \overset{d}{=} \frac{S_n}{\sigma \sqrt{n}} \xrightarrow{D} \mathcal{N}(0, 1),
+$$
+矛盾! 从而\(\frac{S_n}{\sigma \sqrt{n}}\)不是依概率收敛的.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)是独立同分布的随机变量, 且\(\mathbb{E}\{X_j\} = 0\), \(\sigma_{X_j}^2 = \sigma^2 < \infty\).
+设\(S_n = \sum_{j=1}^{n}X_j\), 证明:
+$$
+\lim _{n \rightarrow \infty} E\left\{\frac{\left|S_n\right|}{\sqrt{n}}\right\}=\sqrt{\frac{2}{\pi}} \sigma .
+$$
+\end{exercise}
+\end{framed}
+\begin{remark}
+设\(Z\)服从\(\mathcal{N}(0, \sigma^2)\), 计算\(\mathbb{E}\{|Z|\}\).
+\end{remark}
+
+\begin{proof}
+
+
+
+由于\(\mathbb{E}\{X_j\} = 0\), \(\sigma_{X_j}^2 = \sigma^2\), 有期望方差存在场合下的中心极限定理, 
+$$
+\frac{S_n}{ \sqrt{n}} \xrightarrow{\mathcal{D}} Z \sim \mathcal{N}(0, \sigma^2).
+$$
+
+记\(g_t(x) = |x|\land t\)是一个有界连续函数, 则根据弱收敛的定义, 
+$$
+\lim_{n\to\infty} \mathbb{E}\left\{g_t\left(\frac{S_n}{ \sqrt{n}}\right)\right\} = \mathbb{E}\{g_t(Z)\}, \forall t > 0.
+$$
+利用加一项减一项, 对于\(\forall t > 0\),
+$$
+\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \sqrt{\frac{2}{\pi}} \sigma\right| \leq \underset{ I_1}{\underbrace{\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \mathbb{E}\left\{g_t\left(\frac{S_n}{ \sqrt{n}}\right)\right\}\right|}} + \underset{I_2}{\underbrace{\left|\mathbb{E}\left\{g_t\left(\frac{S_n}{ \sqrt{n}}\right)\right\} - \mathbb{E}\left\{g_t\left(Z\right)\right\}\right|}} + \underset{I_3}{\underbrace{\left|\mathbb{E}\left\{g_t\left(Z\right)\right\} - \sqrt{\frac{2}{\pi}} \sigma\right|}},
+$$
+针对\(I_1\), 
+注意到
+$$
+\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \mathbb{E}\left\{g_t\left(\frac{S_n}{ \sqrt{n}}\right)\right\}\right| \leq \mathbb{E}\left|\frac{|S_n|}{\sqrt{n}} - g_t\left(\frac{|S_n|}{\sqrt{n}}\right)\right| = \mathbb{E}\left\{\frac{|S_n|}{\sqrt{n}} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\}.
+$$
+以及 
+$$
+\mathbb{E}\{S_n^2\} = Var(S_n) + (\mathbb{E}\{S_n\})^2 = n\sigma^2.
+$$
+根据Chebyshev不等式, 
+$$
+\mathbb{E}\left\{\frac{|S_n|}{\sqrt{n}} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\} \leq t \Pr \left(\frac{|S_n|}{\sqrt{n}} \geq t\right) \leq t\cdot \frac{1}{t^2} \mathbb{E}\left(\frac{|S_n|^2}{{n}}\right) \leq \frac{\sigma^2}{t}.
+$$
+不等式两边对\(n\)取极限, 有 
+\begin{equation}
+    \lim_{n\to\infty}\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \sqrt{\frac{2}{\pi}} \sigma\right|  \leq  \frac{\sigma^2}{t} + I_3. \label{ineq:2}
+\end{equation}
+对\(I_3\), 注意到\(g_t(Z) \uparrow |Z|(t\to \infty)\), 且 
+$$
+\mathbb{E}\{|Z|\} = 2 \int_{0}^{\infty} x (2\pi\sigma^2)^{-1/2} \exp\left(-\frac{1}{2\sigma^2} x^2\right)\, dx = \sqrt{\frac{2}{\pi}}\sigma.
+$$
+于是根据Levi单调收敛定理\(\lim_{t\to\infty} I_3 = 0\), 再在不等式\eqref{ineq:2}两边令\(t \to \infty\), 则有 
+$$
+\lim_{n\to\infty}\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \sqrt{\frac{2}{\pi}} \sigma\right| = 0.
+$$
+% $$
+% \mathbb{E}\left\{\left|\frac{S_n}{\sigma \sqrt{n}}\right|\right\} = \frac{1}{\sigma \sqrt{n}}\mathbb{E}\left\{|S_n|\right\} \leq \frac{1}{\sigma \sqrt{n}} \sqrt{\mathbb{E}\{S_n^2\}} = \frac{1}{\sigma \sqrt{n}} \sqrt{n\sigma^2} = 1 < \infty, \quad (n \to \infty).
+% $$
+% 从而根据Markov不等式, 一致可积性成立, 从而矩收敛?
+% \url{https://ymsc.tsinghua.edu.cn/__local/A/2F/84/3662D92F1A23206B73DA60C9C6D_A81B9A0E_10F7D.pdf}
+% \url{https://ocw.mit.edu/courses/6-436j-fundamentals-of-probability-fall-2018/3858b970eb2d877440a485b8ff9cff8a_MIT6_436JF18_lec19.pdf}
+% \url{https://math.stackexchange.com/questions/721378/when-does-distribution-convergence-imply-expectation-convergence}
+这表明:
+$$
+\lim _{n \rightarrow \infty} E\left\{\frac{\left|S_n\right|}{\sqrt{n}}\right\}=\sqrt{\frac{2}{\pi}} \sigma .
+$$
+
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)是独立同\((-1, 1)\)上的均匀分布.
+设 
+$$
+Y_n=\frac{\sum_{j=1}^n X_j}{\sum_{j=1}^n X_j^2+\sum_{j=1}^n X_j^3} .
+$$
+证明: \(\sqrt{n}Y_n\)收敛.
+\end{exercise}
+\end{framed}
+\begin{remark}
+\(\sqrt{n}Y_n\)依分布收敛于\(\mathcal{N}(0,3)\).
+\end{remark}
+
+\begin{proof}
+对于\(X \sim \operatorname{Unif}(-1, 1)\), 
+\begin{align*}
+    \mathbb{E}\{X\} &= 0,\\
+    \mathbb{E}\{X^2\} &= \int_{-1}^{1} x^2 \frac{1}{2} \,dx = \frac{1}{3},\\
+    \mathbb{E}\{X^3\} &= \int_{-1}^{1} x^3 \frac{1}{2} \,dx = 0,\\
+\end{align*}
+
+
+对于\(Y_n\)分别考虑分子分母两个部分: 
+对于分母, 
+根据\(\{X_i^2\}_{i\geq 1}\)独立同分布, 且\(\mathbb{E}\{X_i^2\} = \frac{1}{3}\), 根据Kolmogorov强大数定律, 有
+$$
+\frac{1}{n}\sum_{i=1}^{n}X_i^2 \xrightarrow{a.s.} \frac{1}{3} \quad \Rightarrow \quad \frac{1}{n}\sum_{i=1}^{n}X_i^2 \xrightarrow{P} \frac{1}{3}.
+$$
+同理, 对于\(\{X_i^3\}_{i\geq 1}\), 有
+$$
+\frac{1}{n}\sum_{i=1}^{n}X_i^3 \xrightarrow{a.s.} 0 \quad \Rightarrow \quad \frac{1}{n}\sum_{i=1}^{n}X_i^3 \xrightarrow{P} 0.
+$$
+对于分子, 应用期望, 方差存在的独立同分布场合的中心极限定理, 有
+$$
+\sqrt{\frac{3}{n}} \sum_{j=1}^{n}X_j = \frac{\frac{1}{n}\sum_{i=1}^{n}X_i }{\sqrt{\frac{1}{3n}}}\xrightarrow{\mathcal{D}} Z, \quad \text{其中} Z \sim \mathcal{N}(0, 1).
+$$
+于是, 应用Slutsky定理, 有
+$$
+\sqrt{n}Y_n \xrightarrow{\mathcal{D}} \frac{\frac{1}{\sqrt{3}}Z}{\frac{1}{3} + 0} = \sqrt{3}Z \sim \mathcal{N}(0, 3).
+$$
+从而\(\sqrt{n}Y_n\)依分布收敛于\(\mathcal{N}(0, 3)\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}_{j\geq 1}\)i.n.d.于\((-j,j)\)上的均匀分布.
+\begin{enumerate}[a)]
+    \item 证明:$$
+\lim _{n \rightarrow \infty} \frac{S_n}{n^{\frac{3}{2}}}=Z
+$$
+收敛是依分布收敛, 其中\(Z\)服从正态分布\(\mathcal{N}\left(0, \frac{1}{9}\right)\).
+\item 证明$$\lim_{n\to\infty}\frac{S_n}{\sqrt{\sum_{j=1}^n\sigma_j^2}}=Z,$$其中, \(Z\)服从标准正态分布.  
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+\begin{enumerate}[a)]
+    \item 证明\(X_j\)的特征函数是\(\varphi_{X_j}(u) = \frac{\sin(u_j)}{u_j}\); 计算\(\varphi_{S_n}(u)\)以及\(\varphi_{S_n/n^{3/2}}(u)\), 接着用平方和公式证明极限是\(e^{-u^2/18}\).
+    \item {\bf 不是}定理21.2的应用. {\color{red}注意} 这里\(\sup_{j} \mathbb{E}\{|X_j|^{2+ \varepsilon}\} < \infty\)不满足.
+\end{enumerate}
+\end{remark}
+
+
+\begin{proof}
+\begin{enumerate}
+    \item 根据\(X_j\)的特征函数是\(\varphi_{X_j}(u) = \frac{\sin(u_j)}{u_j}\), 有
+    \begin{align*}
+        \varphi_{S_n}(u) &= \prod_{j=1}^{n}\varphi_{X_j}(u) = \prod_{j=1}^{n}\frac{\sin(u_j)}{u_j} = \frac{\sin(u)}{u} \frac{\sin(2u)}{2u} \cdots \frac{\sin(nu)}{nu} ,\\
+        \varphi_{S_n/n^{3/2}}(u) &= \varphi_{S_n}(u/n^{3/2}) = \frac{\sin(u/n^{3/2})}{u/n^{3/2}} \frac{\sin(2u/n^{3/2})}{2u/n^{3/2}} \cdots \frac{\sin(nu/n^{3/2})}{nu/n^{3/2} }.
+    \end{align*}
+    于是， 
+    $$
+    \log(\varphi_{S_n/n^{3/2}}(u)) = \sum_{j=1}^{n}\log\left(\frac{\sin(ju/n^{3/2})}{ju/n^{3/2}}\right) .
+    $$
+    
+    当\(n\to \infty\)时, \(\frac{ju}{n^{3/2}} \to 0\). 于是, 考虑\(\sin(x)\)在\(0\)附近的Peano余项展开, 有
+    $$
+    \sin\left(\frac{ju}{n^{3/2}}\right) = \frac{ju}{n^{3/2}} - \frac{1}{3!} \frac{j^3 u^3}{n^{9/2}} + o\left(\frac{j^3 u^3}{n^{9/2}}\right).
+    $$
+    于是, 
+    $$
+    \frac{\sin(ju/n^{3/2})}{ju/n^{3/2}} = 1 - \frac{1}{6} \frac{j^2u^2}{n^3} + o\left(\frac{j^2u^2}{n^3}\right).
+    $$
+    考虑\(\log(1 - x)\)在\(0\)附近带Peano余项展开, 有\(\log(1 - x) = -x + o(x)\).
+    $$
+    \log\left(1 - \frac{1}{6} \frac{j^2u^2}{n^3} + o\left(\frac{j^2u^2}{n^3}\right)\right) = - \frac{1}{6} \frac{j^2u^2}{n^3} + o\left(\frac{j^2u^2}{n^3}\right).
+    $$
+    从而 
+    $$
+    \sum_{j=1}^{n}\log\left(\frac{\sin(ju/n^{3/2})}{ju/n^{3/2}}\right) = -\frac{u^2}{6n^3} \sum_{j=1}^{n}j^2 + o\left(\frac{1}{n}\right) = -\frac{u^2}{6n^3} \frac{n(n+1)(2n+1)}{6} + o\left(\frac{1}{n}\right)= -\frac{u^2}{18} + o\left(\frac{1}{n}\right).
+    $$
+    于是,
+    $$
+    \varphi_{S_n/n^{3/2}}(u) = \exp\left(-\frac{u^2}{18} + o\left(\frac{1}{n}\right)\right) \xrightarrow{n\to \infty} \exp\left(-\frac{u^2}{18}\right).
+    $$
+    \item 首先, \(\sigma_j^2 = \mathbb{E}\{X_j^2\} = \frac{j^2}{3}\).
+    于是, $$
+    \sqrt{\sum_{j=1}^{n}\sigma_j^2} = \sqrt{\sum_{j=1}^{n}\frac{j^2}{3}} = \sqrt{\frac{n(n+1)(2n+1)}{18}}.
+    $$
+    根据第一问, 
+    $$
+    \lim_{n\to\infty}\frac{S_n}{n^{3/2}/3} = Z, \quad Z \sim \mathcal{N}(0, 1).
+    $$
+    由于\(\frac{n^{3/2}/3}{\sqrt{\frac{n(n+1)(2n+1)}{18}}} \to 1 (n\to \infty)\),
+    从而根据Slutsky定理, 
+    $$
+    \frac{S_n}{\sqrt{\sum_{j=1}^n\sigma_j^2}} = \frac{S_n}{n^{3/2}/3} \cdot \frac{n^{3/2}/3}{\sqrt{\frac{n(n+1)(2n+1)}{18}}} \xrightarrow{\mathcal{D}} Z.
+    $$
+\end{enumerate}
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(X\in L^2\), 假设\(X\)与\(\frac{1}{\sqrt{2}}(Y+Z)\)同分布, 其中\(Y,Z\)是独立的, 且\(X,Y,Z\)同分布.
+证明: \(X\)服从\(\mathcal{N}(0, \sigma^2), \sigma^2 < \infty\).
+\end{exercise}
+\end{framed}
+\begin{remark}
+用迭代证明\(X\)与\(\frac{1}{\sqrt{n}} \sum_{i=1}^{n}X_i\)同分布, 其中\(X_i\)是独立同分布的, \(n = 2^m\).
+\end{remark}
+
+\begin{proof}
+考虑\(X_1, ..., X_n\)与\(X \in L^2\)独立同分布(\(\forall n\)).
+则根据假设, \(X\)与\(\frac{1}{\sqrt{2}}(X_1 + X_2), \frac{1}{\sqrt{2}}(X_3 + X_4)\)同分布. 
+从而\(X\)与\(\frac{1}{\sqrt{2}}\left\{\frac{1}{\sqrt{2}}(X_1 + X_2) + \frac{1}{\sqrt{2}}(X_3 + X_4)\right\} = \frac{1}{\sqrt{4}}\left(\sum_{j = 1}^{4}X_j\right)\)同分布.
+假设\(X\)与\(\frac{1}{\sqrt{2^m}}\sum_{j=1}^{2^m}X_j\)同分布, 则通过考察\(\{X_j\}_{j = 2^m + 1}^{2^{m+1}}\), 有
+\begin{align*}
+    X &\sim \frac{1}{\sqrt{2}}\left\{\frac{1}{\sqrt{2^m}}\left(\sum_{j=1}^{2^m}X_j\right) + \frac{1}{\sqrt{2^m}}\left(\sum_{j=2^m + 1}^{2^{m + 1}}X_j\right)\right\} = \frac{1}{\sqrt{2^{m+1}}}\left(\sum_{j=1}^{2^{m+1}}X_j\right).
+\end{align*}
+从而对\(n = 2^m\), 有\(X\)与\(\frac{1}{\sqrt{n}}\sum_{j=1}^{n}X_j\)同分布.
+
+分别对\(X\)和\(\frac{1}{\sqrt{n}}\sum_{j=1}^{n}X_j\)计算期望, 有
+$$
+\mathbb{E}\{X\} = 2^{\frac{m}{2}} \mathbb{E}\{X\}, \quad \forall m \in \mathbb{N},
+$$
+这使得\(\mathbb{E}\{X\} = 0\).
+
+由于\(X \in L^2\)方差有限, 根据期望方差存在的独立同分布场合的中心极限定理, 
+$$
+\frac{\sum_{i=1}^{n}X_n - n\mu}{\sqrt{n}\sigma} = \frac{\sum_{i=1}^{n}X_n }{\sqrt{n}\sigma} \xrightarrow{\mathcal{D}} Z \sim \mathcal{N}(0, 1).
+$$
+于是, \(\frac{1}{\sqrt{n}}\sum_{j=1}^{n}X_j \xrightarrow{D} \mathcal{N}(0, \sigma^2)\).
+最后, \(\frac{1}{\sqrt{n}}\sum_{j=1}^{n}X_j\)的子列\(\frac{1}{\sqrt{2^m}}\sum_{j=1}^{2^m}X_j\)同分布, 则必有\(X \sim \frac{1}{\sqrt{2^m}}\sum_{j=1}^{2^m}X_j \sim \mathcal{N}(0, \sigma^2), \forall m\in\mathbb{N}\).
+\end{proof}
+
+
+\begin{framed}
+关于绝对可积的一些注记.
+
+称随机变量列\(\{X_n\}_{n\geq 1}\)一致可积, 若 
+$$
+\sup_{n\geq 1} \mathbb{E}\{|X_n| \mathbb{I}(|X_n| \geq t)\} \xrightarrow{t\to\infty} 0.
+$$
+\end{framed}
+
+\begin{enumerate}
+    \item 一致可积 \(\Rightarrow \sup_{n\geq 1} \mathbb{E}\{|X_n|\} < \infty.\) 根据\(\mathbb{E}|X_n| \leq t + \mathbb{E}\{|X_n| \mathbb{I}(|X_n| \geq t)\}\), 
+    可见, 若\(t\)充分大时, \(\sup_{n\geq 1} \mathbb{E}\{|X_n| \mathbb{I}(|X_n| \geq t)\}\)有限, 
+    则
+    $$
+    \sup_{n\geq 1} \mathbb{E}\{|X_n|\} < \infty.
+    $$
+    \item 反之不然. 比如\(Y_n \sim Bernoulli(1/n), X_n = nY_n\), 则\(\mathbb{E}\{|X_n|\} = 1, \forall n\).
+    但是, 
+    $$
+    \mathbb{E}\{|X_n| \mathbb{I}(|X_n| \geq t)\} = \mathbb{I}_{(-\infty, n]}(t) = \begin{cases}
+        1, & t \leq n, \\
+        0, & t > n.
+    \end{cases}
+    $$
+    \item 若\(X_n \xrightarrow{\mathcal{D}} X\), 则\(\mathbb{E}|X| \leq \liminf_{n\to\infty} \mathbb{E}|X_n|\). 
+    记\(g_t(x) = |x| \land t\), 则\(g_t(x)\)关于\(x\)有界连续. 根据弱收敛的定义, 
+    $$
+    \mathbb{E}g_t(X_n) \to \mathbb{E}g_t(X).
+    $$
+    于是 
+    $$
+    \liminf_{n\to\infty} \mathbb{E}|X_n| \geq \liminf_{n\to\infty} \mathbb{E}{|X_n| \land t} = \lim_{n\to\infty} \mathbb{E}\{g_t(X_n)\} = \mathbb{E}\{g_t(X)\}= \mathbb{E}\{|X| \land t\}.
+    $$
+    根据Levi单调收敛定理, 令\(t\to \infty\), 即得\(\mathbb{E}|X| \leq \liminf_{n\to\infty} \mathbb{E}|X_n|\).
+    \item 若\(X_n \xrightarrow{\mathcal{D}} X\), 且\(X_n\)一致可积, 则\(\mathbb{E}X_n \to \mathbb{E}X\).
+    根据$$
+    \mathbb{E}|X| \leq \liminf_{n\to\infty} \mathbb{E}|X_n| \leq \limsup_{n\to\infty} \mathbb{E}|X_n|.
+    $$
+    以及一致可积性 \(\Rightarrow \sup_{n\geq 1} \mathbb{E}\{|X_n|\} < \infty\), 
+    可得\(\mathbb{E}|X| < \infty\).
+    记\(h_t(x) = -t \lor (x \land t)\), 则有\(|X_n - h_t(X_n)| \leq |X_n| \mathbb{I}\{|X_n| \geq t\}\).
+    用加一项减一项, 
+    $$
+    |\mathbb{E}X_n - \mathbb{E}X| \leq |\mathbb{E}X_n - \mathbb{E}h_t(X_n)| + |\mathbb{E}h_t(X_n) - \mathbb{E}h_t(X)| + |\mathbb{E}h_t(X) - X|.
+    $$
+    两边取\(\limsup_{n\to\infty}\), 有 
+    $$
+    \begin{aligned}
+        \limsup_{n\to\infty}|\mathbb{E}X_n - \mathbb{E}X| &\leq \limsup_{n\to\infty}|\mathbb{E}X_n - \mathbb{E}h_t(X_n)| + \underset{=0}{\underbrace{\limsup_{n\to\infty}|\mathbb{E}h_t(X_n) - \mathbb{E}h_t(X)|}} + |\mathbb{E}h_t(X) - X| \\
+        &\leq \sup_{n\geq 1} \mathbb{E}\{|X_n| \mathbb{I}(|X_n| \geq t)\} + \mathbb{E}\{|X| \mathbb{I}(|X| \geq t)\}, \forall t > 0.
+    \end{aligned}
+    $$
+    再令\(t\to \infty\), 根据一致可积性和\(\mathbb{E}|X| < \infty\), 即得 
+    $$
+    \limsup_{n\to\infty}|\mathbb{E}X_n - \mathbb{E}X| = 0.
+    $$
+    % \item 若\(X_n \xrightarrow{\mathcal{D}} X\), \(X, \{X_n\}_{n\geq 1}\)非负可积, 且\(\mathbb{E}X_n \to \mathbb{E}X\), 则\(X_n\)一致可积.
+\end{enumerate}
+
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

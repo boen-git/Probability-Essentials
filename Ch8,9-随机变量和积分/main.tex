@@ -1,0 +1,756 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#9.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 8\&9: 概率测度的构造}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}
+设\(X: (\Omega, \mathcal{A}) \to (\mathbb{R}, \mathcal{B})\)是一个随机变量. 令
+$$
+\mathcal{F} = \{A: A = X^{-1}(B) , B \in \mathcal{B}\} = X^{-1}(\mathcal{B}).
+$$
+证明: \(X\)是\((\Omega, \mathcal{F})\)到\((\mathbb{R}, \mathcal{B})\)的一个随机变量.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据\(\mathcal{F}\)的定义, 对于任意的\(B \in \mathcal{B}\), 有\(X^{-1}(B) \in \mathcal{F}\). 由此可知, \(X\)是一个随机变量.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\((\Omega, \mathcal{A}, P)\)是一个概率空间, \(\mathcal{F}, \mathcal{G}\)是两\(\Omega\)上的\(\sigma\)-代数.
+假设\(\mathcal{F} \subset \mathcal{A}\), \(\mathcal{G} \subset \mathcal{A}\)(我们称这种情况为\(\mathcal{F}\)和\(\mathcal{G}\)是\(\mathcal{A}\)的子\(\sigma\)-代数).
+\(\sigma\)-代数\(\mathcal{F}\)和\(\mathcal{G}\)是独立的, 若对任意的\(A \in \mathcal{F}\)和\(B \in \mathcal{G}\), 有\(P(A \cap B) = P(A)P(B)\).
+假设\(\mathcal{F}\)和\(\mathcal{G}\)是独立的, \(X\)同时是\((\Omega, \mathcal{F})\)到\((\mathbb{R}, \mathcal{B})\)和\((\Omega, \mathcal{G})\)到\((\mathbb{R}, \mathcal{B})\)上的随机变量.
+证明: \(X\)几乎必然是常数, 即存在一个常数\(c\)使得\(P(X = c) = 1\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于\(X\)是\((\Omega, \mathcal{F})\)到\((\mathbb{R}, \mathcal{B})\)和\((\Omega, \mathcal{G})\)到\((\mathbb{R}, \mathcal{B})\)上的随机变量, 所以对于任意的\(B \in \mathcal{B}\), 有\(X^{-1}(B) \in \mathcal{F}\)和\(X^{-1}(B) \in \mathcal{G}\).
+由于\(\mathcal{F}\)和\(\mathcal{G}\)是独立的, 所以对于任意的\(B \in \mathcal{B}\), 有
+\[
+P\{X^{-1}(B)\} = P\{X^{-1}(B) \cap X^{-1}(B)\} = P\{X^{-1}(B)\}P\{X^{-1}(B)\}.
+\]
+所以\(P\{X^{-1}(B)\}\)可能的取值为\(0\)或\(1\).
+由于\(B\)的任意性, 存在\(B_0 \in \mathcal{B}\)使得\(P\{X^{-1}(B_0)\} = 1\).
+不妨设\(B_0 = [a_0, b_0], a_0, b_0 \in \mathbb{R}\). 
+
+断言: 要么\(P\{X^{-1}([a_0, (a_0+b_0)/2])\} = 1\), 要么\(P\{X^{-1}([(a_0+b_0)/2, b_0])\} = 1\).
+若不然, 可能的情况是在两个区间上, 概率值都大于零, 但是\(P\{X^{-1}(B)\}\)可能的取值为\(0\)或\(1\), 于是两个区间上的值都是\(1\), 矛盾.
+
+根据上述断言, 
+若\(P\{X^{-1}([a_0, (a_0+b_0)/2])\} = 1\), 记\(a_1 = a_0, b_1 = (a_0+b_0)/2\),
+若\(P\{X^{-1}([(a_0+b_0)/2, b_0])\} = 1\), 记\(a_1 = (a_0+b_0)/2, b_1 = b_0\).
+根据上述取法构造闭区间套\(\{[a_n, b_n]\}_{n=0}^\infty\), 有\(b_n - a_n \to 0, n\to\infty, P_X([a_n, b_n]) = 1\).
+根据实数上的闭区间套定理, 存在唯一的实数\(c\)使得\(c \in \cap_{n\geq 0}[a_n, b_n]\), 
+根据概率的连续性, 有\(P\{X = c\} = P_X(\{c\})= \lim_{n\to\infty} P_X([a_n, b_n]) = 1\).
+于是, \(X\)几乎必然是常数.
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+给定\((\Omega, \mathcal{A}, P)\), 设\(\mathcal{A}^\prime = \{A \cup N : A \in \mathcal{A}, N\in \mathcal{N}\}\), 其中\(\mathcal{N}\)是可忽略集.
+假设\(X = Y\quad\)a.s. 其中\(X\)和\(Y\)是\(\Omega\)上的实值函数.
+证明: \(X\)是\((\Omega, \mathcal{A}^\prime)\)到\((\mathbb{R}, \mathcal{B})\)的一个随机变量当且仅当\(Y\)是\((\Omega, \mathcal{A}^\prime)\)到\((\mathbb{R}, \mathcal{B})\)的一个随机变量.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+    根据定理6.4, \(\mathcal{A}^\prime\)是一个\(\sigma\)-代数.
+对函数\(X\)和\(Y\), 
+任取\(B\in \mathcal{B}\), 
+\begin{align}
+\begin{aligned}
+    X^{-1}(B) &= \left\{X^{-1}(B) \backslash Y^{-1}(B)\right\} \cup \left\{X^{-1}(B) \cap Y^{-1}(B)\right\} \\
+    &= \left\{X^{-1}(B) \backslash Y^{-1}(B)\right\} \cup \left[Y^{-1}(B) \backslash \left\{Y^{-1}(B) \backslash X^{-1}(B)\right\}\right] .
+\end{aligned} \label{eq:9-3}
+\end{align}
+由于\(X = Y\quad\)a.s., 所以\(P\{X^{-1}(B) \backslash Y^{-1}(B)\} = 0\), \(P\{Y^{-1}(B) \backslash X^{-1}(B)\} = 0\).
+\(\left\{X^{-1}(B) \backslash Y^{-1}(B)\right\}\) , \(\left\{Y^{-1}(B) \backslash X^{-1}(B)\right\}  \in \mathcal{N}\), 从而在事件域\(\mathcal{A}^\prime\)中.
+
+所以根据式(\ref{eq:9-3}), \(X^{-1}(B) \in \mathcal{A}^\prime\)当且仅当\(Y^{-1}(B) \in \mathcal{A}^\prime\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X \in \mathcal{L}^1(\Omega, \mathcal{A}, P)\), 设\(A_n\)是一列事件使得\(\lim_{n\to \infty}P(A_n) = 0\).
+证明: \(\lim_{n\to\infty} \mathbb{E}\{X \mathbb{I}_{A_n}\} = 0\). (这里我们不假设$\lim _{n \rightarrow \infty} X \mathbb{I}_{A_n}=0$ a.s. )
+\end{exercise}
+\end{framed}
+\begin{proof}
+根据\(X \in \mathcal{L}^1(\Omega, \mathcal{A}, P)\), 
+则有\(\mathbb{E}\{X\} = \int X dP < \infty\).
+首先分析
+$$
+\mathbb{E}\{X \mathbb{I}_{A_n}\} = \int X(w) \mathbb{I}_{A_n}(w) dP(w) ,
+$$
+如果能把积分中的\(X\)放缩为常数控制, 那么结论自然是成立的.
+因此, 接下来要用可积的条件控制\(X\).
+
+断言: 若\(X \in \mathcal{L}^1(\Omega,\mathcal{A}, P)\), 则\(\lim_{M \to\infty}\mathbb{E}\left[|X|\mathbb{I}_{\{|X| > M\}}\right] = 0\).
+证明可以用控制收敛定理.
+由于\(\mathbb{E}\left[|X|\mathbb{I}_{\{|X| > M\}}\right] \leq \mathbb{E}\left(|X|\right) \leq \infty\), 所以积分极限可交换.
+于是 
+$$
+\lim_{M\to\infty} \int |X| \mathbb{I}_{\{|X| > M\}} dP = \int |X| \lim_{M\to\infty}\mathbb{I}_{\{|X| > M\}} dP = \int |X| \mathbb{I}_{\{|X| = \infty\}} dP = 0.
+$$
+这里用到了: 若\(X \in \mathcal{L}^1(\Omega, \mathcal{A}, P)\), 则\(P(|X| = \infty) = 0\).
+因为,
+$$
+\infty > \int |X| dP \geq \int n\mathbb{I}_{\{|X| = \infty\}} dP = n P(|X| = \infty) \geq 0, \quad \forall n \in \mathbb{N}_+.
+$$
+所以\(P(|X| = \infty) = 0\).
+
+
+由于\(\lim_{n\to\infty}P(A_n) = 0\), 所以
+% 对于任意的\(\varepsilon > 0\), 存在\(N\)使得当\(n \geq N\)时, \(P(A_n) < \varepsilon\).
+$$
+\begin{aligned}
+    |\mathbb{E}\{X \mathbb{I}_{A_n}\}| &\leq \int |X| \mathbb{I}_{A_n} \left[\mathbb{I}_{\{|X| \leq M\}} + \mathbb{I}_{\{|X| > M\}}\right] dP \\
+    &\leq \int M \mathbb{I}_{A_n} dP + \int |X| \mathbb{I}_{A_n} \mathbb{I}_{\{|X| > M\}} dP \\
+    &\leq M P(A_n) + \int |X| \mathbb{I}_{\{|X| > M\}} dP \\
+\end{aligned}
+$$
+由于\(M\)的取值与\(n\)无关, 所以先令\(n\)趋于无穷, 再令\(M\)趋于无穷, 有\(\lim_{n\to\infty} \mathbb{E}\{X \mathbb{I}_{A_n}\} = 0\).
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+给定\((\Omega, \mathcal{A}, P)\), 假设\(X\)是一个随机变量, 满足\(X \geq 0\)  a.s. 以及\(\mathbb{E}X = 1\).
+定义: \(Q:\mathcal{A} \to \mathbb{R}\), 映射关系为\(Q(A) = \mathbb{E}\{X \mathbb{I}_A\}\).
+证明: \(Q\)是\((\Omega, \mathcal{A})\)上的一个概率测度.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+要证明\(Q\)是可测空间\((\Omega, \mathcal{A})\)上的测度, 需要证明:
+\begin{enumerate}
+    \item \(Q: \mathcal{A} \to [0,1]\),
+    \item \(Q(\Omega) = 1\),
+    \item 对于任意的\(A_n \in \mathcal{A}\), 若\(A_i \cap A_j = \emptyset, i \neq j\), 则\(Q\left(\bigcup_{n=1}^\infty A_n\right) = \sum_{n=1}^\infty Q(A_n)\).
+\end{enumerate}
+
+首先, 由于\(X \geq 0\) a.s., 记\(N = \{X < 0\}\), 于是\(P(N) = 0\).
+所以对于任意的\(A \in \mathcal{A}\), 有\(Q(A) = \mathbb{E}\{X \mathbb{I}_A \mathbb{I}_{N^c}\} \geq 0\).
+以及, \(Q(A) \leq \mathbb{E}X = 1 =  \mathbb{E}\{X \mathbb{I}_\Omega\} = Q(\Omega)\), 这里不等号用的是定理9.1(1)期望的不等式.
+从而1,2成立.
+
+接下来证明3.
+对于任意的\(A_n \in \mathcal{A}\), 若\(A_i \cap A_j = \emptyset, i \neq j\), 则
+根据第二章已经证明过的集合与示性函数之间的关系, 
+$$
+\begin{aligned}
+    Q\left(\bigcup_{n=1}^\infty A_n\right) &= \mathbb{E}\left\{ X \cdot \mathbb{I}_{\cup_{i=1}^\infty A_i} \right\} \\
+    &= \mathbb{E}\left\{ X \sum_{i=1}^\infty \mathbb{I}_{A_i} \right\} \\
+    &= \sum_{i=1}^\infty \mathbb{E}\left\{ X \mathbb{I}_{A_i} \right\} \quad \text{(控制收敛定理)}\\
+    &= \sum_{i=1}^\infty Q(A_i).
+\end{aligned}
+$$
+于是\(Q\)是可测空间\((\Omega, \mathcal{A})\)上的测度.
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+对于9.5中定义的\(Q\), 证明若\(P(A) = 0\), 则\(Q(A) = 0\).
+给出一个例子说明\(Q(A) = 0\)一般不蕴含\(P(A) = 0\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+对于\(P(A) = 0\), 有\(X \mathbb{I}_A = 0\) a.s.\(P\), 于是\(\mathbb{E}\{X \mathbb{I}_A\} = 0\), 即\(Q(A) = 0\).
+
+反之, 考虑\(\Omega = [0,1]\), \(\mathcal{A} = \mathcal{B}([0,1])\), \(P\)是Lebesgue测度, \(X = 2\mathbb{I}_{[0,1/2]}\), 
+取\(A = (1/2, 1) \in \mathcal{A} \), 
+则\(Q(A) = \mathbb{E}\{X \mathbb{I}_A\} = 0\), 但是\(P(A) = 1/2\).
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+对于9.5中定义的\(Q\), 假设还满足\(P(X > 0) = 1\).
+设\(\mathbb{E}_Q\)表示关于测度\(Q\)的积分. 证明 
+$$
+\mathbb{E}_Q \{Y\} = \mathbb{E}_P \{YX\}.
+$$
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+证明这一点并不容易, 需要用Lebesgue积分的标准技巧.
+% 要证明对于任意的\(Y \in \mathcal{L}^1(\Omega, \mathcal{A}, Q)\), 满足以下等式, 
+\begin{enumerate}[Step 1]
+    \item 当\(Y = \sum_{i=1}^{n}a_i \mathbb{I}_{A_i}\)是简单随机变量时, $$
+    \begin{aligned}
+        \mathbb{E}_Q\{Y\} &= \int Y dQ \\
+        &= \sum_{i=1}^{n} a_n Q(A_n) \\
+        & = \sum_{i=1}^{n} a_n \int X \mathbb{I}_{A_n} dP\\
+        &= \int X Y dP \\ 
+        &= \mathbb{E}_P\{XY\}.
+    \end{aligned}
+    $$
+    \item 当\(Y \geq 0\)时, 存在简单函数列\(\{Y_n\}_{n\geq 1}\)使得\(Y_n \uparrow Y\). 根据单调收敛定理, $$
+    \begin{aligned}
+        \mathbb{E}_Q\{Y\} &= \mathbb{E}_Q\{\lim_{n\to \infty} Y_n\} \\
+        &=\lim_{n\to \infty} \mathbb{E}_Q\{Y_n\} \quad \text{(单调收敛定理)} \\
+        &= \lim_{n \to \infty} \mathbb{E}_P\{XY_n\} \quad \text{(Step 1)} \\
+        &=\mathbb{E}_P \{X \lim_{n\to \infty}Y_n\} \quad \text{(单调收敛定理)} \\
+        &=\mathbb{E}_P\{XY\}.
+    \end{aligned}
+    $$
+    \item 当\(Y \in \mathcal{L}^1 (\Omega, \mathcal{A}, Q)\)时, 有\(Y = Y^+ - Y^-\), $$
+    \begin{aligned}
+        \mathbb{E}_Q\{Y\} &= \mathbb{E}_Q\{ Y^+ - Y^- \} \\
+        &= \mathbb{E}_Q\{ Y^+\} - \mathbb{E}_Q\{ Y^- \} \\
+        &= \mathbb{E}_P\{XY^+\} - \mathbb{E}_P\{XY^-\} \\
+        &= \mathbb{E}_P\{XY\}.
+    \end{aligned}
+    $$
+\end{enumerate}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+对于9.5中定义的\(Q\), 假设还满足\(P(X > 0) = 1\).
+\begin{enumerate}[(a)]
+    \item 证明\(\frac{1}{X}\)是关于\(Q\)可积的.
+    \item 定义映射\(R: \mathcal{A} \to \mathbb{R}\), \(R(A) = \mathbb{E}_Q\left\{\frac{1}{X} \mathbb{I}_A\right\}\), 证明\(R\)是就是9.5中\((\Omega, \mathcal{A})\)上的概率测度\(P\).
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+\begin{enumerate}[(a)]
+    \item $$\mathbb{E}_Q\left\{\frac{1}{X}\right\} = \mathbb{E}_P\left\{X\frac{1}{X}\right\} = 1 < \infty,$$从而\(\frac{1}{X}\)是关于\(Q\)可积的.
+    \item 由于\(\frac{1}{X} \geq 0\) a.s., \(\mathbb{E}_Q \{1/X\} = 1\), 根据9.5, \(R\)是一个测度. \(\forall A \in \mathcal{A}\), 有\(R(A) = \mathbb{E}_Q \left\{\frac{1}{X} \mathbb{I}_A\right\} = \mathbb{E}_P\{\mathbb{I}_A\} = P(A)\), 于是\(R\)是就是9.5中\((\Omega, \mathcal{A})\)上的概率测度\(P\).
+\end{enumerate}
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(Q\)的定义如9.8. 证明\(Q(A) = 0\)蕴含\(P(A) = 0\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+若\(Q(A) = 0\), 则\(\frac{1}{X}\mathbb{I}_A = 0\) a.s.\(Q\), 从而\(P(A) = \mathbb{E}_Q \left\{\frac{1}{X} \mathbb{I}_A\right\} = 0\).
+对比9.6, 这里加强了条件: \(P(X > 0) = 1\)
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是\((a,b)\)上的均匀分布. 证明: \(\mathbb{E}X = \frac{a+b}{2}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \mathbb{E}X &= \int_{-\infty}^{\infty} x f(x) dx \\
+    &= \int_{a}^{b} x \frac{1}{b-a} dx \\
+    &= \frac{1}{b-a} \left[\frac{x^2}{2}\right]_a^b \\
+    &= \frac{b^2 - a^2}{2(b-a)} \\
+    &= \frac{a+b}{2}.
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+
+\begin{exercise}
+设\(X\)是一个可积的随机变量, 密度是\(f(x)\), 令\(\mu = \mathbb{E}X\). 证明:
+$$
+\operatorname{Var}(X)=\sigma^2(X)=\int_{-\infty}^{\infty}(x-\mu)^2 f(x) d x
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据Expectation Rule(定理9.1/引理9.1), 
+由于\(h(x) = (x-\mu)^2 \geq 0\), 于是
+$$
+\begin{aligned}
+    \sigma^2(X) &= \mathbb{E}\{(X-\mu)^2\} \\
+    &= \int_{-\infty}^{\infty} (x-\mu)^2 f(x) dx .
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是\((a, b)\)上的均匀分布. 证明: \(\operatorname{Var}(X) = \frac{(b-a)^2}{12}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \sigma^2(X) &= \int_{a}^{b} (x-\mu)^2 \frac{1}{b-a} dx \\
+    &= \frac{1}{b-a} \int_{a}^{b} (x-\frac{a+b}{2})^2 dx \\
+    &= \frac{1}{b-a} \left[\frac{(x-\frac{a+b}{2})^3}{3}\right]_a^b \\
+    &= \frac{1}{b-a} \left[\frac{(b-\frac{a+b}{2})^3}{3} - \frac{(a-\frac{a+b}{2})^3}{3}\right] \\
+    &= \frac{1}{b-a} \left[\frac{(b-a)^3}{12}\right] \\
+    &= \frac{(b-a)^2}{12}.
+\end{aligned}   
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个Cauchy随机变量, 密度是\(\frac{1}{\pi\{1+(x-\alpha)^2\}}\).
+证明: \(X\)的方差无定义, 且\(\mathbb{E}X^2 = \infty\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+已经在P60有期望不存在, 根据Liapunov不等式, 二阶矩/方差也无定义.
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(\beta\)函数是\(B(r,s) = \frac{\Gamma(r)\Gamma(s)}{\Gamma(r+s)}\), 其中\(\Gamma\)是\(\Gamma\)函数. 等价地, 
+$$
+B(r, s)=\int_0^1 t^{r-1}(1-t)^{s-1} d t \quad(r>0, s>0)
+$$
+称\(X\)的分布是\(\beta\)分布, 若它关于分布的测度的密度是
+$$
+f(x)= \begin{cases}\frac{x^{r-1}(1-x)^{s-1}}{B(r, s)} & \text { if } 0 \leq x \leq 1 \\ 0 & \text { if } x<0 \text { or } x>1\end{cases}
+$$
+证明对于有\(\beta(r,s)\)分布的随机变量\(X(r>0, s>0)\), 则
+$$
+E\left\{X^k\right\}=\frac{B(r+k, s)}{B(r, s)}=\frac{\Gamma(r+k) \Gamma(r+s)}{\Gamma(r) \Gamma(r+s+k)}, \quad k \geq 0.
+$$
+推导:
+$$
+\begin{aligned}
+\mathbb{E}\{X\} & =\frac{r}{r+s} \\
+\sigma^2(X) & =\frac{r s}{(r+s)^2(r+s+1)}
+\end{aligned}
+$$
+\(\beta\)分布是一族\([0,1]\)上丰富的分布函数族.
+它被经常用来对随机的比例建模.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \mathbb{E}\{X^k\} &= \int_0^1 x^k \frac{x^{r-1}(1-x)^{s-1}}{B(r, s)} dx \\
+    &= \frac{1}{B(r, s)} \int_0^1 x^{r+k-1}(1-x)^{s-1} dx \\
+    &= \frac{B(r+k, s)}{B(r, s)} \\
+    &= \frac{\Gamma(r+k)\Gamma(s)}{\Gamma(r+k+s)} \frac{\Gamma(r+s)}{\Gamma(r+s)} \\
+    &= \frac{\Gamma(r+k)\Gamma(r+s)}{\Gamma(r)\Gamma(r+s+k)}.
+\end{aligned}
+$$
+分别带入\(k=1\)和\(k=2\)即可得到期望和方差.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个参数是\((\mu, \sigma^2)\)的对数正态分布.
+证明: 
+$$
+E\left\{X^r\right\}=e^{r \mu+\frac{1}{2} \sigma^2 r^2}
+$$
+并据此推出$E\{X\}=e^{\mu+\frac{1}{2} \sigma^2}$以及$\sigma_X^2=e^{2 \mu+\sigma^2}\left(e^{\sigma^2}-1\right)$.
+\end{exercise}
+\end{framed}
+
+
+\begin{remark}
+\(E\{X^r\} = \int_{0}^{\infty} x^r f(x) dx\)其中\(f\)是对数正态密度, 定义\(y = \log(x) - \mu\), 有
+$$
+E\left\{X^r\right\}=\int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi \sigma^2}} e^{\left(r \mu+r y-y^2 / 2 \sigma^2\right)} d y.
+$$
+\end{remark}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \mathbb{E}\{X^r\} &= \int_{0}^{\infty} x^r \frac{1}{x\sigma\sqrt{2\pi}} e^{-\frac{(\log(x) - \mu)^2}{2\sigma^2}} dx \\
+    &\overset{y = \log x - \mu}{=} e^{r\mu}\int_{-\infty}^{\infty} e^{r y} \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{y^2}{2\sigma^2}} dy \\
+    &= e^{r\mu} e^{\frac{1}{2}\sigma^2 r^2} \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(y-r\sigma^2)^2}{2\sigma^2}} dy \\
+    &= e^{r\mu + \frac{1}{2}\sigma^2 r^2}.
+\end{aligned}
+$$
+期望和方差只需带入\(r=1\)和\(r=2\)即可.
+期望为
+$$
+\mathbb{E}\{X\} = e^{\mu + \frac{1}{2}\sigma^2},
+$$
+方差为
+$$
+\sigma^2(X) = \mathbb{E}\{X^2\} - \mathbb{E}^2\{X\} = e^{2\mu + \sigma^2}\left(e^{\sigma^2} - 1\right).
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+\(\Gamma\)分布往往被简化为单参数分布. 
+一个随机变量\(X\)被称为有标准\(\Gamma\)分布, 如果它有参数\(\alpha\), 且它在给定测度上的密度是
+$$
+f(x)= \begin{cases}\frac{x^{\alpha-1} e^{-x}}{\Gamma(\alpha)} & \text { if } x \geq 0 \\ 0 & \text { if } x<0\end{cases}
+$$
+也就是说, \(\beta = 1\). (回顾: $\Gamma(\alpha)=\int_0^{\infty} t^{\alpha-1} e^{-t} d t.$) 证明对于有标准\(\Gamma\)分布的随机变量\(X\), 则
+$$
+\mathbb{E}\left\{X^k\right\}=\frac{\Gamma(\alpha+k)}{\Gamma(\alpha)} \quad(k \geq 0).
+$$
+并据此推出\(X\)有均值\(\alpha\), 方差\(\alpha\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \mathbb{E}\{X^k\} &= \int_{0}^{\infty} x^k \frac{x^{\alpha-1} e^{-x}}{\Gamma(\alpha)} dx \\
+    &= \frac{1}{\Gamma(\alpha)} \int_{0}^{\infty} x^{\alpha+k-1} e^{-x} dx \\
+    &= \frac{\Gamma(\alpha+k)}{\Gamma(\alpha)}.
+\end{aligned}
+$$
+期望和方差只需带入\(k=1\)和\(k=2\)即可.
+期望为
+$$
+\mathbb{E}\{X\} = \frac{\Gamma(\alpha+1)}{\Gamma(\alpha)} = \alpha,
+$$
+方差为
+$$
+\sigma^2(X) = \mathbb{E}\{X^2\} - \mathbb{E}^2\{X\} = \frac{\Gamma(\alpha+2)}{\Gamma(\alpha)} - \alpha^2 = \alpha.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个非负的随机变量, 均值是\(\mu\), 方差是\(\sigma^2\), 两个都是有限的.
+证明对任意的\(b>0\), 
+$$
+P\{X \geq \mu+b \sigma\} \leq \frac{1}{1+b^2}.
+$$
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+考虑函数\(g(x) = \frac{\{(x-\mu)b + \sigma\}^2}{\sigma^2(1+b^2)^2}\), 以及\(\mathbb{E}\{((X-\mu)b + \sigma)^2\} = \sigma^2 (b^2+1).\)
+\end{remark}
+
+\begin{proof}
+考虑{\bf 非负}函数\(g(x) = \frac{\{(x-\mu)b + \sigma\}^2}{\sigma^2(1+b^2)^2}\), 
+由于当\(X \geq \mu +  b \sigma\)时, 有\(g(X) \geq 1\), 于是
+$$
+\{X \geq \mu + b \sigma\} \subset \{g(X) \geq 1\}.
+$$
+于是, 令\(Y = g(X) \geq 0\) a.s., 根据Markov不等式, 
+$$
+P(X \geq \mu + b \sigma) \leq P(g(X) \geq 1) \leq \frac{\mathbb{E}\{g(X)\}}{1} = \frac{\mathbb{E}\{(X-\mu)b + \sigma\}^2}{\sigma^2(1+b^2)^2} = \frac{1}{1+b^2}.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个非负的随机变量, 均值是\(\mu\), 方差是\(\sigma^2\), 两个都是有限的.
+证明: 
+$$
+P\{\mu-d \sigma<X<\mu+d \sigma\} \geq 1-\frac{1}{d^2}.
+$$
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+只有当\(d>1\)时, 上述结论是有趣的.
+\end{remark}
+
+\begin{proof}
+由于\(X \in L^2\)根据Chebyshev不等式,
+$$
+\begin{aligned}
+    P\{\mu-d \sigma<X<\mu+d \sigma\} &= 1 - P\{|X - \mu| \geq d\sigma\} \\
+    &\geq 1 - \frac{\sigma^2}{d^2\sigma^2} \\
+    &= 1 - \frac{1}{d^2}.
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个\(\mu = 0, \sigma^2 = 1\)的正态分布.
+证明: 
+$$
+P(X > x) \leq \frac{1}{x\sqrt{2\pi}}e^{-x^2/2}, \quad x > 0.
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+考察
+$$
+\begin{aligned}
+\mathbb{E}\{X \mathbb{I}(X\geq x)\} = \int_{x}^{\infty} t \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt = \left.-\frac{1}{\sqrt{2\pi}} e^{-t^2/2}\right|_{x}^\infty = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}.
+\end{aligned}
+$$
+注意到, 
+$$
+\begin{aligned}
+    \mathbb{E}\{X \mathbb{I}(X\geq x)\} &= \int_{x}^{\infty} t \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt \\
+    & \geq  \int_{x}^{\infty} x \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt \\
+    & = xP(X > x).
+\end{aligned}
+$$
+组合上述两个不等式即可得到结论.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个指数随机变量. 证明: 对\(s>0,t>0\),  
+\(P(X > s+t\mid X>s) = P(X>t)\).
+这被称为指数分布的无记忆性.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+    按教材中参数化的记号, 指数分布的密度是\(f(x) = \beta e^{-\beta x} \mathbb{I}(x \geq 0)\),
+    于是, 无记忆性为 
+$$
+\begin{aligned}
+    P(X > s+t\mid X>s) &= \frac{P(X > s+t, X > s)}{P(X > s)} \\
+    &= \frac{P(X > s+t)}{P(X > s)} \\
+    &= \frac{e^{-\beta(s+t)}}{e^{-\beta s}} \\
+    &= e^{-\beta t} \\
+    &= P(X > t).
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个随机变量, 满足\(P(X > s+t\mid X>s) = P(X>t)\).
+证明若\(h(t) = P(X>t)\), 则\(h\)满足Cauchy等式:
+$$
+h(s+t)=h(s) h(t) \quad(s>0, t>0)
+$$
+证明\(X\)是指数分布的.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+事实上, \(h\)是右连续的, 于是Cauchy方程可以被求解.
+\end{remark}
+
+
+\begin{proof}
+反过来, 无记忆性蕴含着指数分布.
+首先, 求解Cauchy等式.
+由于\(h(t) = 1 - P(X \leq t)\), 于是\(h\)也是右连左极的, 单调非增的函数.
+$$
+h(s)h(t) = h(s + t), \quad s > 0, t > 0.
+$$
+首先, \(\forall x \in \mathbb{R}^1\), 
+$$
+h(x) = \left\{h\left(\frac{x}{2}\right)\right\}^2 \geq 0.
+$$
+因此函数\(h\)非负. 反复使用Cauchy等式, 则对任意的正整数\(n\), \(x\in \mathbb{R}^1\), 有
+$$
+h(nx) = \left\{h\left(\frac{x}{n}\right)\right\}^n.
+$$
+在上式中, 取\(x = \frac{1}{n}\), 有
+$$
+h(1) = \left\{h\left(\frac{1}{n}\right)\right\}^n.
+$$
+若记\(a = f(1) \geq 0\), 则有 
+$$
+f\left(\frac{1}{n}\right) = a^{1/n}.
+$$
+因此对于任意的有理数\(r = \frac{m}{n}\), 有
+$$
+h\left(\frac{m}{n}\right) = \left\{f\left(\frac{1}{n}\right)\right\}^m = a^{m/n}.
+$$
+由于\(h\)是右连续的, 于是对于任意的实数\(x\), 有有理数列\(\{x_n\}\)使得\(x_n \downarrow x\), 于是
+$$
+h(x) = \lim_{n\to \infty} h(x_n) = \lim_{n\to \infty} a^{x_n} = a^x.
+$$
+综上, \(h(x) = a^x\), 其中\(a \geq 0\).
+
+于是\(X\)的分布函数是\(F(x) = 1 - a^x\), 
+写\(a = e^{-\lambda}\), 
+于是\(X\)是参数为\(\lambda\)的指数分布.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\alpha\)是一个整数, 假设\(X\)服从\(\Gamma(\alpha, \beta)\).
+证明: \(P(X \leq x) = P(Y\geq \alpha)\), 其中\(Y\)服从参数为\(\lambda = x\beta\)的Poisson分布.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+回顾\(\Gamma(\alpha) = (\alpha - 1)!\), 写出\(P(X \leq x)\), 
+接下来使用积分代换\(u = t^{\alpha - 1}, dv = e^{-t/\beta}dt\).
+
+注意: 这本书的Gamma参数化是P43中的参数化格式, 采用的是rate parameter \(\beta\).
+\end{remark}
+
+\begin{proof}
+
+
+由于\(\alpha\)是一个整数, 
+于是, 
+$$
+P(Y\geq \alpha) = \sum_{k = \alpha}^{\infty} e^{-x\beta} \frac{(x\beta)^k}{k!} = 1 - \sum_{k = 0}^{\alpha - 1} e^{-x\beta} \frac{(x\beta)^k}{k!}.
+$$
+
+断言: 
+$$
+\sum_{k=0}^{\alpha - 1} \frac{(x\beta)^k e^{-x\beta}}{k!} = \int_{x\beta}^{\infty} \frac{z^{\alpha - 1} e^{-z}}{\Gamma(\alpha)} \, dz
+$$
+这是因为分部积分:
+$$
+\begin{aligned}
+    \int_{x\beta}^{\infty} \frac{z^{\alpha - 1} e^{-z}}{\Gamma(\alpha)} \, dz &= \left. -\frac{z^{\alpha - 1} e^{-z}}{\Gamma(\alpha)} \right|_{x\beta}^{\infty} + \int_{x\beta}^{\infty} \frac{z^{\alpha - 2} e^{-z}}{\Gamma(\alpha - 1)} \, dz \\
+    &= \frac{(x\beta)^{\alpha - 1} e^{-x\beta}}{\Gamma(\alpha)} + \int_{x\beta}^{\infty} \frac{z^{\alpha - 2} e^{-z}}{\Gamma(\alpha - 1)} \, dz.
+\end{aligned}
+$$
+以及当\(\alpha = 1\)时,
+$$
+\int_{x\beta}^{\infty} e^{-z} \,dz = e^{-x\beta} = \frac{(x\beta)^0 e^{-x\beta}}{0!}.
+$$
+
+
+
+
+则根据上述断言, 
+$$
+P(Y \geq \alpha) = \int_{0}^{x\beta} \frac{z^{\alpha - 1} e^{-z}}{\Gamma(\alpha)} \, dz \overset{z = \beta t}{=} = \int_{0}^{x} \frac{(\beta t)^{\alpha - 1} e^{-\beta t}}{\Gamma(\alpha)} \beta \, dt = P(X \leq x).
+$$
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+一个非负随机变量的风险比可以被定义为
+$$
+h_X(t)=\lim _{\varepsilon \rightarrow 0} \frac{P(t \leq X<t+\varepsilon \mid X \geq t)}{\varepsilon}
+$$
+当上述极限存在.
+风险比可以被看作是某一个体在\(t\)时刻后一个无限小时间内没有活下来的概率.
+指数分布的无记忆性给出来一个常数的风险比. 一个Weibull随机变量也可以用来建模生存时间.
+证明:
+\begin{enumerate}[a)]
+    \item 若\(X\)服从参数为\(\lambda\)的指数分布, 则它的风险比是\(h_X(t) = \lambda\);
+    \item 若\(X\)服从Weibull\((\alpha, \beta)\), 则它的风险比是\(h_X(t) = \alpha \beta^\alpha t^{\alpha - 1}\).
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{enumerate}[a)]
+    \item 若\(X\)服从参数为\(\lambda\)的指数分布, 则它的分布函数是\(F_X(x) = 1 - e^{-\lambda x} \mathbb{I}_{\{x\geq 0\}}\). 当\(t\geq 0\)时, $$
+    \begin{aligned}
+        P(t\leq X < t+\varepsilon \mid X \geq t) =&\frac{P(t \leq X < t + \varepsilon)}{P(X \geq t)} \\
+        =&  \frac{e^{-\lambda t} - e^{-\lambda (t+ \varepsilon)}}{e^{-\lambda t}} 
+    \end{aligned}
+    $$
+    于是 
+    $$
+    h_X(t) = \frac{\lambda e^{-\lambda t}}{e^{-\lambda t}} = \lambda.
+    $$
+    \item 若\(X\)服从Weibull\((\alpha, \beta)\), 
+    密度函数:$$
+f(x)= \begin{cases}\alpha \beta^\alpha x^{\alpha-1} e^{-(\beta x)^\alpha} & \text { if } x \geq 0 \\ 0 & \text { if } x<0\end{cases}
+$$累积分布函数:
+$$
+F(x)= \begin{cases}1-e^{-(\beta x)^\alpha}, & x \geq 0 \\ 0, & x<0\end{cases}
+$$
+    则当\(t\geq 0\)时, 它的风险比是\(h_X(t) = \alpha \beta^\alpha t^{\alpha - 1}\). 类似上面的操作, $$
+    h_X(t) = \frac{f(t)}{1-F(t)} = \alpha \beta^\alpha t^{\alpha - 1}.
+    $$
+\end{enumerate}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+一个正的随机变量\(X\)服从logistic分布, 若它的分布函数是
+$$
+F(x)=P(X \leq x)=\frac{1}{1+e^{-(x-\mu) / \beta}} ; \quad(x>0)
+$$
+其中参数是\((\mu, \beta), \beta > 0\).
+\begin{enumerate}[a)]
+    \item 证明若\(\mu = 0, \beta = 1\), 则\(X\)的密度函数是$$
+f(x)=\frac{e^{-x}}{\left(1+e^{-x}\right)^2};
+$$
+    \item 证明若\(X\)服从参数为\((\mu, \beta)\)的logistic分布, 则\(X\)的风险比是\(h_X(t) = \frac{1}{\beta}F(t)\).
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{enumerate}[a)]
+    \item 当\(\mu = 0, \beta = 1\)时, \(F(x) = \frac{1}{1+e^{-x}}\), 密度函数是$$
+    f(x) = \frac{d}{dx}F(x) = \frac{e^{-x}}{\left(1+e^{-x}\right)^2}.
+    $$
+    \item 当\(X\)服从参数为\((\mu, \beta)\)的logistic分布时, 密度函数是$$
+    f(x) = \frac{e^{-(x-\mu)/\beta}}{\beta\left(1+e^{-(x-\mu)/\beta}\right)^2}.
+    $$于是$$
+    h_X(t) = \frac{f(t)}{1-F(t)} = \frac{1}{\beta}F(t).
+    $$
+\end{enumerate}
+\end{proof}
+
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

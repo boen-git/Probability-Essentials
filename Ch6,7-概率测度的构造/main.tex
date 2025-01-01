@@ -1,0 +1,425 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#7.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 6\&7: 概率测度的构造}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+
+\begin{framed}
+\begin{exercise}
+设$\{A_n\}_{n \geq 1}$是任何一列两两不交的事件, $P$是一个概率测度. 证明:$\lim_{n\to\infty} P(A_n) = 0$.
+\end{exercise}
+\end{framed}
+\begin{proof}
+根据概率的定义, 
+$$
+P\left(\bigcup_{i=1}^{\infty} A_i\right)  = \sum_{i=1}^{\infty} P(A_i)\leq 1.
+$$
+根据级数收敛的必要条件, 级数的一般项\(P(A_n)\)趋于零, 从而$\lim_{n\to\infty} P(A_n) = 0$.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设$\{A_\beta\}_{\beta \in B}$是一族两两不交的事件. 证明若$P(A_\beta) > 0, \forall \beta \in B$, 则$B$是至多可数的.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+定义\(\mathcal{S}_n = \left\{A_\beta: P(A_\beta) > \frac{1}{n}\right\}\).
+显然, \(\cup_{n = 1}^{\infty} \mathcal{S}_n = \left\{A_\beta: P(A_\beta) \geq 0\right\} = \{A_\beta\}_{\beta \in B}\).
+断言: \(\mathcal{S}_n\)中只有有限多个元素. 否则, 若\(\mathcal{S}_n\)中有无穷多个元素, 则
+不妨设取出可列个不交的事件, \(\{A_{\beta_i}\}_{i=1}^{\infty}\), 有\(P(A_{\beta_i}) > \frac{1}{n}\), 从而
+$$
+P\left(\bigcup_{i=1}^{\infty} A_{\beta_i}\right) \geq \sum_{i=1}^{\infty} P(A_{\beta_i}) > \sum_{i=1}^{\infty} \frac{1}{n} = \infty,
+$$
+而这与概率的定义矛盾. 因此\(\mathcal{S}_n\)中只有有限多个元素, 从而\(B\)是至多可数的.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明$\Gamma$密度函数的最大值出现在$x = \frac{\alpha - 1}{\beta}$, 其中$\alpha \geq 1$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(\Gamma\)密度函数为
+$$
+f(x)= \begin{cases}\frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} & x \geq 0; \\ 0 & x<0.\end{cases}
+$$
+对\(x\)求导, 有
+$$
+f'(x) = \frac{\beta^\alpha}{\Gamma(\alpha)}\left((\alpha - 1)x^{\alpha - 2}e^{-\beta x} - \beta x^{\alpha - 1}e^{-\beta x}\right).
+$$
+令\(f'(x) = 0\), 得到
+$$
+(\alpha - 1)x = \beta.
+$$
+因为\(\alpha \geq 1\), 所以\(\frac{\alpha - 1}{\beta} \geq 0\), 从而\(\Gamma\)密度函数的最大值出现在\(x = \frac{\alpha - 1}{\beta}\).
+
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+证明Weibull密度函数的最大值出现在$x = \frac{1}{\beta}\left(\frac{\alpha - 1}{\alpha}\right)^{\frac{1}{\alpha}}$, 其中$\alpha \geq 1$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+Weibull密度函数为
+$$
+f(x)= \begin{cases}\alpha \beta^\alpha x^{\alpha-1} e^{-(\beta x)^\alpha} & \text { if } x \geq 0 \\ 0 & \text { if } x<0\end{cases}
+$$
+对\(x\)求导, 有
+$$
+f'(x) = \alpha \beta^\alpha \left((\alpha - 1)x^{\alpha - 2}e^{-(\beta x)^\alpha} - \beta^\alpha \alpha x^{\alpha - 1}e^{-(\beta x)^\alpha}\right).
+$$
+令\(f'(x) = 0\), 得到
+$$
+\alpha - 1 = \beta^\alpha \alpha x.
+$$
+因为\(\alpha \geq 1\), 所以\(\frac{1}{\beta}\left(\frac{\alpha - 1}{\alpha}\right)^{\frac{1}{\alpha}} \geq 0\), 从而Weibull密度函数的最大值出现在\(x = \frac{1}{\beta}\left(\frac{\alpha - 1}{\alpha}\right)^{\frac{1}{\alpha}}\).
+
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+证明正态密度函数的最大值出现在$x = \mu$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+正态密度函数为
+$$
+f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x - \mu)^2}{2\sigma^2}}.
+$$
+对\(x\)求导, 有
+$$
+f'(x) = \frac{1}{\sqrt{2\pi}\sigma}\left(-\frac{2(x - \mu)}{2\sigma^2}e^{-\frac{(x - \mu)^2}{2\sigma^2}}\right) = -\frac{x - \mu}{\sigma^2}f(x).
+$$
+令\(f'(x) = 0\), 得到
+$$
+x = \mu.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明对数正态密度函数的最大值出现在$x = e^{\mu}e^{- \sigma^2}$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+对数正态密度函数为
+$$
+f(x)= \begin{cases}\frac{1}{x} g_{\mu, \sigma^2}(\log x) & \text { if } x>0 \\ 0 & \text { if } x \leq 0\end{cases}
+$$
+其中\(g_{\mu, \sigma^2}\)是正态密度函数. 对\(x\)求导, 有
+$$
+f'(x) = -\frac{1}{x^2} g_{\mu, \sigma^2}(\log x) + \frac{1}{x} g'_{\mu, \sigma^2}(\log x).
+$$
+令\(f'(x) = 0\), 得到
+$$
+\frac{1}{x} = \frac{g'_{\mu, \sigma^2}(\log x)}{g_{\mu, \sigma^2}(\log x)} = \frac{1}{x} \cdot\left(- \frac{\log x - \mu}{\sigma^2}\right).
+$$
+所以最大值出现在\(x = e^{\mu}e^{- \sigma^2}\).
+
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+证明双指数密度函数的最大值出现在$x = \alpha$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+双指数密度函数为
+$$
+f(x)=\frac{\beta}{2} e^{-\beta|x-\alpha|}
+$$
+对\(x\)求(次)导, 有
+$$
+f'(x) = \frac{\beta}{2} \text{sgn}(x - \alpha)e^{-\beta|x-\alpha|}.
+$$
+令\(f'(x) = 0\), 得到
+$$
+\text{sgn}(x - \alpha) = 0,
+$$
+所以最大值出现在\(x = \alpha\). 也可以直接从增减性分析.
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明$\Gamma$和Weibull分布都可以在$\alpha = 1$的条件下退化为指数分布.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+当\(\alpha = 1\)时, \(\Gamma\)密度函数为
+$$
+f(x)= \begin{cases}\beta e^{-\beta x} & x \geq 0; \\ 0 & x<0.\end{cases}
+$$
+当\(\alpha = 1\)时, Weibull密度函数为
+$$
+f(x)= \begin{cases}\beta e^{-\beta x} & \text { if } x \geq 0 \\ 0 & \text { if } x<0\end{cases}
+$$
+因此\(\Gamma\)和Weibull分布都可以在\(\alpha = 1\)的条件下退化为指数分布.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明均匀分布, 正态分布, 双指数分布, 柯西分布的密度函数都关于他们的中点对称.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+均匀分布密度函数为
+$$
+f(x)=\frac{1}{b-a} 1_{[a, b]}(x).
+$$
+正态分布密度函数为
+$$
+f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x - \mu)^2}{2\sigma^2}}.
+$$
+双指数分布密度函数为
+$$
+f(x)=\frac{\beta}{2} e^{-\beta|x-\alpha|}.
+$$
+柯西分布密度函数为
+$$
+f(x)=\frac{1}{\beta\pi} \frac{1}{1+(x - \alpha)^2/\beta^2}.
+$$
+显然均匀分布, 正态分布, 双指数分布, 柯西分布的密度函数都关于他们的中点对称.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+一个分布被称为单峰(unimodal)的, 若其密度函数仅有一个全局最大值. 证明正态分布, 指数分布, 双指数分布, Cauchy分布, $\Gamma$分布, Weibull分布, 对数正态分布都是单峰的.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+上面已经证明.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+对于一个非负函数$f$满足$\int_{-\infty}^{\infty} f(x) d x=1$, 设$P(A) = \int_{-\infty}^{\infty} \mathbb{I}_A(x)f(x) \,dx$.
+令\(A = \{x_0\}\)是一个单点集, 证明$A$是Borel集, 而且是可忽略集(从而是零测集).
+\end{exercise}
+\end{framed}
+\begin{proof}
+先证明\(\{x_0\}\)是一个Borel集, 
+事实上, 若考虑\(\mathcal{B}(\mathbb{R}) = \sigma((-\infty, x])\), 则\(\{x_0\} = \bigcap_{n=1}^{\infty} (-\infty, x_0] \cap (-\infty, x_0 - 1/n]^c\), 因此是Borel集.
+接下来, 记Lebegue测度为\(\lambda\), 根据函数\(f\)在零测集上的积分为\(0\), 有
+$$
+P(A) = \int_{-\infty}^{\infty} \mathbb{I}_{\{x_0\}}(x)f(x) \,dx = \int_{\{x_0\}} f(x) \,d\lambda = 0.
+$$
+从而\(\{x_0\}\)是可忽略集.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+考察7.11中的概率$P$. 令$B$是一个可数基数的集合. 证明$B$是$P$可忽略集.
+\end{exercise}
+\end{framed}
+\begin{proof}
+不妨设\(B = \{x_i\}_{i = 1}^\infty\), 则\(\lambda B = 0\), 根据\(f\)绝对可积, 函数\(f\)在零测集上的积分为\(0\), 有
+$$
+P(B) = \int_{B} f(x) \,d\lambda = 0.
+$$
+于是\(B\)是可忽略集, 根据上一题的讨论, 也是零测集.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+考察7.12中的$P, B$, 假设$A$是一个事件, $P(A) = \frac{1}{2}$, 证明: \(P(A \cup B) = \frac{1}{2}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+P(A \cup B) = P(A) + P(B-A) = P(A) = \frac{1}{2}.
+$$
+因为\(0\leq P(B-A) \leq P(B) = 0\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{A_i\}_{i=1}^\infty\)是一列可忽略集, 证明$B = \cup_{i=1}^\infty A_i$是可忽略集.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+对于\(A_i\), 存在\(B_i\)是Borel集, 且\(A_i \subset B_i\), 且\(\lambda B_i = 0\), 有
+则
+$$
+\bigcup_{i=1}^\infty A_i \subset \bigcup_{i=1}^\infty B_i.
+$$
+且
+$$
+0 \leq P\left(\bigcup_{i=1}^\infty B_i\right) \leq \sum_{i=1}^\infty P(B_i) = 0.
+$$
+从而\(\bigcup_{i=1}^\infty A_i\)是可忽略集.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是定义在可数概率空间上的随机变量. 假设$\mathbb{E}\{|X|\} = 0$. 证明除了一个可忽略集, \(X = 0\). 我们能否断言\(X(w) = 0, \forall w\)?
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+0 = \mathbb{E}\{|X|\} = \sum_{w} |X(w)|p_w = \sum_{\{w: X = 0\}}^{} |X(w)|p_w + \sum_{\{w: X \neq 0\}}^{}|X(w)|p_w =  \sum_{\{w: X \neq 0\}}^{}|X(w)|p_w.
+$$
+因此\(\{w: X \neq 0\}\)是零测集, 从而\(X = 0\)几乎处处成立.
+
+但是这个结论不能推出\(X(w) = 0, \forall w\), 
+比如取\(\Omega = \{0, 1\}\), \(X(0) = 0\), \(X(1) = 1\), \(P(0) = 1, P(1) = 0\), 则\(\mathbb{E}\{|X|\} = 0\), 但是\(X(1) = 1\).
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设$F$是一个分布函数. 证明$F$至多有可数个间断点.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+\(F\)是一个分布函数, 当且仅当它满足
+\begin{itemize}
+    \item \(F\)在\(\mathbb{R}\)上单调非降;
+    \item \(F\)是右连左极的;
+    \item \(F(-\infty) = 0, F(\infty) = 1\).
+\end{itemize}
+
+事实上, 根据单调性和实数理论, 可以推出函数有左右极限.
+因为\(\forall a \in \mathbb{R}\), 
+\(\{F(x): x < a\}\)非空且有上界\(F(a)\), 所以存在上确界\(M = \sup\{F(x): x < a\}\).
+\(\forall \varepsilon > 0\), 根据上确界的定义, 存在\(x_0 < a\)使得\(M - \varepsilon < F(x_0) \leq M\)
+取\(\delta = a - x_0\), 则当\(x \in (a - \delta, a)\)时, 有 \(M - \varepsilon < F(x) \leq M\), 从而左极限存在, 同理右极限也存在.
+
+根据函数是单调, 且函数是有界的, 右连续的, 因此函数\(F\)仅可能有跳跃间断点.
+记跳跃间断点的点集为\(E\), 那么
+$$
+E = \{x\in \mathbb{R}: f(x-) < f(x)\}.
+$$
+若\(x_1, x_2 \in E\), 且\(x_1 < x_2\), 有
+$$
+f(x_1 - ) < f(x_1) \leq f(x_2-) < f(x_2),
+$$
+从而\((f(x_1 - ), f(x_1)) \cap (f(x_2-), f(x_2)) = \varnothing\), 因此\(E\)与
+\(\{(f(x-), f(x)): x\in E\}\)等势, 由于直线上的互不相交的开区间是至多可数的, 因此\(E\)是至多可数的.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+假设分布函数由以下形式给出, 
+$$
+F(x)=\frac{1}{4} 1_{[0, \infty)}(x)+\frac{1}{2} 1_{[1, \infty)}(x)+\frac{1}{4} 1_{[2, \infty)}(x) .
+$$
+设\(P\)由
+$$
+P((-\infty, x])=F(x)
+$$
+给出. 求出下列事件的概率:
+\begin{enumerate}[a)]
+    \item $A=\left(-\frac{1}{2}, \frac{1}{2}\right)$
+    \item  $B=\left(-\frac{1}{2}, \frac{3}{2}\right)$
+    \item $C=\left(\frac{2}{3}, \frac{5}{2}\right)$
+    \item  $D=[0,2)$
+    \item $E=(3, \infty)$
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{enumerate}[a)]
+    \item \(P(A) = F\left(\frac{1}{2}-\right) - F\left(-\frac{1}{2}\right) = \frac{1}{4} - 0 = \frac{1}{4}\).
+    \item \(P(B) = F\left(\frac{3}{2}-\right) - F\left(-\frac{1}{2}\right) = \frac{1}{2} - 0 = \frac{1}{2}\).
+    \item \(P(C) = F\left(\frac{5}{2}-\right) - F\left(\frac{2}{3}\right) = 1 - \frac{1}{4} = \frac{3}{4}\).
+    \item \(P(D) = F(2-) - F(0-) = \frac{3}{4} - 0 = \frac{3}{4}\).
+    \item \(P(E) = F(\infty) - F(3) = 1 - 1 = 0\).    
+\end{enumerate}
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设函数$F$有以下形式,
+$$
+F(x)=\sum_{i=1}^{\infty} \frac{1}{2^i} 1_{\left[\frac{1}{i}, \infty\right)} .
+$$
+证明它是某一个\(\mathbb{R}\)上概率的分布函数. 我们定义概率\(P\)通过$
+P((-\infty, x])=F(x)
+$. 求出以下事件的概率:
+\begin{enumerate}[a)]
+    \item $A=[1, \infty)$
+    \item $B=\left[\frac{1}{10}, \infty\right)$
+    \item $C=\{0\}$
+    \item $D=\left[0, \frac{1}{2}\right)$
+    \item $E=(-\infty, 0)$
+    \item $G=(0, \infty)$
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+先证明\(F\)是一个分布函数.
+\begin{enumerate}
+    \item \(F\)在\(\mathbb{R}\)上单调非降. 事实上, 对于\(x < y\), 若\(x \in \left[\frac{1}{i}, \infty\right)\), 则\(y \in \left[\frac{1}{i}, \infty\right)\), 从而\(F(x) \leq F(y)\).
+    \item \(F\)是右连的. 事实上, 对于\(x \in (0,1)\), 存在\(i^*\)使得\(x \in \left[\frac{1}{i^* + 1}, \frac{1}{i^*}\right)\), 若\(x_n \downarrow x\), \(\forall \varepsilon >0\), 存在\(N\)使得当\(n\geq N\)时, \(x_n \in \left[\frac{1}{i^* + 1}, \frac{1}{i}\right)\), 从而\(F(x+) = F(x)\). 当\(x \geq 1\)时, 右连续性显然成立. 当\(x \leq 0\)时, \(F(x) = 0\), 且对于任意的\(x_n \downarrow 0\), \(\forall \varepsilon >0\), 存在\(N\)使得当\(n\geq N\)时, \(F(x_n) = \sum_{i = N}^{\infty} \frac{1}{2^i} < \varepsilon\), 从而\(F(0+) = F(0)\).
+    \item \(F(-\infty) = 0, F(\infty) = 1\). 事实上, \(F(-\infty) = F(0) = 0\), \(F(\infty) = F(1) = \sum_{i=1}^{\infty} \frac{1}{2^i} = 1\).
+\end{enumerate}
+于是, \(F\)是一个\(\mathbb{R}^1\)上的分布函数.
+
+\begin{enumerate}[a)]
+    \item \(P(A) = F(\infty) - F(1-) = 1 - \frac{1}{2} = \frac{1}{2}\).
+    \item \(P(B) = F(\infty) - F\left(\frac{1}{10}-\right) = 1 - \sum_{i=11}^{\infty} \frac{1}{2^i} = 1 - \frac{1}{2^{10}}\).
+    \item \(P(C) = F(0) - F(0-) = 0 - 0 = 0\).
+    \item \(P(D) = F\left(\frac{1}{2}-\right) - F(0-) = \sum_{i=3}^{\infty}\frac{1}{2^i} = \frac{1}{4}\).
+    \item \(P(E) = F(0) - F(-\infty) = 0 - 0 = 0\).
+    \item \(P(G) = F(\infty) - F(0) = 1 - 0 = 1\).
+\end{enumerate}
+
+\end{proof}
+
+
+% \printbibliography
+
+
+\end{document}

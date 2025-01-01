@@ -1,0 +1,283 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#20.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 20: 大数定律}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+实变函数技巧: 函数收敛到点上
+$$
+\left\{x \mid \lim _{k \rightarrow \infty} f_k(x)=f(x)\right\}=\bigcap_{l=1}^{\infty} \bigcup_{j=1}^{\infty} \bigcap_{k=j}^{\infty}\left\{x| | f_k(x)-f(x) \mid<1 / l\right\} .
+$$
+
+函数收敛到无穷的点集:
+$$
+\begin{aligned}
+    E_{\infty}&:= \left\{x \in X \mid \lim _{n \rightarrow \infty} f_n(x)=  \infty\right\}=\bigcap_{M=1}^{\infty} \bigcup_{N=1}^{\infty} \bigcap_{n \geq N}\left\{x: f_n(x) \geq M\right\}\\
+    E_{-\infty}&:= \left\{x \in X \mid \lim _{n \rightarrow \infty} f_n(x)=  -\infty\right\}=\bigcap_{M=1}^{\infty} \bigcup_{N=1}^{\infty} \bigcap_{n \geq N}\left\{x: f_n(x) \leq -M\right\}\\
+\end{aligned}
+$$
+
+
+\begin{framed}
+\begin{exercise}[一个弱化版本的大数定律]
+设\(\{X_j\}\)是一列随机变量, 使得\(\sup_j \mathbb{E}\{X_j^2\} = c < \infty\), \(\mathbb{E}\{X_j X_k\} = 0\)当\(j \neq k\).
+设\(S_n = X_1 + \cdots + X_n\),  
+\begin{enumerate}[a)]
+    \item 证明: \(P\left(\left|\frac{1}{n}S_n\right| \geq \varepsilon\right) \leq \frac{c}{n\varepsilon^2}, \forall \varepsilon > 0\);
+    \item \(\frac{1}{n}S_n \xrightarrow{L^2} 0, \frac{1}{n}S_n \xrightarrow{P} 0.\)
+\end{enumerate}
+\end{exercise}
+\end{framed}
+\begin{remark}
+这里放松了常见的i.i.d.假设.
+\end{remark}
+
+
+\begin{proof}
+\begin{enumerate}[a)]
+\item 考察\(\mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\}\), 有
+\begin{align*}
+    \mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\} &= \frac{1}{n^2}\mathbb{E}\left\{S_n^2\right\} = \frac{1}{n^2}\mathbb{E}\left\{\sum_{j=1}^{n}X_j^2 + 2\sum_{1\leq j < k \leq n}X_jX_k\right\} \\
+    &= \frac{1}{n^2}\sum_{j=1}^{n}\mathbb{E}\{X_j^2\} \leq \frac{c}{n}.
+\end{align*}
+由Markov不等式, 对任意\(\varepsilon > 0\), 有
+\begin{align*}
+    P\left(\left|\frac{1}{n}S_n\right| \geq \varepsilon\right) & \leq \frac{\mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\}}{\varepsilon^2} \leq \frac{c}{n\varepsilon^2}.
+\end{align*}
+\end{enumerate}
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{Y_j\}_{j\geq 1}\)是一列独立的二项随机变量, 定义在相同的概率空间上, 服从\(Bernoulli(p)\). 令\(X_n = \sum_{j = 1}^{n} Y_j\).
+证明: \(X_j\)服从\(Binomial(j, p)\), 且\(\frac{X_j}{j} \xrightarrow{a.s.} p\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(Y_i\)的特征函数为\(\varphi_{Y_i}(t) = 1 - p + pe^{it}\), 由独立性, \(X_j\)的特征函数为\(\varphi_{X_j}(t) = \left(1 - p + pe^{it}\right)^j\).
+这是一个二项分布的特征函数, 由特征函数的唯一性定理, \(X_j\)服从\(Binomial(j, p)\).
+
+根据独立同分布场合下, 期望方差存在的强大数定律, \(\mathbb{E}\{Y_1\} = p, \operatorname{Var}(Y_j) = p(1-p) < \infty\), 有
+\begin{align*}
+    \frac{X_j}{j} = \frac{1}{j}\sum_{i=1}^{j}Y_i \xrightarrow{a.s.} \mathbb{E}\{Y_1\} = p.
+\end{align*}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同分布的随机变量, 且\(X_j \in L^1\).
+令\(Y_j = e^{X_j}\). 证明: 
+$$
+\left(\prod_{j=1}^n Y_j\right)^{\frac{1}{n}} \xrightarrow{a.s.} e^{\mathbb{E}\{X_1\}}.
+$$
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+    由于\(X_i\)是独立同分布的随机变量, 且是\(L^1\)的, 有\(\mathbb{E}\{X_1\} = \cdots = \mathbb{E}\{X_n\} = \mu \in \mathbb{R}^1\).
+    根据Kolmogorov强大数定律, 对题目中式子
+取对数, 有
+\begin{align*}
+    \log\left(\left(\prod_{j=1}^n Y_j\right)^{\frac{1}{n}}\right) &= \frac{1}{n}\sum_{j=1}^{n}X_j \xrightarrow{a.s.} \mathbb{E}\{X_1\}.
+\end{align*}
+由于对数函数是连续函数, 根据连续映射定理, 有
+\begin{align*}
+    \left(\prod_{j=1}^n Y_j\right)^{\frac{1}{n}} \xrightarrow{a.s.} e^{\mathbb{E}\{X_1\}}.
+\end{align*}
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同分布的随机变量, 且\(X_j \in L^1, \mathbb{E}\{X_j\} = \mu\).
+设\(\{Y_j\}\)也是一列独立同分布的随机变量, 且\(Y_j \in L^1, \mathbb{E}\{Y_j\} = \nu \neq 0\).
+证明: 
+$$
+\lim _{n \rightarrow \infty} \frac{1}{\sum_{j=1}^n Y_j} \sum_{j=1}^n X_j=\frac{\mu}{\nu} \quad \text { a.s. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据Kolmogorov强大数定律(独立同分布 + 期望存在)和连续映射定理(\(f(x) = \frac{1}{x}\)在\(\mathbb{R}^1\backslash \{0\}\)上连续), 只需证:
+设随机变量\(Z_n \xrightarrow{a.s.} a, W_n \xrightarrow{a.s.} b\), 则\(Z_nW_n \xrightarrow{a.s.} ab\).
+
+
+根据几乎处处收敛的定义, 
+$$
+\begin{aligned}
+    P(\limsup_{n\to\infty}\{|Z_n - a| > \varepsilon\}) = 0, \quad \forall \varepsilon > 0, \\
+    P(\limsup_{n\to\infty}\{|W_n - b| > \varepsilon\}) = 0, \quad \forall \varepsilon > 0.
+\end{aligned}
+$$
+即\(\forall \varepsilon > 0, \exists N  = N(\varepsilon),\)当\(n > N\)时, 有
+\begin{align*}
+    P\left(\left|Z_n - a\right| \leq \varepsilon\right) & = 1, \\
+    P\left(\left|W_n - b\right| \leq \varepsilon\right) & = 1.
+\end{align*}
+由于\(Z_nW_n = (Z_n - a + a)(W_n - b + b)\), 于是有如下的拆分: 
+$$
+\begin{aligned}
+    \left|Z_nW_n - ab\right| & = \left|(Z_n - a)(W_n - b) + a(W_n - b) + b(Z_n - a)\right| \\
+    & \leq \left|Z_n - a\right|\left|W_n - b\right| + \left|a\right|\left|W_n - b\right| + \left|b\right|\left|Z_n - a\right| \\
+    & < \varepsilon^2 + 2\left|a\right|\varepsilon + 2\left|b\right|\varepsilon. \quad a.s. P \text{ 当} n > N(\varepsilon) \text{时.}
+\end{aligned}
+$$
+% 当\(\varepsilon \leq 1\)时, \(\varepsilon^2 + (2|a| + 2|b|)\varepsilon \leq (1 + 2|a| + 2|b|) \varepsilon \leq \kappa \leadsto \varepsilon\leq \max\left\{\frac{\kappa}{1 + 2|a| + 2|b|}, 1\right\}\).
+% 当\(\varepsilon > 1\)时, \(\varepsilon^2 + (2|a| + 2|b|)\varepsilon \leq (1 + 2|a| + 2|b|) \varepsilon^2 \leq \kappa \leadsto \varepsilon\leq \sqrt{\frac{\kappa}{1 + 2|a| + 2|b|}}\).
+于是记\(\tilde{\varepsilon} = \varepsilon^2 + 2\left|a\right|\varepsilon + 2\left|b\right|\varepsilon\), 
+则\(\forall \tilde{\varepsilon} > 0, \exists N = N(\varepsilon)\), 当\(n > N\)时, 有
+\begin{align*}
+    P\left(\left|Z_nW_n - ab\right| \leq \tilde{\varepsilon}\right) = 1.
+\end{align*}
+即\(Z_nW_n \xrightarrow{a.s.} ab\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同分布的随机变量, 且\(X_j \in L^1\).
+假设\(\frac{1}{\sqrt{n}} \sum_{j = 1}^{n}(X_j - \nu)\)依分布收敛于某个随机变量\(Z\), 证明:
+$$
+\lim _{n \rightarrow \infty} \frac{1}{n} \sum_{j=1}^n X_j=\nu \quad \text { a.s. }
+$$
+\end{exercise}
+\end{framed}
+\begin{remark}
+若\(Z_n = \frac{1}{\sqrt{n}} \sum_{j = 1}^{n}(X_j - \nu)\), 
+首先证明: \(\frac{1}{\sqrt{n}}Z_n\)依分布收敛于\(0\).
+\end{remark}
+
+
+\begin{proof}
+由于\(\{X_j\}\)独立同分布且期望有限, 记\(\mu = \mathbb{E}X_j\), 则根据Kolmogorov强大数定律, 有
+$$
+\frac{1}{n}\sum_{j=1}^{n}X_j \xrightarrow{a.s.} \mu.
+$$
+由于\(Z_n = \frac{1}{\sqrt{n}} \sum_{j = 1}^{n}(X_j - \nu)\)
+依分布收敛于某个随机变量\(Z\), 则对\(\frac{1}{\sqrt{n}}Z_n\), 
+根据Slutsky定理, 有 \(\frac{1}{\sqrt{n}}Z_n\)依分布收敛于\(0\), 从而依概率收敛于\(0\).
+
+即\(\forall \varepsilon > 0, \exists N = N(\varepsilon), \forall n > N\), 
+$$
+P\left(\left|\frac{1}{\sqrt{n}}Z_n\right|\right) = P\left(\left|\frac{1}{n}\sum_{j = 1}^{n}(X_j - \nu)\right|\right)  < \varepsilon.
+$$
+从而\(\frac{1}{n}\sum_{j=1}^{n}X_j \xrightarrow{P} \nu\), 而\(\frac{1}{n}\sum_{j=1}^{n}X_j \xrightarrow{a.s.} \mu\), 从而\(\mu = \nu\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同分布的随机变量, 且\(X_j \in L^p\).
+证明: 
+$$
+\lim _{n \rightarrow \infty} \frac{1}{n} \sum_{j=1}^n X_j^p=\mathbb{E}\left\{X^p\right\}
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+记\(Y_j = X_j^p \in L^1\), 则根据Kolmogorov强大数定律, 立刻得出结论.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同\(\mathcal{N}(1,3)\)的随机变量. 证明:
+$$
+\lim _{n \rightarrow \infty} \frac{X_1+X_2+\ldots+X_n}{X_1^2+X_2^2+\ldots+X_n^2}=\frac{1}{4} \text { a.s. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据习题20.5, 立刻得出结论.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同分布的随机变量, 且有均值\(\mu\), 方差\(\sigma^2\).
+证明:
+$$
+\lim _{n \rightarrow \infty} \frac{1}{n} \sum_{i=1}^n\left(X_i-\mu\right)^2=\sigma^2 \quad \text { a.s. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+记\(Y_j = (X_j - \mu)^2 \in L^1\), 则根据Kolmogorov强大数定律, 立刻得出结论.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_j\}\)是一列独立同分布的{\it 整数}随机变量, 且\(\mathbb{E}\{|X_j|\} < \infty\).
+设\(S_n = \sum_{j=1}^{n}X_j\). 称\(\{S_n\}_{n\geq 1}\)为整数上的随机游走.
+证明: 若\(\mathbb{E}(X_j) > 0\), 则
+$$
+\lim _{n \rightarrow \infty} S_n=\infty, \text { a.s. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据Kolmogorov强大数定律, 有
+$$
+\lim _{n \rightarrow \infty} \frac{S_n}{n} = \mathbb{E}\{X_1\} > 0, \text{ a.s.}
+$$
+反证法, 若不然, 
+记\(A = \{w: \lim_{n\to\infty} S_n = \infty\} = \bigcap_{M = 1}^\infty \bigcup_{N = 1}^\infty \bigcap_{n \geq N} \{w: S_n \geq M\}\), 则\(P(A) < 1\), 
+则 
+$$
+A^c = \bigcup_{M = 1}^\infty \bigcap_{N = 1}^\infty \bigcup_{n \geq N} \{w: S_n < M\}.
+$$
+\(w\in A^c\)表明: 存在\(M = M(w)\), 使得\(\forall N\), 存在\(n \geq N\), 使得\(S_n(w) < M\).
+% 于是存在子列\(S_{n_k}\)满足\(S_{n_k}(w) < M\), 
+于是
+$$
+\frac{S_{n}}{n}(w) < \frac{M}{n} \xrightarrow{n\to \infty} 0.
+$$
+从而
+$$
+A^c \subset \left\{\lim_{n\to\infty} \frac{S_{n}}{{n}} \leq 0\right\},
+$$
+而\(\Pr\left\{\lim_{n\to\infty} \frac{S_{n}}{{n}} \leq 0\right\} > 0\)与\(\lim_{n\to\infty} \frac{S_n}{n} = \mathbb{E}\{X_1\} > 0\) a.s.矛盾!
+假设不成立, 
+\(\lim _{n \rightarrow \infty} S_n=\infty, \text { a.s. }\)
+% 即\(\forall M \in \mathbb{N}\), \(\exists N = N(M)\), 当\(n \geq N\)时, 有\(S_n < M\),
+% 记
+% $$
+% N = \{w: \lim_{n\to\infty} S_n < \infty\}, 
+% $$
+% 则\(N \subset A^c\)
+
+% 从而若\(\lim _{n \rightarrow \infty} S_n < \infty, \text{ a.s.}\), 
+% 或\(\lim_{n\to\infty}S_n\)不收敛于\(\infty\)\(, \text{ a.s.}\), 则存在子列\(\{S_{n_k}\}\)收敛于某个有限值\(M\)\(, \text{ a.s.}\), 则\(\frac{S_{n_k}}{n_k} \xrightarrow{a.s.} 0\), 矛盾.
+\end{proof}
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

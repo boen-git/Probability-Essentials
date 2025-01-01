@@ -1,0 +1,636 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#5.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 5: 可列空间中的随机变量}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+
+\begin{framed}
+\begin{exercise}
+令\(g : [0, \infty) \to [0, \infty)\)是一个严格增的非负函数. 证明:
+$$
+P(|X| \geq a) \leq \frac{E\{g(|X|)\}}{g(a)} \quad \text { 当 } a>0.
+$$
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+根据可列空间中期望的定义, 对\(a > 0\), 
+$$
+\begin{aligned}
+    \mathbb{E}\{g(|X|)\} =& \sum_{w\in \Omega}^{} g\{|X(w)|\}P(w) \\
+    =& \sum_{w: |X| \geq a}^{} g\{|X(w)|\}P(w) + \sum_{w: |X|< a}^{} g\{|X(w)|\}P(w) \\
+    \geq & \sum_{w: |X| \geq a}^{} g(a)P(w) + 0 \\
+    =& g(a)P(|X| \geq a).
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(h: \mathbb{R} \to [0,\alpha]\)是一个非负有界函数. 证明当\(0\leq a < \alpha \), 
+$$
+P\{h(X) \geq a\} \geq \frac{E\{h(X)\}-a}{\alpha-a}.
+$$
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+根据可列空间中期望的定义, 对\(a < \alpha\),
+$$
+\begin{aligned}
+    E\{h(X)\} - a =& \sum_{w\in\Omega}^{} \{h(X(w)) - a\}P(w) \\
+    =& \sum_{\{h(X) \geq a\}} \{h(X) - a\} P(w) + \sum_{\{h(X) < a\}} \{h(X) - a\}P(w) \\
+    \leq & \sum_{\{h(X) \geq a\}} \{h(X) - a\} P(w) + 0 \\
+    \leq & \sum_{\{h(X) \geq a\}} (\alpha - a) P(w) \\
+    =& (\alpha - a) P\{h(X) \geq a\}.
+\end{aligned}
+$$
+移项即得证(同样的思路可以推广到连续的场合).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+证明$\sigma_X^2=E\left\{X^2\right\}-E\{X\}^2$, 假设上述两个期望都存在.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据可列空间中期望的定义, 运算根据P28(i), (iii), 
+$$
+\begin{aligned}
+    \sigma_X^2 &= \mathbb{E}\{(X - \mathbb{E}X)^2\} \\
+    &= \mathbb{E}\{X^2 - 2X\mathbb{E}X + \mathbb{E}X^2\} \\
+    &= \mathbb{E}\{X^2\} - 2\mathbb{E}X\mathbb{E}X + \mathbb{E}X^2 \\
+    &= \mathbb{E}\{X^2\} - (\mathbb{E}X)^2.
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明$E\{X\}^2 \leq E\left\{X^2\right\}$, 假设上述两个期望都存在.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据\((X-\mathbb{E}X)^2 \geq 0\), P28运算性质(ii), 以及上一题的结论, 立刻得证.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+证明: $\sigma_X^2=E\{X(X-1)\}+\mu_X-\mu_X^2$, 其中\(\mu_X = \mathbb{E}X\). 假设上述期望都存在.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    LHS &=  \mathbb{E}\{X^2\} - (\mathbb{E}X)^2.\\
+    RHS &= \mathbb{E}\{X(X-1)\} + \mathbb{E}X - (\mathbb{E}X)^2 \\
+    &= \mathbb{E}\{X^2 - X\} + \mathbb{E}X - (\mathbb{E}X)^2 \\
+    &= \mathbb{E}\{X^2\} - \mathbb{E}X + \mathbb{E}X - (\mathbb{E}X)^2 \\
+    &= \mathbb{E}\{X^2\} - (\mathbb{E}X)^2.
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+假设\(X\)是一个多项分布\(B(p,n)\)随机变量.
+当\(j\)取什么值时, \(P\{X = j\}\)最大?
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+计算\(\frac{P(X = k)}{P(X = k-1)}\).
+\end{remark}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \frac{P(X = k)}{P(X = k-1)} &= \frac{\binom{n}{k}p^k(1-p)^{n-k}}{\binom{n}{k-1}p^{k-1}(1-p)^{n-k+1}} \\
+    &= \frac{(k-1)!(n-k+1)!}{k!(n-k)!}\frac{p}{1-p} \\
+    &= \frac{n-k+1}{k}\frac{p}{1-p} \\
+\end{aligned}
+$$
+令上式等于1, 
+$$
+\begin{aligned}
+    \frac{n-k+1}{k} &= \frac{1-p}{p} \\
+    \Rightarrow \frac{n+1}{k} &= \frac{1}{p} \\
+    \Rightarrow k &= (n + 1)p.
+\end{aligned}
+$$
+当\(k\leq \lfloor (n+1)p \rfloor\)时, \(\frac{P(X = k)}{P(X = k-1)} > 1\), 当\(k > \lfloor (n+1)p \rfloor\)时, \(\frac{P(X = k)}{P(X = k-1)} < 1\). 因此, \(P(X = \lfloor (n+1)p \rfloor)\)最大.
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+    假设\(X\)是一个多项分布\(B(p,n)\)随机变量.
+    求出当\(X\)取值为偶数时的概率.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+这里可以给出两种证明方法: 
+
+一种是直接证明. 沿用上一章的记号, 记\(p_k = P({k})\), \(k = 0,1,2,...,n\).
+那么
+$$
+\begin{aligned}
+    P(X \text{ 偶数}) + P(X \text{ 奇数}) &= \sum_{k=0}^{n} p_k  = 1\\
+    P(X \text{ 偶数}) - P(X \text{ 奇数}) &= \sum_{k=0}^{n} (-1)^k p_k .
+\end{aligned}
+$$
+由于
+$$
+\sum_{k=0}^{n} (-1)^k p_k = \sum_{k=0}^{n}\binom{n}{k}(-p)^k (1-p)^{n-k} = (1 - 2p)^n,
+$$
+所以
+$$
+P(X \text{ 偶数}) = \frac{1}{2}\left(1+\sum_{k=0}^{n} (-1)^k p_k\right) = \frac{1}{2} \left[1 + (1-2p)^n\right].
+$$
+
+
+另一种方法是用数学归纳法. 断言: 对样本数为\(n\), \(P(X \text{ 偶数}) = \frac{1}{2} \left[1 + (1-2p)^n\right]\). 当\(n = 1\)时, 结论显然成立. 假设对于\(n-1\), 结论成立. 那么
+$$
+\begin{aligned}
+    P(X_n \text{ 偶数}) = &P(X_{n-1} \text{ 偶数})(1 - p) + P(X_n \text{ 奇数} )p \\
+    =& \frac{1}{2} \left[1 + (1-2p)^{n-1}\right](1-p) + \frac{1}{2} \left[1 - (1-2p)^{n-1}\right]p \\
+    =& \frac{1}{2} \left[1 + (1-2p)^n\right].
+\end{aligned}
+$$
+证毕.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+假设\(X_n\)是服从多项分布\(B(p_n, n)\)的随机变量, 且满足\(\lambda = np_n\)是一个常数.
+令\(A_n = \{X_n \geq 1\}\), \(Y\)服从Poisson(\(\lambda\)). 证明: \(\lim_{n\to\infty} P(X_n = j | A_n) = P(Y = j | Y \geq 1)\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+先计算
+$$
+\begin{aligned}
+    P(X_n = j \mid X_n \geq 1) &= \frac{P(X_n = j, X_n \geq 1)}{P(X_n \geq 1)} \\
+\end{aligned}
+$$
+显然, 当\(j = 0\)时, \(P(X_n = 0 \mid X_n \geq 1) = 0\). 
+且\(P(Y = 0 \mid Y\geq 1) = 0\), 等式成立!
+当\(j \geq 1\)时,
+$$
+\begin{aligned}
+    P(X_n = j \mid X_n \geq 1) &= \frac{P(X_n = j)}{P(X_n \geq 1)} \\
+    &= \frac{\binom{n}{j}p_n^j(1-p_n)^{n-j}}{1 - (1-p_n)^n} \\
+    &= \frac{n!}{j!(n-j)!} \frac{p_n^j(1-p_n)^{n-j}}{1 - (1-p_n)^n} \\
+    &= \frac{\left(1 - \frac{\lambda}{n}\right)^n}{j!\left\{1 - \left(1 - \frac{\lambda}{n}\right)^n\right\}} \left(\frac{p_n}{1-p_n}\right)^j \frac{n!}{(n-j)!} \\
+    &= \frac{\left(1 - \frac{\lambda}{n}\right)^n}{j!\left\{1 - \left(1 - \frac{\lambda}{n}\right)^n\right\}} \left(\frac{\lambda}{n - \lambda}\right)^j \frac{n!}{(n-j)!} \\
+    &= \frac{\lambda^j \left(1 - \frac{\lambda}{n}\right)^n}{j!\left\{1 - \left(1 - \frac{\lambda}{n}\right)^n\right\}}  \frac{n!}{(n - \lambda)^j(n-j)!} \\
+    & \to \frac{\lambda^j e^{-\lambda}}{j!(1 - e^{-\lambda})} \quad \text{ } (n\to \infty).
+\end{aligned}
+$$
+
+
+而当\(j\geq 1\)时, 
+$$
+P(Y = j \mid Y \geq 1) = \frac{P(Y = j)}{1 - P(Y = 0)} = \frac{e^{-\lambda}\lambda^j/j!}{1 - e^{-\lambda}} = \frac{e^{-\lambda}\lambda^j}{j!(1 - e^{-\lambda})}.
+$$
+
+因此, \(\lim_{n\to\infty} P(X_n = j | A_n) = P(Y = j | Y \geq 1)\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+    设\(X\)服从Poisson\((\lambda)\). \(j\)取何值时, \(P(X = j)\)最大?
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \frac{P(X = j)}{P(X = j-1)} &= \frac{\frac{\lambda^j e^{-\lambda}}{j!}}{\frac{\lambda^{j-1}e^{-\lambda}}{(j-1)!}} = \frac{\lambda}{j}.
+\end{aligned}
+$$
+其中, \(j\)为整数.
+当\(j \leq \lfloor \lambda \rfloor\)时, \(\frac{P(X = j)}{P(X = j-1)} > 1\), 当\(j > \lfloor \lambda \rfloor\)时, \(\frac{P(X = j)}{P(X = j-1)} < 1\).
+
+因此, 当\(j = \lfloor \lambda \rfloor\)时, \(P(X = j)\)最大.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)服从Poisson\((\lambda)\). 对固定的\(j>0\), \(\lambda\)取何值时, \(P(X = j)\)最大?
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+关于\(\lambda\)求导, 
+$$
+\begin{aligned}
+    \frac{d}{d\lambda} P(X = j) &= \frac{d}{d\lambda} \frac{\lambda^j e^{-\lambda}}{j!} \\
+    &= \frac{je^{-\lambda}\lambda^{j-1}}{j!} - \frac{\lambda^j e^{-\lambda}}{j!} \\
+    &= \frac{e^{-\lambda}\lambda^{j-1}}{j!} \left(j - \lambda\right).
+\end{aligned}
+$$
+因此, 当\(\lambda = j\)时, \(P(X = j)\)最大.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(X\)服从Poisson\((\lambda)\), \(\lambda\)是正整数. 证明\(\mathbb{E}\{|X - \lambda|\} = \frac{2\lambda^\lambda e^{-\lambda}}{(\lambda - 1)!}\), 以及\(\sigma_X^2 = \lambda\).
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+先证明\(Var(X) = \lambda\). 首先, \(\mathbb{E}X = \sum_{k=0}^{\infty} k\cdot \frac{\lambda^k e^{-\lambda}}{k!} = \lambda e^{-\lambda} \sum_{k=0}^{\infty} \frac{\lambda^k}{k!} = \lambda\).
+\(\mathbb{E}X^2 = \sum_{k=0}^{\infty} k^2 \cdot \frac{\lambda^k e^{-\lambda}}{k!} = \sum_{k=0}^{\infty} k\cdot \frac{\lambda^k e^{-\lambda}}{(k-1)!} = \lambda e^{-\lambda} \sum_{n=0}^{\infty}\frac{n+1}{n!}\lambda^n = \lambda^2 + \lambda\).
+因此, \(\sigma_X^2 = \mathbb{E}X^2 - \left(\mathbb{E}X\right)^2 = \lambda\).
+
+
+接下来证明\(\mathbb{E}\{|X - \lambda|\} = \frac{2\lambda^\lambda e^{-\lambda}}{(\lambda - 1)!}\). 对固定的\(\lambda > 0\), 
+$$
+\begin{aligned}
+    \mathbb{E}\{|X - \lambda|\} = &\sum_{k=0}^{\infty} |k - \lambda| \cdot \frac{\lambda^k e^{-\lambda}}{k!} \\
+    =& \sum_{k \leq \lambda} (\lambda - k) \cdot \frac{\lambda^k e^{-\lambda}}{k!} + \sum_{k > \lambda} (k - \lambda) \cdot \frac{\lambda^k e^{-\lambda}}{k!} \\
+    =& \sum_{k \leq \lambda} (\lambda - k) \cdot \frac{\lambda^k e^{-\lambda}}{k!} + \sum_{k=0}^\infty  (k - \lambda) \cdot \frac{\lambda^k e^{-\lambda}}{k!} -\sum_{k \leq \lambda} (k - \lambda) \cdot \frac{\lambda^k e^{-\lambda}}{k!} \\
+    =& 2\sum_{k =0}^\lambda (\lambda - k) \cdot \frac{\lambda^k e^{-\lambda}}{k!},
+\end{aligned}
+$$
+而\(\sum_{k=0}^{\lambda}(\lambda - k)\cdot \frac{\lambda^k}{k!} = \lambda + \sum_{k=1}^{\lambda-1}\left[\frac{\lambda^{k+1}}{k!} - \frac{\lambda^k}{(k-1)!}\right] = \frac{\lambda^\lambda}{(\lambda-1)!}\), 
+于是, \(\mathbb{E}\{|X - \lambda|\} = \frac{2\lambda^\lambda e^{-\lambda}}{(\lambda - 1)!}\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)服从多项分布\(B(p,n)\). 证明当\(\lambda > 0, \varepsilon>0\)时, 
+$$
+P(X-n p>n \varepsilon) \leq \mathbb{E}\{\exp (\lambda(X-n p-n \varepsilon))\}.
+$$
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+$$
+\begin{aligned}
+    \mathbb{E}\{\exp (\lambda(X-n p-n \varepsilon))\} &= \sum_{k=0}^{n} \exp(\lambda(k-np-n\varepsilon))\binom{n}{k}p^k(1-p)^{n-k} \\
+    & = \left[\sum_{k - np - n\varepsilon > 0}^{} + \sum_{k - np - n\varepsilon \leq 0}^{}\right] \exp(\lambda(k-np-n\varepsilon))\binom{n}{k}p^k(1-p)^{n-k} \\
+    & \geq \sum_{k - np - n\varepsilon > 0}^{} \exp(\lambda(k-np-n\varepsilon))\binom{n}{k}p^k(1-p)^{n-k}  \\
+    & \geq \sum_{k - np - n\varepsilon > 0}^{} \binom{n}{k}p^k(1-p)^{n-k}  \\
+    & = P(X-np > n\varepsilon).
+\end{aligned}
+$$
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(X_n\)服从多项分布\(B(p,n)\), \(p>0\)固定. 证明对于任意固定的\(b>0\), \(P(X_n \leq b)\)趋于\(0\). 
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    P(X_n \leq b) &= \sum_{k=0}^{b} \binom{n}{k}p^k(1-p)^{n-k} \\
+\end{aligned}
+$$
+对\(n\)取极限, 
+$$
+\begin{aligned}
+    \lim_{n\to \infty} P(X_n \leq b) &=  \sum_{k=0}^{b} \lim_{n\to \infty} \binom{n}{k}p^k(1-p)^{n-k} \\
+    &= \sum_{k=0}^{b} \frac{1}{k!} \lim_{n\to \infty} \frac{n!}{n^k(n - k)!} (1-p)^n \left(\frac{np}{1 - p}\right)^k\\
+    &= \sum_{k=0}^{b} \frac{1}{k!} \left(\frac{p}{1 - p}\right)^k \lim_{n\to \infty} (1-p)^n n^k \\
+    &= \sum_{k=0}^{b} \frac{1}{k!} \left(\frac{p}{1 - p}\right)^k \cdot 0\\
+    &= 0.
+\end{aligned}
+$$
+
+其中\(\lim_{n\to\infty} (1 - p)^n n^k = 0\)是因为可以运用L'Hospital法则.
+\begin{align*}
+    \lim_{n\to\infty} (1 - p)^n n^k &= \lim_{n\to\infty} \frac{n^k}{\exp(-n\log(1-p))} \\
+    &= \lim_{n\to\infty} \frac{k n^{k-1}}{-\exp(-n\log(1-p))\log(1-p)} \\
+\end{align*}
+重复\(k\)次
+$$
+\lim_{n\to\infty} (1 - p)^n n^k = \lim_{n\to\infty} \frac{k!}{(-\log(1-p))^k} \exp(-n\log(1-p)) = 0.
+$$
+其中\(0<p<1\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+    设\(X\)服从多项分布\(B(p,n)\). 其中\(p>0\)固定, \(a>0\). 证明:
+$$
+P\left(\left|\frac{X}{n}-p\right|>a\right) \leq \frac{\sqrt{p(1-p)}}{a^2 n} \min \{\sqrt{p(1-p)}, a \sqrt{n}\}
+$$
+以及
+对任意的\(\varepsilon > 0\), \(P(|X - np| \leq n\varepsilon)\)趋于\(1\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+首先, 
+根据Chebyshev不等式,
+$$
+\begin{aligned}
+    P\left(\left|\frac{X}{n}-p\right|>a\right) = P\left(\left|X-np\right|>an\right) &\leq \frac{np(1 - p)}{a^2 n^2} = \frac{np(1-p)}{a^2 n^2} = \frac{p(1-p)}{a^2 n}.
+\end{aligned}
+$$
+其次, 根据Markov不等式和Cauchy-Schwarz不等式,
+$$
+\begin{aligned}
+    P\left(\left|\frac{X}{n}-p\right|>a\right) &= P\left(\left|X-np\right|>an\right) \\
+    &\leq \frac{\mathbb{E}\left\{\left|X-np\right|\right\}}{an} \\
+    &\leq \frac{1}{a n} \sqrt{\mathbb{E}\left\{\left|X-np\right|^2\right\}} \\
+    &= \frac{{1}}{a n} \sqrt{np(1-p)} \\
+    &= \frac{\sqrt{p(1-p)}}{a\sqrt{n}}.
+\end{aligned}
+$$
+结合以上两个不等式, 即得到题目中的不等式.
+
+
+最后, 
+$$
+1 \geq P(|X - np| \leq n\varepsilon) = 1 - P\left(\left|\frac{X}{n}-p\right|> \varepsilon\right) \geq 1 - \frac{\sqrt{p(1-p)}}{\varepsilon^2} \min \{\sqrt{p(1-p)}, \varepsilon \sqrt{n}\} \xrightarrow{n\to \infty} 1.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+令\(X\)服从二项分布\(B\left(\frac{1}{2},p\right)\), 其中\(n = 2m\). 令
+$$
+a(m, k)=\frac{4^m}{\binom{2 m}{m}} P(X=m+k) \text {. }
+$$
+证明: \(\lim_{m\to \infty} \left(a(m,k)\right)^m = e^{-k^2}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \left(a(m,k)\right)^m &= \left(\frac{4^m}{\binom{2m}{m}} \binom{2m}{m+k} \left(\frac{1}{2}\right)^{m+k} \left(\frac{1}{2}\right)^{m-k}\right)^m \\
+    &= \left(\frac{\frac{(2m)!}{(m+k)!(m-k)!}}{\frac{(2m)!}{m!m!}}\right)^m \\
+    &= \left(\frac{m!m!}{(m+k)!(m-k)!}\right)^m \\
+    &= \left[\frac{m \cdot (m - 1) \cdots (m - k + 1)}{(m + k) \cdot (m + k - 1) \cdots (m + 1)}\right]^m \\
+    &= \left[\prod_{i = 0}^{k - 1}\left(1 - \frac{k}{m+k - i}\right)\right]^m
+\end{aligned}
+$$
+于是, 
+$$
+\begin{aligned}
+    \log \left(a(m,k)\right)^m &= m \sum_{i = 0}^{k - 1} \log\left(1 - \frac{k}{m+k - i}\right) \\
+    &= -m \sum_{i = 0}^{k - 1} \frac{k}{m+k - i} + o\left(1\right) \\
+    &= -k \sum_{i = 0}^{k-1} \frac{1}{1 + \frac{k-i}{m}} + o\left(1\right) \\
+    &\to -k^2 (m \to \infty).
+\end{aligned}
+$$
+于是, \(\lim_{m\to \infty} \left(a(m,k)\right)^m = e^{-k^2}\).
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}[无记忆性]
+    设\(X\)服从几何分布. 证明对于\(i,j > 0\), 
+    $$
+P(X>i+j \mid X>i)=P(X>j).
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据几何分布的定义,
+\(P(X > x) = (1 - p)^x\), 其中\(p\)是成功的概率, 则
+$$
+\begin{aligned}
+    P(X>i+j \mid X>i) &= \frac{P(X>i+j, X>i)}{P(X>i)} \\
+    &= \frac{P(X>i+j)}{P(X>i)} \\
+    &= \frac{(1-p)^{i+j}}{(1-p)^i } \\
+    &= (1-p)^j \\
+    &= P(X>j).
+\end{aligned}
+$$
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)服从几何分布Geometric\((p)\). 证明 
+$$
+\mathbb{E}\left\{\frac{1}{1+X}\right\}=\log \left((1-p)^{\frac{p}{p-1}}\right)
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+设\(X\)服从参数为\(p\)的几何分布, 则按照书上的参数化(P31), 
+$$
+P(X = k) = p^k (1-p), \quad k = 0,1,2,...
+$$
+于是,
+$$
+\begin{aligned}
+    \mathbb{E}\left\{\frac{1}{1+X}\right\} &= \sum_{k=0}^{\infty} \frac{1}{1+k} p^k (1-p) \\
+    &= (1 - p) \sum_{k = 0}^{\infty} \frac{1}{k+1} p^k.
+\end{aligned}
+$$
+对于级数\(\sum_{k=0}^{\infty}\frac{p^k}{1+k}\), 注意到\(\frac{1}{k+1} = \int_{0}^{1}x^k dx\).
+于是根据Fubini定理, 以及当\(p < 1, x\in[0,1]\)时级数绝对收敛, 
+$$
+\sum_{k = 0}^{\infty} \frac{1}{k+1} p^k =  \sum_{k = 0}^{\infty} \int_{0}^{1}x^k p^k dx  = \int_{0}^{1} \sum_{k = 0}^{\infty} x^k p^k dx = \int_{0}^{1} \frac{1}{1 - xp} dx = \left.-\frac{1}{p}\log\left(1 - px\right) \right|_{0}^1 = \frac{1}{p}\log\left(\frac{1}{1-p}\right).
+$$
+于是, 
+$$
+\mathbb{E}\left\{\frac{1}{1+X}\right\} = (p-1) \frac{1}{p}\log\left({1-p}\right) = \log \left((1-p)^{\frac{p-1}{p}}\right).
+$$
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+    独立重复地投掷一枚朝上概率为\(p\)的硬币. 
+    \begin{enumerate}[a)]
+        \item 前 \(n\) 次抛硬币都是正面朝上的概率是多少?
+        \item 在第$n$次抛掷时首次得到反面的概率是多少?
+        \item 首次得到反面时, 需要投掷硬币次数多期望是多少?
+    \end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\mathbb{E}[X]=(1-p) \sum_{k=1}^{\infty} k \cdot p^{k-1}
+$$
+这个级数可以通过级数求导得出. 
+$$
+\sum_{k=0}^{\infty} p^k=\frac{1}{1-p}, \quad|p|<1 .
+$$
+两边关于\(p\)求导,
+$$
+\sum_{k=1}^{\infty} k p^{k-1}=\frac{1}{(1-p)^2} .
+$$
+因此,
+$$
+\mathbb{E}[X]=\frac{1}{1-p} \cdot \frac{1}{(1-p)^2}=\frac{1}{1-p} .
+$$
+
+\begin{enumerate}[a)]
+    \item 前 \(n\) 次抛硬币都是正面朝上的概率是\(p^n\).
+    \item 在第\(n\)次抛掷时首次得到反面的概率是\(p^{n-1}(1-p)\).
+    \item 即投掷次数服从成功概率为\(1-p\)的几何分布, 首次得到反面时, 需要投掷硬币次数的期望是\(\frac{1}{1-p}\).
+\end{enumerate}
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+证明对于一列事件\(\{A_n\}_{n = 1}^\infty\), 
+$$
+\mathbb{E}\left\{\sum_{n=1}^{\infty} 1_{A_n}\right\}=\sum_{n=1}^{\infty} P\left(A_n\right)
+$$
+其中等式的每一侧都可以取值为\(\infty\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+记\(S = \sum_{n=1}^{\infty} 1_{A_n}, S_n = \sum_{k=1}^{n} 1_{A_k}\), 则\(S_n\)是一个递增序列, 且\(S_n \uparrow S\). 由Levi单调收敛定理,
+$$
+\mathbb{E}\left\{S\right\} = \lim_{n\to\infty} \mathbb{E}\left\{S_n\right\} = \lim_{n\to\infty} \sum_{k=1}^{n} P(A_k) = \sum_{n=1}^{\infty} P(A_n).
+$$
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+假设\(X\)所有可能的取值是\(\mathbb{N} = \{0,1,2,3,...\}\). 证明 
+$$
+\mathbb{E}\{X\}=\sum_{n=0}^{\infty} P(X>n) \text {. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据正项级数求和可交换(要么绝对收敛, 要么发散), 
+$$
+\begin{aligned}
+    \mathbb{E}\{X\} &= \sum_{n=0}^{\infty} n P(X = n) \\
+    &= \sum_{n=0}^{\infty} \sum_{k=n+1}^{\infty} P(X = k) \\
+    &= \sum_{n=0}^{\infty} P(X > n).
+\end{aligned}
+$$
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+    设\(X\)服从Poisson\((\lambda)\). 证明对\(r = 2,3,4,...\),
+    $$
+\mathbb{E}\{X(X-1) \ldots(X-r+1)\}=\lambda^r.
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \mathbb{E}\{X(X-1) \ldots(X-r+1)\} &= \sum_{k=0}^{\infty} k(k-1) \ldots (k-r+1) \frac{\lambda^k e^{-\lambda}}{k!} \\
+    &= \sum_{k=r}^{\infty} \frac{k!}{(k-r)!} \frac{\lambda^k e^{-\lambda}}{k!} \\
+    &= \sum_{k=r}^{\infty} \frac{\lambda^k e^{-\lambda}}{(k-r)!} \\
+    &= \lambda^r \sum_{k=r}^{\infty} \frac{\lambda^{k-r} e^{-\lambda}}{(k-r)!} \\
+    &= \lambda^r.
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+    设\(X\)服从几何分布Geometric\((p)\). 证明对\(r = 2,3,4,...\),
+$$
+\mathbb{E}\{X(X-1) \ldots(X-r+1)\}=\frac{r!p^r}{(1-p)^r}
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+设\(X\)服从参数为\(p\)的几何分布, 则按照书上的参数化(P31), 
+$$
+P(X = k) = p^k (1-p), \quad k = 0,1,2,...
+$$
+
+
+于是,
+$$
+\begin{aligned}
+    \mathbb{E}\{X(X-1) \ldots(X-r+1)\} &= \sum_{k=0}^{\infty} k(k-1) \ldots (k-r+1) p^k (1-p) \\
+    &= (1 - p) \sum_{k = 0}^{\infty} k(k-1) \ldots (k-r+1) p^k \\
+    &= (1 - p) \sum_{k = r}^{\infty} k(k-1) \ldots (k-r+1) p^k \\
+    & = (1 - p) \sum_{k=r}^{\infty} \frac{k!}{(k-r)!} p^k \\
+    &= (1 - p) r! \sum_{k=r}^{\infty} \binom{k}{r} p^k \\
+\end{aligned}
+$$
+由于
+$$
+\sum_{k=0}^{\infty} p^k=\frac{1}{1-p}, \quad|p|<1 .
+$$
+两边关于\(p\)求\(r - 1\)阶导,
+$$
+\sum_{k = r}^{\infty} \binom{k}{r} p^{k-r} = \frac{r!}{(1-p)^{r+1}}.
+$$
+两边同乘\(p^r\), 于是, 
+$$
+\mathbb{E}\{X(X-1) \ldots(X-r+1)\} = \frac{r!p^r}{(1-p)^{r}}.
+$$
+\end{proof}
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

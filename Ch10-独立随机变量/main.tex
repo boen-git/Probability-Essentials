@@ -1,0 +1,845 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{diagbox}
+\newcommand{\Perp}{\perp\!\!\!\!\perp}
+\newtheorem{exercise}{Exercise \#10.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 10: 独立随机变量}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}
+设\(f = (f_1, f_2): \Omega \to E \times F\).
+证明\(f: (\Omega, \mathcal{A}) \to (E\times F, \mathcal{E}\otimes \mathcal{F})\)是可测的, 
+当且仅当, \(f_1: (\Omega, \mathcal{A}) \to (E, \mathcal{E})\)是可测的, 以及
+\(f_2: (\Omega, \mathcal{A}) \to (F, \mathcal{F})\)是可测的.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(\Rightarrow\): 设\(f:  (\Omega, \mathcal{A}) \to (E\times F, \mathcal{E}\otimes \mathcal{F})\)是可测的, 
+则\(\forall A\times B \in \mathcal{E} \otimes \mathcal{F}\), 有\(f^{-1}(A\times B) \in \mathcal{A}\).
+记\(\pi_E, \pi_F\)分别是向\(E, F\)的投影算子, 即\(\pi_E: E\times F \to E, \pi_F: E\times F \to F\), 
+则有\(f_1 = \pi_E \circ f, f_2 = \pi_F \circ f\), 则
+$$
+\begin{gathered}
+    f_1^{-1}(A) = f^{-1} \circ \pi_E^{-1}(A) = f^{-1} (A \times \mathcal{F}) \in \mathcal{A}, \\
+    f_2^{-1}(B) = f^{-1} \circ \pi_F^{-1}(B) = f^{-1} (\mathcal{E} \times B) \in \mathcal{A},
+\end{gathered}
+$$
+从而\(f_1, f_2\)是可测的.
+
+\(\Leftarrow\): 设\(f_1: (\Omega, \mathcal{A}) \to (E, \mathcal{E})\)是可测的, 以及\(f_2: (\Omega, \mathcal{A}) \to (F, \mathcal{F})\)是可测的, 
+则\(\forall A \in \mathcal{E}, B \in \mathcal{F}\), 有\(f_1^{-1}(A) \in \mathcal{A}\), \(f_2^{-1}(B) \in \mathcal{A}\).
+于是对\(A \times B\), 有\(f^{-1}(A \times B) = f^{-1}(A) \cap f_2^{-1}(B) \in \mathcal{A}\), 从而\(f\)是可测的.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\mathbb{R}^2 = \mathbb{R} \times \mathbb{R}\), 
+设\(\mathcal{B}^2\)表示\(\mathbb{R}^2\)上的Borel集合族.
+\(\mathcal{B}\)表示\(\mathbb{R}\)上的Borel集合族.
+证明: \(\mathcal{B}^2 = \mathcal{B} \otimes \mathcal{B}\).
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+根据定义, 以及\(\mathbb{R}^n\)有可数拓扑基, 有
+$$
+\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R}) = \sigma\{A\times B: A, B \in \mathcal{B}(\mathbb{R})\}, \quad \mathcal{B}(\mathbb{R}^2) = \sigma\{(a,b) \times (a,d), a,b,c,d \in \mathbb{R}\}.
+$$
+显然, \((a,b) \times (a,d) \subset \mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})\), 根据定义, \(\mathcal{B}(\mathbb{R}^2) \subset \mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})\).
+
+设
+$$
+\mathcal{F} = \{A | A \times \mathbb{R} \in \mathcal{B}(\mathbb{R}^2)\},
+$$
+可见所有开区间落在\(\mathcal{F}\)中, 且\(\mathcal{F}\)是\(\sigma\)代数, 因此\(\mathcal{B}(\mathbb{R}) \subset \mathcal{F}\).
+于是\(\forall A \in \mathcal{B}(\mathbb{R}), A\times \mathbb{R} \in \mathcal{B}(\mathbb{R}^2)\).
+同样的方法可以说明: \(\forall B \in \mathcal{B}(\mathbb{R}), \mathbb{R}\times B \in \mathcal{B}(\mathbb{R}^2)\).
+于是
+$$
+A \times B = (A \times \mathbb{R}) \cap (\mathbb{R} \times B) \in \mathcal{B}(\mathbb{R}^2).
+$$
+这表明\(\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R}) \subset \mathcal{B}(\mathbb{R}^2)\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\Omega = [0, 1]\), \(\mathcal{A}\)是\([0,1]\)上的Borel集, 
+\(P(A) = \int \mathbb{I}_A(x)dx, A \in \mathcal{A}\).
+设\(X(x) = x\), 证明\(X\)服从均匀分布.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+定理7.1和7.2保证了分布函数和概率测度之间的一一对应关系.
+下面求\(X\)的分布函数\(F(x)\).
+$$
+\begin{aligned}
+    F(x) &= P\{X^{-1}((-\infty, x])\} \quad \text{(定义)} \\
+    &= P((-\infty, x]\cap [0,1]) \quad \text{(随机变量\(X\)的定义)} \\
+    &= \begin{cases}
+        0, & x<0, \\
+        x, & 0\leq x \leq 1, \\
+        1, & x>1.
+    \end{cases}
+\end{aligned}
+$$
+\(F(x)\)是\(X\)的分布函数, 从而\(X\)服从均匀分布\(Unif[0,1]\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\Omega = \mathbb{R}, \mathcal{A} = \mathcal{B}\).
+设\(P(A) = \frac{1}{\sqrt{2\pi}} \int \mathbb{I}_A(x)e^{-\frac{x^2}{2}} dx\).
+令\(X(x) = x\).
+证明: \(X\)服从标准正态分布.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(X: (\mathbb{R}, \mathcal{B}) \to (\mathbb{R}, \mathcal{B})\). \(X\)诱导的分布函数是
+$$
+F(x) = P\{X^{-1}((-\infty, x])\} = P((-\infty, x]) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{t^2}{2}} dt.
+$$
+是标准正态分布的分布函数, 因此\(X\)服从标准正态分布.
+\end{proof}
+
+
+
+
+
+\begin{framed}
+\begin{exercise}
+构造一个例子证明\(\mathbb{E}\{XY\} = \mathbb{E}\{X\}\mathbb{E}\{Y\}\)一般来说不能推出\(X, Y\)是独立的.
+(不妨假设\(X, Y, XY \in L^1\).)
+\end{exercise}
+\end{framed}
+\begin{proof}
+考虑离散型随机变量\(X\)满足\(P(X = 0) = P(X = 1) = P(X = -1) = \frac{1}{3}\), 
+\(Y = X^2\).
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[htbp]
+\centering
+\caption{$X$和$Y$的联合分布列}
+\label{tab:my-table}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\diagbox{$Y$}{$X$} & $-1$          & $0$           & $1$           &               \\ \hline
+$0$                & $0$           & $\frac{1\strut}{3\strut}$ & $0$           & $\frac{1\strut}{3\strut}$ \\ \hline
+$1$                & $\frac{1\strut}{\strut 3}$ & $0$           & $\frac{1\strut}{3\strut}$ & $\frac{2\strut}{3\strut}$ \\ \hline
+                   & $\frac{1\strut}{3\strut}$ & $\frac{1\strut}{3\strut}$ & $\frac{1\strut}{3\strut}$ &               \\ \hline
+\end{tabular}%
+\end{table}
+有\(\mathbb{E}(X) = 0, \mathbb{E}Y = \frac{2}{3}, \mathbb{E}XY = 0 = \mathbb{E}X \mathbb{E}Y\), 但是\(X, Y\)不独立, 比如
+$$
+0 = P(X = -1, Y = 0) \neq P(X = -1)P(Y = 0) = \frac{1}{3}\cdot \frac{1}{3} = \frac{1}{9}.
+$$
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(X, Y\)是独立的随机变量, 它们在\(\mathbb{N}\)中取值, 满足
+$$
+P(X=i)=P(Y=i)=\frac{1}{2^i} \quad(i=1,2, \ldots).
+$$
+求出以下的概率:
+\begin{enumerate}[a)]
+    \item \(P(\min(X,Y) \leq i)\)
+    \item \(P(X = Y)\)
+    \item \(P(Y > X)\)
+    \item \(P(X \text{ 整除 } Y)\)
+    \item \(P(X \geq kY)\)
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+\(X, Y\)独立同分布. 
+$$
+P(X > i) = \sum_{k=i+1}^{\infty} P(X = k) = \sum_{k=i+1}^{\infty} \frac{1}{2^k} = \frac{1}{2^i}.
+$$
+\begin{enumerate}[a)]
+    \item \(P(\min(X,Y) \leq i) = 1 - P(\min(X,Y) > i) = 1 - P(X > i, Y > i) = 1 - P(X > i)P(Y > i) = 1 - \frac{1}{2^i}\cdot \frac{1}{2^i} = 1 - \frac{1}{4^i}\).
+    \item \(P(X = Y) = \sum_{i=1}^{\infty} P(X = i, Y = i) = \sum_{i=1}^{\infty} \frac{1}{2^i}\cdot \frac{1}{2^i} = \sum_{i=1}^{\infty} \frac{1}{4^i} = \frac{1}{3}\).
+    \item \(P(Y > X) = \sum_{i=1}^{\infty} P(Y > i)P(X = i) = \sum_{i=1}^{\infty} \frac{1}{2^i}\cdot \frac{1}{2^i} = \frac{1}{3}\).
+    \item \(P(X \text{ 整除 } Y) = \sum_{i=1}^{\infty} \sum_{n = 1}^{\infty}P(X = i, Y = ni) = \sum_{i=1}^{\infty} \sum_{n=1}^{\infty} \frac{1}{2^i}\cdot \frac{1}{2^{in}} = \sum_{i = 1}^{\infty} \frac{1}{2^i(2^i - 1)}\).
+    \item \(P(X \geq kY) = \sum_{i=1}^{\infty} P(X \geq ki, Y = i) = \sum_{i=1}^{\infty} P(X > ki - 1)P(Y = i) = \sum_{i=1}^{\infty} \frac{1}{2^{ki- 1}}\cdot \frac{1}{2^i} = 2\sum_{i=1}^{\infty} \frac{1}{2^{(k+1)i}} = \frac{2}{2^{k+1} - 1}\).
+\end{enumerate}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X, Y\)是独立的几何随机变量, 参数分别是\(\lambda\)和\(\mu\).
+设\(Z = \min(X,Y)\).
+证明\(Z\)服从几何分布随机变量, 求出它的参数.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于\(X \sim Geom(\lambda), Y \sim Geom(\mu)\), 从而\(X\)和\(Y\)的pmf分别是
+$$
+p_X(x) = \lambda(1-\lambda)^{x-1}, \quad p_Y(y) = \mu(1-\mu)^{y-1}.
+$$
+几何分布的尾概率是(\(x-1\)次没有成功的概率):
+$$
+P(X \geq x) = \sum_{k = x}^{\infty} p_X(k) = \lambda \sum_{k=x}^{\infty} (1-\lambda)^{k-1} = \lambda \lim_{k\to \infty} \frac{(1-\lambda)^{x-1}(1 - (1-\lambda)^k)}{1-(1-\lambda)} = (1-\lambda)^{x-1}.
+$$
+
+考察\(Z = \min(X,Y)\)的分布:
+$$
+\begin{aligned}
+P(Z \geq z) &= P(\min(X,Y) \geq z) \\
+         &= P(X \geq z, Y \geq z)  \\
+         &= P(X \geq z)P(Y \geq z)  \quad \text{(独立性)}\\
+         &= (1-\lambda - \mu + \lambda \mu)^{z - 1}.
+\end{aligned}
+$$
+于是, \(P(Z = z) = P(Z \geq z) - P(Z \geq z+1) = (1-\lambda - \mu + \lambda \mu)^{z - 1}(\lambda +\mu - \lambda \mu)\).
+因此, 服从参数为\(\lambda + \mu - \lambda \mu\)的几何分布.
+
+若按照教材P31, 4)参数化的方法得到的参数是\(\mu \lambda\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X, Y \in L^2\).
+定义\(X\)和\(Y\)的协方差是
+$$
+\operatorname{Cov}(X, Y)=\mathbb{E}\{(X-\mu)(Y-\nu)\}
+$$
+其中\(\mathbb{E}X = \mu, \mathbb{E}Y = \nu\).
+证明:
+$$
+\operatorname{Cov}(X, Y)=\mathbb{E}\{X Y\}-\mu \nu
+$$
+并证明: 若\(X\)和\(Y\)独立, \(\operatorname{Cov}(X,Y) = 0\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+    \operatorname{Cov}(X, Y)&=\mathbb{E}\{(X-\mu)(Y-\nu)\} \\
+    &= \mathbb{E}\{XY - X\nu - Y\mu + \mu\nu\} \\
+    &= \mathbb{E}\{XY\} - \nu \mathbb{E}X - \mu \mathbb{E}Y + \mu\nu \\
+    &= \mathbb{E}\{XY\} - \mu\nu.
+\end{aligned}
+$$
+若\(X\)和\(Y\)独立, 则在定理10.1中, 取\(f = g = id\), 有\(\mathbb{E}\{XY\} = \mathbb{E}X\mathbb{E}Y\), 从而\(\operatorname{Cov}(X,Y) = 0\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X, Y \in L^1\). 若\(X\)和\(Y\)是独立的, 证明: \(XY\in L^1\).
+给出例子说明当\(X\)和\(Y\)不独立时, \(XY \notin L^1\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(X, Y\)独立, 根据\(\mathbb{E}\{|X|\}, \mathbb{E}\{|Y|\} < \infty\), 有\(\mathbb{E}\{|XY|\} = \mathbb{E}\{|X||Y|\} = \mathbb{E}\{|X|\}\mathbb{E}\{|Y|\} < \infty\), 从而\(XY \in L^1\).
+
+为构造反例, 考察\(\Omega = (0, 1], \mathcal{A} = \mathcal{B}((0,1]), P = \lambda|_{(0,1]}\), 其中\(\lambda\)是Lebesgue测度.
+设\(X(\omega) = \omega^{-\frac{1}{2}}\), \(Y = X\), 有
+$$
+\mathbb{E}X = \int X dP = \int_{0}^{1} \omega^{-\frac{1}{2}} d\omega = 2 < \infty.
+$$
+则\(X, Y \in L^1\), 但是\(XY(w) = w^{-1}\)在\((0,1]\)上不可积.
+\end{proof}
+
+\begin{remark}
+为证明\(f(x) = \frac{1}{x}\)在\((0,1]\)上不可积, 
+考察\(\left(\frac{1}{k+1}, \frac{1}{k}\right)\), \(s_n := \sum_{k=1}^{n} k \chi_{I_k}\), 有\(s_n \uparrow f\).
+由于, 
+$$
+\int_{(0, 1]} s_n d\lambda = \sum_{k=1}^{n} \frac{k}{k} - \frac{k}{k+1} = \sum_{k=1}^{n}\frac{1}{k+1}.
+$$
+于是, 
+$$
+\int_{(0, 1]} s_{2n} d\lambda - \int_{(0, 1]} s_n d\lambda = \sum_{k=n+1}^{2n} \frac{1}{k+1} \geq \frac{n}{2n+1} \geq \frac{1}{3}.
+$$
+序列\(\{\int_{(0, 1]} s_n d\lambda\}\)是严格增的, 这表明
+$$
+\sup\left\{\int_{(0,1]} s\,d\lambda, 0\leq s\leq f, s\text{是简单函数}\right\} = \infty
+$$
+即\(f\)不可积.
+\end{remark}
+
+
+\begin{framed}
+\begin{exercise}
+设\(n\)是大于\(2\)的素数; 设\(X, Y\)是独立的\(\{0,1,\cdots, n-1\}\)上的(离散)均匀分布, 即\(P(X = i) = P(Y = i) = \frac{1}{n}, i = 0,1,\cdots, n-1\).
+对于\(0\leq r \leq n-1\), 定义\(Z_r = X+rY \mod n\).
+\begin{enumerate}[a)]
+    \item 证明: \(Z_0, Z_1, \cdots, Z_{n-1}\)是两两独立的.
+    \item 若\(n\)不再是素数, 结果是否正确?
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+使用以下初等数论的结论.
+设\(a,b\)是整数, 且\(a \not\equiv 0 \mod m\), 则称方程\(ax \equiv b \mod m\)为(一次)同余方程.
+\begin{enumerate}
+    \item 设\(a,b\)是整数, 且\(a \not\equiv 0 \mod m\), 则同余方程有解当且仅当\((a,m) | b\).
+    \item 进一步, 上述同余方程在模\(m\)下有\((a, m)\)个不同的解.
+\end{enumerate}
+\end{remark}
+
+\begin{proof}
+\begin{enumerate}[a)]
+    \item 当\(n\)是素数时, 往证\(Z_s \Perp Z_t, s\neq t, s,t \in \{0,1,2,...,n-1\}\).
+由于\(Z_s, Z_t\)可能的取值均为\(\{0,1,2,...,n-1\}\), 
+先计算\(Z_s, Z_t\)的边际分布, 当\(k \in \{0,1,2,...,n-1\}\)时,
+$$
+\begin{aligned}
+    P(Z_s = k) &= P(X + sY= k  \mod n ) \\
+    &= \sum_{i=0}^{n-1} P(Y = i)P(X = (k-is) \mod n) \quad (X,Y\text{独立})\\
+    &= \sum_{i=0}^{n-1} \frac{1}{n}\cdot \frac{1}{n} = \frac{1}{n}.
+\end{aligned}
+$$
+同理, \(P(Z_t = k) = \frac{1}{n}, k \in \{0,1,2,...,n-1\}\).
+
+接下来计算\(P(Z_s = k, Z_t = l)\), 当\(k, l \in \{0,1,2,...,n-1\}\)时,
+$$
+\begin{aligned}
+    P(Z_s = k, Z_t = l) &= P(X + sY  = k\mod n, X + tY  = l\mod n) \\
+    &= \sum_{i=0}^{n-1} P(Y = i)P(X = (k-is) \mod n, X = (l-it) \mod n) .
+\end{aligned}
+$$
+考察一次同余方程\(k-is = l-it \mod n\), 有\((s-t)i = k-l \mod n\), 由于\((s-t, n) = 1\), 从而该方程有唯一解\(i_0 \in \{0,1,2,...,n-1\}\). 
+从而
+$$
+P(Z_s = k, Z_t = l) = P(Y = i_0) P(X = k - i_0 s \mod n) = \frac{1}{n}\cdot \frac{1}{n} = \frac{1}{n^2}.
+$$
+于是\(Z_s, Z_t\)是独立的(\(\forall k, l \in \{0,1,2,...,n-1\}\)).
+
+\item 当\(n\)不再是素数时, 令\(n = 4\), \(X, Y\)是独立的\(\{0,1,2,3\}\)上的均匀分布,
+$$
+\begin{aligned}
+    P(Z_0 = 0, Z_1 = 2) &= P(X = 0, Y = 2) = \frac{1}{4}\cdot \frac{1}{4} = \frac{1}{16}, \\
+    % P(Z_0 = 1, Z_1 = 3) &= P(X = 1, Y = 3) = \frac{1}{4}\cdot \frac{1}{4} = \frac{1}{16}, \\
+    % P(Z_0 = 2, Z_1 = 0) &= P(X = 2, Y = 0) = \frac{1}{4}\cdot \frac{1}{4} = \frac{1}{16}, \\
+    % P(Z_0 = 3, Z_1 = 1) &= P(X = 3, Y = 1) = \frac{1}{4}\cdot \frac{1}{4} = \frac{1}{16}.
+\end{aligned}
+$$
+但是
+$$
+\begin{aligned}
+    P(Z_0 = 0) &= P(X = 0 \mod 4) = P(X = 0) = \frac{1}{4}, \\
+    P(Z_1 = 2) &= P(X + Y = 2 \mod 4) = P(X = 0, Y = 2) + P(X = 1, Y = 1) + P(X = 2, Y = 0) = \frac{3}{16}.
+\end{aligned}
+$$
+从而\(Z_0, Z_1\)不独立.
+\end{enumerate}
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)和\(Y\)是独立的随机变量, 服从分布\(P(X = 1 ) = P(Y=1) = \frac{1}{2}\), \(P(X = -1) = P(Y = -1) = \frac{1}{2}\).
+设\(Z = XY\), 证明: \(X,Y,Z\)两两独立, 但不相互独立.
+\end{exercise}
+\end{framed}
+\begin{remark}
+这给出了一个两两独立但不相互独立的例子.
+\end{remark}
+\begin{proof}
+\(Z\)的可能取值为\(\{-1, 1\}\), 有
+$$
+\begin{gathered}
+    P(Z = 1) = P(X = 1, Y = 1) + P(X = -1, Y = -1) = \frac{1}{2}, \\
+    P(Z = -1) = P(X = 1, Y = -1) + P(X = -1, Y = 1) = \frac{1}{2}.
+\end{gathered}
+$$
+
+已经知道了\(X, Y\)独立, 下面证明\(X, Z\)独立, \(Y,Z\)独立.
+$$
+\begin{aligned}
+    P(X = 1, Z = 1) &= P(X = 1, Y = 1) = P(X = 1)P(Y = 1) = \frac{1}{4}, \\
+    P(X = 1, Z = -1) &= P(X = 1, Y = -1) = P(X = 1)P(Y = -1) = \frac{1}{4}, \\
+    P(X = -1, Z = 1) &= P(X = -1, Y = -1) = P(X = -1)P(Y = -1) = \frac{1}{4}, \\
+    P(X = -1, Z = -1) &= P(X = -1, Y = 1) = P(X = -1)P(Y = 1) = \frac{1}{4}.
+\end{aligned}
+$$
+
+\(X, Z\)独立, \(Y, Z\)独立, 但是\(X, Y, Z\)不独立, 比如
+$$
+P(X = 1, Y = 1, Z = 1) = P(X = 1, Y = 1) = \frac{1}{4} \neq P(X = 1)P(Y = 1)P(Z = 1) = \frac{1}{8}.
+$$
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(A_n\)是一列事件. 证明: $$
+P\left(A_n \text { i.o. }\right) \geq \underset{n \rightarrow \infty}{\limsup } P\left(A_n\right) \text {. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+\begin{aligned}
+P(A_n \text{ i.o. }) =& P(\limsup_{n\to\infty} A_n) \\
+=& P(\bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} A_k) \\
+=& \lim_{n\to \infty} P(\bigcup_{k=n}^{\infty} A_k) \\
+\geq & \limsup_{n\to \infty} P(A_n).
+\end{aligned}
+$$
+因为\(\bigcup_{k=n}^{\infty} A_k \supset A_n\), 从而\(P(\bigcup_{k=n}^{\infty} A_k) \geq P(A_n)\), 而\(P(A_n)\)的极限未必存在, 为得到非平凡的结论, 取上极限.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+称一列随机变量\(X_1, X_2, \cdots\)是完全收敛于\(X\)(completely convergent to \(X\)), 是指
+$$
+\sum_{n=1}^{\infty} P\left(\left|X_n-X\right|>\varepsilon\right)<\infty \text { for each } \varepsilon>0
+$$
+证明: 若序列\(X_n\)是独立的, 那么完全收敛和以概率1收敛是等价的.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(\Leftarrow\):
+
+随机变量\(X_n\)几乎处处收敛于\(X\)是指
+$$
+P(\lim_{n\to\infty}X_n = X) = 1.
+$$
+
+根据Kolmogorov零壹律, 若\(X_n\)几乎处处收敛于\(X\), 则\(X = \lim_{n\to\infty}X_n\)几乎处处是常数.
+
+对于固定的随机变量\(X\), 记\(A_n(\varepsilon) = \{|X_n - X| > \varepsilon\}\), 
+由于
+$$
+\{|X_n - X| > \varepsilon\} = \{X_n > X + \varepsilon\} \cup \{X_n < X - \varepsilon\}, 
+$$
+由于\(\{X_n\}\)相互独立, 于是\(\{A_n(\varepsilon)\}\)相互独立.
+
+
+
+由于
+$$
+\begin{gathered}
+\left\{\omega: \lim _{n \rightarrow \infty} X_n(\omega)=X(\omega)\right\} 
+=\left\{\omega: \bigcap_{m=1}^{\infty} \bigcup_{k=1}^{\infty} \bigcap_{n=k}^{\infty}\left(\left|X_n(\omega)-X(\omega)\right|<\frac{1}{m}\right)\right\}
+\end{gathered}
+$$
+于是几乎处处收敛的等价表述是
+$$
+P(\limsup_{n\to\infty} \{|X_n - X| > \varepsilon\}) = 0, \quad \forall \varepsilon > 0.
+$$
+根据Borel-Cantelli零壹律, \(\forall \varepsilon > 0\), 当\(\{A_n(\varepsilon)\}\)独立时, 
+$$
+\begin{gathered}
+    \sum_{n=1}^{\infty}P(A_n(\varepsilon)) < \infty \iff P(\limsup_{n \to \infty} A_n(\varepsilon)) = 0, \\
+    \sum_{n=1}^{\infty}P(A_n(\varepsilon)) = \infty \iff P(\limsup_{n \to \infty} A_n(\varepsilon)) = 1. \\
+\end{gathered}
+$$
+于是根据Borel-Cantelli零壹律, \(X_n\)完全收敛于\(X\).
+
+\(\Rightarrow\):
+
+若
+$$
+\sum_{n=1}^{\infty} P\left(\left|X_n-X\right|>\varepsilon\right)<\infty \text { for each } \varepsilon>0
+$$
+根据Borel-Cantelli零壹律, 有
+$$
+P(\limsup_{n\to\infty} A_n(\varepsilon)) = 0, \quad \forall \varepsilon >0.
+$$
+从而\(X_n\)几乎处处收敛于\(X\). (这里证明没有用到独立性, 是一个一般的结论.)
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(\mu, \nu\)分别是\((E,\mathcal{E}), (F, \mathcal{F})\)上的两个有限测度. 即满足概率公理, 出来正规化条件\(\mu(E), \nu(F)\)未必等于\(1\).
+令乘积测度\(\lambda = \mu \otimes \nu\)定义在乘积可测空间\((E\times F, \mathcal{E} \otimes \mathcal{F})\), 它的定义是对于Cartesian积\(A\times B, A\in \mathcal{E}, B\in \mathcal{F}\), \(\lambda(A\times B) = \mu(A)\nu(B)\).
+
+\begin{enumerate}[a)]
+    \item 证明\(\lambda\)可以延拓到\(\mathcal{E} \otimes \mathcal{F}\)上的一个有限测度;
+    \item 设\(f: E\times F \to \mathbb{R}\)是可测的. 证明Fubini定理: 若\(f\)是\(\lambda\)-可测的, 则\(x\to \int f(x,y) \nu(dy), y\to \int f(x,y) \mu(dx)\)分别相对\(\mathcal{E}, \mathcal{F}\)可测, 进一步地, 
+$$
+\int f d \lambda=\iint f(x, y) \mu(d x) \nu(d y)=\iint f(x, y) \nu(d y) \mu(d x)
+$$
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+\begin{enumerate}[a)]
+    \item 
+设\(C \in \mathcal{E} \otimes \mathcal{F}\)是乘积Borel \(\sigma\)代数上的元素.
+记\(C(x) = \{y: (x,y) \in C\}\)是给定\(x\)后的一个截面. 
+先证明: \(C(x) \in \mathcal{F}\).
+
+
+这个结论是一般的, 即对可测函数\(f: (E \times F, \mathcal{E} \otimes \mathcal{F}) \to (\mathbb{R}, \mathcal{B}(\mathbb{R}))\), 截口是可测的.
+设\(f(x, y) = \mathbb{I}_C(x, y), C \in \mathcal{E} \otimes \mathcal{F}, g_x(y) = f(x,y)\). 
+令
+$$
+\mathcal{H} = \{C \in \mathcal{E} \otimes \mathcal{F}: \mathbb{I}_C(x, y) \text{ 可测, } \forall x\in E\}.
+$$
+\(\mathcal{H}\)是一个\(\sigma\)-代数, 因为
+\begin{enumerate}
+    \item \(\mathbb{I}_{\varnothing}(x, y) = 0\), \(\mathbb{I}_{E\times F}(x, y) = 1\), 从而\(\varnothing, E\times F \in \mathcal{H}\);
+    \item 若\(S\in \mathcal{H}\), 则对于任意\(x\in E\), \(\mathbb{I}_S(x,y)\)可测, 从而\(\mathbb{I}_{S^c}(x,y) = 1 - \mathbb{I}_{S}(x, y)\)可测;
+    \item 若\(\{S_n\}\)是\(\mathcal{H}\)中的序列, 则对于任意\(x\in E\), \(\mathbb{I}_{\cup S_n}(x, y) = \max\left\{\sum_{n=1}^{\infty}\mathbb{I}_{S_n}(x, y), 1\right\}\)可测.
+\end{enumerate}
+从而\(\sigma(\mathcal{E} \times \mathcal{F}) \subset \mathcal{H}\).
+另一方面, 根据定义, \(\mathcal{H} \subset \sigma(\mathcal{E} \times \mathcal{F})\), 从而\(\mathcal{H} = \sigma(\mathcal{E} \times \mathcal{F})\).
+这就已经证明\(C(x) \in \mathcal{F}\).
+
+此外, 根据经典操作, 示性函数可测, 根据线性性, 简单函数截口可测. 
+若\(f\)是正的, 令\(f_n\)是向上趋于\(f\)的简单函数, 于是\(g_n(y) = f_n(x,y)\)对于固定的\(x\)是\(\mathcal{F}\)可测的, \(\forall n\).
+根据可测函数的极限还是可测函数, 从而\(g(y) = f(x,y)\)对于固定的\(x\)是\(\mathcal{F}\)可测的.
+最后, 若\(f\)是任意可测函数, 则只需要考虑\(f = f^+ - f^-\), 从而固定\(x\), \(f\)是\(\mathcal{F}\)可测的.
+
+以下, 尝试定义
+\boxed{$$
+\lambda(C) = \int \nu \{C(x)\} \,d\mu(x).
+$$}
+
+
+若\(C = A\times B\), 则截面函数
+$$
+C(x) = \begin{cases}
+    B,  & x\in A, \\
+    \emptyset, & x\notin A.
+\end{cases} 
+$$
+此时, 根据定义, 
+$$
+\lambda(C) = \mu \otimes \nu (C) = \mu(A) \nu(B) = \int \mathbb{I}_A(x) \nu(B) \, d\mu = \int \nu\{C(x)\} \, d\mu(x).
+$$
+定义 
+$$
+\mathcal{H}  = \{C \in \mathcal{E} \otimes \mathcal{F}: x \mapsto \nu(C(x)) \text{ 可测}\}
+$$
+\begin{itemize}
+    \item 集合系\(\mathcal{E} \times \mathcal{F}\)包含全集\(E \times F\), 并且关于有限交封闭: \((\Lambda_1 \times \Gamma_1) \cap (\Lambda_2 \times \Gamma_2) = (\Lambda_1 \cap \Lambda_2) \times (\Gamma_1 \times \Gamma_2)\).
+    \item \(\mathcal{E} \times \mathcal{F} \subset \mathcal{H}\), 因为当\(\forall C = A\times B \in \mathcal{E} \times \mathcal{F}\), \(A\)可测, 从而\(\nu(C(x)) = \nu(B) \mathbb{I}_A(x)\)可测, 于是\(C \in \mathcal{H}\).
+    \item \(\mathcal{H}\)关于单增封闭. 设\(C_i \uparrow C, C_i \in \mathcal{H}\), 于是, 集合关系也有\(C_i(x) \uparrow C(x)\), 从而根据测度连续性, \(\nu(C_i(x)) \uparrow \nu(C(x))\), 从而\(\nu(C(x)) = \lim_{n\to \infty} \nu(C_n(x))\)可测, 从而\(C\in \mathcal{H}\).
+    \item \(\mathcal{H}\)关于差封闭. 设\(C_1 \subset C_2 \in \mathcal{H}\), 于是对于任意的\(x\), \(C_1(x) \subset C_2(x)\), 从而\(\nu((C_2 - C_1)(x)) = \nu(C_2(x) - C_1(x)) = \nu(C_1(x)) - \nu(C_2(x))\)可测, 从而\(C_1 - C_2 \in \mathcal{H}\).
+\end{itemize}
+综上4点, 根据单调类定理, \(\mathcal{H} \supset \mathcal{E} \otimes \mathcal{F} = \sigma(\mathcal{E} \times \mathcal{F})\).
+另一方面, 根据定义, \(\mathcal{H} \subset \mathcal{E} \otimes \mathcal{F}\). 于是\(\mathcal{H} = \mathcal{E} \otimes \mathcal{F}\).
+
+于是对\(\mathcal{E} \otimes \mathcal{F}\)中的元素\(C\), 可以证明\(\lambda(C) = \int \nu \{C(x)\} \,d\mu(x)\)是良定的有限测度. 只需证明分离可列可加性:
+$$
+\lambda\left(\sum_{k=1}^{\infty} C_k\right) = \sum_{k=1}^{\infty} \lambda(C_k).
+$$
+事实上, 由于\(C_n \in \mathcal{E} \otimes \mathcal{F}\)两两不交, 从而\(\forall x\), \(\{C_n(x)\}\)两两不交.
+由于\(\nu\)是一个测度, 具有分离可列可加性, 于是$$
+\nu\left[\sum_{k=1}^{\infty} C_k(x)\right] = \sum_{k=1}^{\infty} \nu(C_k(x)).
+$$
+已经证明\(f_n(x) =  \nu(C_k(x))\)是非负的可测函数, 从而根据单调收敛定理即可证明\(\lambda\)的分离可加性, 
+且$$
+\lambda(E \times F) = \mu(E) \nu(F) < \infty,
+$$
+因此\(\lambda\)是一个有限测度.
+
+由单调类定理的推论, \(\lambda\)是唯一的延拓.
+
+    \item 已经证明, 当\(f = \mathbb{I}_C(x,y), C\in \mathcal{E} \otimes \mathcal{F}\)中时, $$
+    \begin{aligned}
+        \int_{E\times F} f d\lambda &= \int_{E\times F} \mathbb{I}_C(x,y) d\lambda \\
+        &= (\mu \otimes \nu)(C) \\
+        &= \int \nu\{C(x)\} \,d\mu(x) \\
+        &= \iint \mathbb{I}_{C(x)}(y) \,d\nu(y) \,d\mu(x) \\
+    \end{aligned}
+    $$
+    从而可测性和积分交换顺序对示性函数成立, 根据线性性, 对简单函数也成立.
+
+    对于一般的非负函数\(f\), 从而存在一个递增的简单函数列\(f_n \uparrow f\), 从而 \begin{align*}
+        \int f \, d \lambda &=  \int \lim_{n\to \infty} f_n \, d\lambda \\
+        &= \lim_{n\to \infty} \int f_n \, d\lambda \quad (\text{单调收敛定理})\\
+        &= \lim_{n\to \infty} \iint f_n(x, y) \,d\nu(y) \,d\mu(x)  \quad (\text{已经证明的简单函数的Fubini})\\
+        &= \int \lim_{n\to \infty} \int f_n(x, y) \,d\nu(y) \,d\mu(x)  \quad (\text{单调收敛定理})\\
+        &= \int \left\{\int \lim_{n\to \infty} f_n d\nu(y)\right\}d\mu(x) \\
+        &= \int \left\{\int f d\nu(y)\right\}d\mu(x).
+    \end{align*}
+    其中, \(x \mapsto \int f(x, y) d\nu(y) = \lim_{n\to \infty} \int f_n(x, y)d\nu(y)\)可测. 因此可测性和积分交换次序对非负函数成立.
+
+    对于一般的函数\(f\), 可以分解为\(f = f^+ - f^-\), 从而可测性和积分交换顺序对一般可测函数成立.
+\end{enumerate}
+\end{proof}
+
+
+
+
+
+\begin{framed}
+\begin{exercise}
+称测度\(\tau\)在\((G, \mathcal{G})\)上是\(\sigma\)-有限的, 若存在一列集合\(\{G_j\}_{j\geq 1} \subset \mathcal{G}\), 
+使得\(\cup_{j=1}^\infty G_j = G, \tau(G_j) < \infty, \forall j\).
+证明: 若\(\mu, \nu\)是\(\sigma\)-有限的, \(\lambda = \mu\otimes \nu\)存在, 那么 
+\begin{enumerate}[a)]
+    \item \(\lambda = \mu\otimes \nu\)是\(\sigma\)-有限的;
+    \item (Fubini定理): 若\(f: E\times F \to \mathbb{R}\)是可测的, 且是\(\lambda\)-可积的, 则\(x\to \int f(x,y) \nu(dy), y\to \int f(x,y) \mu(dx)\)分别相对\(\mathcal{E}, \mathcal{F}\)可测, 进一步地, 
+$$
+\int f d \lambda=\iint f(x, y) \mu(d x) \nu(d y)=\iint f(x, y) \nu(d y) \mu(d x)
+$$
+\end{enumerate}  
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+按照之前的证明流程, 只需证: 若\(\mu, \nu\)是\(\sigma\)-有限的, 那么延拓后的\(\lambda\)是\(\sigma\)-有限的.
+
+由于\(\mu\)是\(\sigma\)-有限的, 从而存在一列集合\(\{E_j\}_{j\geq 1} \subset \mathcal{E}\), 使得\(\cup_{j=1}^\infty E_j = E, \mu(E_j) < \infty, \forall j\).
+同理根据\(\nu\)的\(\sigma\)-有限, 存在一列集合\(\{F_k\}_{k\geq 1} \subset \mathcal{F}\), 使得\(\cup_{k=1}^\infty F_k = F, \nu(F_k) < \infty, \forall k\).
+于是, 定义 
+$$
+G_{j,k} = E_j \times F_k, \quad \{G_{j,k}\}_{j,k\geq 1} \subset \mathcal{E} \otimes \mathcal{F}, \quad \cup_{j,k=1}^\infty G_{j,k} = E\times F.
+$$
+根据\(\lambda\)的定义, \(\lambda(G_{j,k}) = \mu(E_j)\nu(F_k) < \infty\), 从而\(\lambda\)是\(\sigma\)-有限的.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+重复投一枚满足\(P(\text{正面朝上}) = p\)的硬币. 
+设\(A_k\)表示有在第\(2^k, 2^k+1, ..., 2^{k+1} - 1\)次投掷中, 有\(k\)或更多次接连不断的正面朝上的事件.
+证明: 当\(p \geq 1/2\)时, \(P(A_k\text { i.o. }) = 1\), 当\(p<1/2\)时, \(P(A_k\text { i.o. }) = 0\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于当\(i\neq j\)时, \(\{2^i, ..., 2^{i+1} - 1\} \cap \{2^j, ..., 2^{j+1} - 1\} = \varnothing\), 根据投硬币实验的独立性, 事件\(\{A_k\}\)相互独立.
+
+接下来, 我们要找出\(P(A_k)\)的上下界.
+
+在事件\(A_k\)中, 考虑的投掷是: \(2^k, 2^k+1, ..., 2^{k+1} - 1\), 共\(2^k\)次投掷.
+
+对于上界, 我们可以考虑: 有\(k\)次连续向上的事件中, 第一个元素可能出现的位置. 在整个序列中有\(2^k - k + 1\)个位置, 由于这种选法包含了长度为\(k\)及以上的序列(因为没有指定后面的投掷), 以及存在数重的情况, 从而\(P(A_k) \leq (2^k - k + 1)p^k\).
+
+对于下界, 在这\(2^k\)次投掷中, 有\(\lfloor \frac{2^k}{k}\rfloor\)个互不相交的长度为\(k\)的块.
+对于这种特殊的划分, 有一个块全部正面向上的概率是\(1 - (1 - p^k)^{\lfloor \frac{2^k}{k}\rfloor}\), 从而
+\(P(A_k) \geq 1 - (1 - p^k)^{\lfloor \frac{2^k}{k}\rfloor}\).
+
+\begin{itemize}
+    \item 当\(p < \frac{1}{2}\)时, \(P(A_k) \leq (2^k - k + 1) p^k <(2p)^k\), 从而\(\sum_{k=1}^{\infty} P(A_k) \leq \sum_{k=1}^{\infty} (2p)^k = \frac{2p}{1-2p} < \infty\), 根据Borel-Cantelli引理, \(P(A_k \text{ i.o. }) = 0\).
+    \item 当\(p > \frac{1}{2}\)时, 考察\(\ln(1 - P(A_k)) \leq \lfloor \frac{2^k}{k} \rfloor \ln(1 - p^k) \leq -\frac{2^k}{k}p^k = -\frac{(2p)^k}{k} \to -\infty(k \to \infty)\). 于是\(1 - P(A_k) \to 0\), 从而\(P(A_k) \to 1(k \to \infty)\). 因此\(\sum_{k=1}^{\infty}P(A_k) = \infty\), 根据独立条件下的Borel-Cantelli引理, \(P(A_k \text{ i.o. }) = 1\).
+\end{itemize}
+
+
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_0, X_1, X_2, ...\)是独立随机变量, 满足\(P(X_n = 1) = P(X_n = -1) = \frac{1}{2}, \forall n\).
+令\(Z_n = \prod_{i=1}^{n}X_i\).
+证明: \(Z_1, Z_2, ...\)是独立的.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于\(Z_n\)是二值取值的随机变量, 因此只需考虑一个事件即可.
+因为若\(P(Z_i = 1, Z_j = 1) = P(Z_i = 1)P(Z_j = 1)\), 则
+\(P(Z_i = 1, Z_j = -1) = P(Z_i = 1) - P(Z_i = 1, Z_j = 1) = P(Z_i = 1)P(Z_j = -1)\).
+
+
+用数学归纳法完成证明. 先考察\(Z_1, Z_2\).
+$$
+\begin{aligned}
+    P(Z_1 = 1, Z_2 = -1) &= P(X_1 = 1, X_1 X_2 = -1) \\
+    &= P(X_1 = 1, X_2 = -1) \\ 
+    &= \frac{1}{4} 
+\end{aligned}
+$$
+而边际概率
+$$
+P(Z_1 = 1) = P(X_1 = 1) = \frac{1}{2}, \quad P(Z_2 = -1) = P(X_1 = 1, X_2 = -1) + P(X_1 = -1, X_2 = 1) = \frac{1}{2}.
+$$
+于是\(Z_1 \Perp Z_2\).
+
+考虑\(Z_1, Z_2, Z_3\), 
+$$
+\begin{aligned}
+    P(Z_1 = 1, Z_2 = -1, Z_3 = 1) &= P(X_1 = 1, X_1X_2 = -1, X_1X_2X_3 = 1) \\
+    &= P(X_1 = 1, X_2 = -1, X_3 = 1) \\
+    &= \frac{1}{8}.
+\end{aligned}
+$$
+边际概率
+$$
+P(Z_3 = 1) = \frac{1}{2^3} \times \sum_{k=0}^{1}\binom{3}{2k} = \frac{1}{2}.
+$$
+重复上述流程, 即可证明\(Z_1, Z_2, ...\)是独立的.
+\end{proof}
+
+\begin{remark}
+以下是一个严格的写法. 往证
+$$
+P(Z_n = 1) = P(Z_n = -1) = \frac{1}{2}.
+$$
+由于
+\begin{align*}
+P(Z_1 = z_1, ..., Z_n = z_n) &= P\left(X_1 = z_1, X_2 = \frac{z_2}{z_1}, ..., X_n = \frac{z_n}{z_{n-1}}\right) \\
+&= P(X_1 = z_1) P\left(X_2 = \frac{z_2}{z_1}\right) \cdots P\left(X_n = \frac{z_n}{z_{n-1}}\right) \\
+&= \frac{1}{2^n}.
+\end{align*}
+从而, \(Z_1, Z_2, ..., Z_n\)的联合分布是均匀分布, \(\forall n\).
+由于 
+\begin{align*}
+P(Z_1 = z_1, ..., Z_n = z_n) &= P(Z_1 = z_1) P(Z_2 = z_2 | Z_1 = z_1) \cdots P(Z_n = z_n | Z_1 = z_1, ..., Z_{n-1} = z_{n-1}). \\
+\end{align*}
+若有
+{\color{blue}
+$$
+P(Z_n = z_n) = P(Z_n = z_n | Z_1 = z_1, ..., Z_{n-1} = z_{n-1}), \quad \forall n.
+$$
+}
+则独立性得证.
+
+于是, 只需证明\(P(Z_n = 1) = P(Z_n = -1) = \frac{1}{2}\), 即\(Z_n\)是均匀分布.
+由于\(\{Z_n = 1\} = \{\text{偶数个} X_n = -1\}\), 只需证明, \(\sharp\{\text{偶数个} X_n = -1\} = 2^{n-1}\). 
+
+当\(n = 2m\)为偶数时, 
+要计算求和 \(\sum_{k = 0}^{m} \binom{2m}{2k}\), 我们可以使用二项式系数的性质. 二项式系数 \(\binom{2m}{2k}\) 表示从 \(2m\) 个元素中选择 \(2k\) 个元素的方式数量. 
+
+首先, 考虑 \((1 + x)^{2m}\) 的二项式展开:
+\[
+(1 + x)^{2m} = \sum_{j=0}^{2m} \binom{2m}{j} x^j
+\]
+接下来, 考虑 \((1 - x)^{2m}\) 的二项式展开:
+\[
+(1 - x)^{2m} = \sum_{j=0}^{2m} \binom{2m}{j} (-x)^j
+\]
+将这两个展开式相加, 我们得到:
+\[
+(1 + x)^{2m} + (1 - x)^{2m} = \sum_{j=0}^{2m} \binom{2m}{j} x^j + \sum_{j=0}^{2m} \binom{2m}{j} (-x)^j
+\]
+注意到当 \(j\) 为奇数时, \(x^j\) 和 \((-x)^j\) 会相互抵消, 而当 \(j\) 为偶数时, 它们会相加. 因此, 我们有:
+\[
+(1 + x)^{2m} + (1 - x)^{2m} = 2 \sum_{k=0}^{m} \binom{2m}{2k} x^{2k}
+\]
+为了找到求和 \(\sum_{k=0}^{m} \binom{2m}{2k}\), 我们设 \(x = 1\):
+\[
+(1 + 1)^{2m} + (1 - 1)^{2m} = 2 \sum_{k=0}^{m} \binom{2m}{2k}
+\]
+简化左边:
+\[
+2^{2m} + 0 = 2 \sum_{k=0}^{m} \binom{2m}{2k}
+\]
+因此:
+\[
+2^{2m} = 2 \sum_{k=0}^{m} \binom{2m}{2k}
+\]
+两边同时除以2:
+\[
+\sum_{k=0}^{m} \binom{2m}{2k} = \frac{2^{2m}}{2} = 2^{2m-1}
+\]
+因此, 最终答案是:
+\[
+\boxed{2^{2m-1}} = 2^{n-1}.
+\]
+
+当\(n = 2m+1\)为奇数时, 
+要计算求和 \(\sum_{k = 0}^{m} \binom{2m+1}{2k}\), 我们可以使用二项式系数的性质和生成函数. 二项式系数 \(\binom{2m+1}{2k}\) 表示从 \(2m+1\) 个元素中选择 \(2k\) 个元素的方式数量. 
+首先, 考虑 \((1 + x)^{2m+1}\) 的二项式展开:
+\[
+(1 + x)^{2m+1} = \sum_{j=0}^{2m+1} \binom{2m+1}{j} x^j
+\]
+接下来, 考虑 \((1 - x)^{2m+1}\) 的二项式展开:
+\[
+(1 - x)^{2m+1} = \sum_{j=0}^{2m+1} \binom{2m+1}{j} (-x)^j
+\]
+将这两个展开式相加, 我们得到:
+\[
+(1 + x)^{2m+1} + (1 - x)^{2m+1} = \sum_{j=0}^{2m+1} \binom{2m+1}{j} x^j + \sum_{j=0}^{2m+1} \binom{2m+1}{j} (-x)^j
+\]
+注意到当 \(j\) 为奇数时, \(x^j\) 和 \((-x)^j\) 会相互抵消, 而当 \(j\) 为偶数时, 它们会相加. 因此, 我们有:
+\[
+(1 + x)^{2m+1} + (1 - x)^{2m+1} = 2 \sum_{k=0}^{m} \binom{2m+1}{2k} x^{2k}
+\]
+为了找到求和 \(\sum_{k=0}^{m} \binom{2m+1}{2k}\), 我们设 \(x = 1\):
+\[
+(1 + 1)^{2m+1} + (1 - 1)^{2m+1} = 2 \sum_{k=0}^{m} \binom{2m+1}{2k}
+\]
+简化左边:
+\[
+2^{2m+1} + 0 = 2 \sum_{k=0}^{m} \binom{2m+1}{2k}
+\]
+因此:
+\[
+2^{2m+1} = 2 \sum_{k=0}^{m} \binom{2m+1}{2k}
+\]
+两边同时除以2:
+\[
+\sum_{k=0}^{m} \binom{2m+1}{2k} = \frac{2^{2m+1}}{2} = 2^{2m}
+\]
+因此, 最终答案是:
+\[
+\boxed{2^{2m}} = 2^{n-1}.
+\]
+
+综上两种情况, 我们得到 \(\sharp\{\text{偶数个} X_n = -1\} = 2^{n-1}\).
+
+
+\end{remark}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X, Y\)是独立的, 假设\(P(X+Y = \alpha) = 1\),其中\(\alpha\)是常数.
+证明: \(X, Y\)是常数随机变量.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+由于\(X = \alpha - Y\), a.s. \(P\). 因此, 若\(X\)与\(Y\)独立, 则\(X\)与\(\alpha - X\)独立, 因为\(f(x) = \alpha - x\)是一个可测函数(函数在一个零测集处的取值不会改变其可测性).
+从而\(X\)与自身独立. 从而
+$$
+F(x) = P((-\infty, x]) = 0 \text{ 或 } 1.
+$$
+于是\(X\)服从退化分布, 即\(X\)是常数随机变量, 根据\(X\)和\(Y\)的对称性, \(Y\)也是常数随机变量.
+\end{proof}
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

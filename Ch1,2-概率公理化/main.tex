@@ -1,0 +1,530 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#2.}
+\newtheorem*{proposition}{命题}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 2: 概率公理}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+\begin{framed}
+\begin{exercise}
+    令\(\Omega\)是一个有限集合. 证明: \(\Omega\)的所有子集构成的集合\(2^{\Omega}\)是一个有限集合, 且是\(\sigma\)-代数.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+    由于\(\Omega\)是有限集合, 不妨设\(\Omega = \{x_{1}, x_{2}, \ldots, x_{n}\}\), 其中\(n\)是一个正整数. 对于任意的\(A \subset \Omega\), 即\(A \in 2^{\Omega}\), 我们有\(A = \{x_{i_{1}}, x_{i_{2}}, \ldots, x_{i_{k}}\}\), 其中\(i_{1}, i_{2}, \ldots, i_{k}\)是\(\{1, 2, \ldots, n\}\)中的不同的整数. 
+    记
+    $$
+    \begin{aligned}
+        T : 2^\Omega &\to \{(\theta_1, \cdots, \theta_n): \theta_i \in \{0,1\}, i = 1,\cdots,n\}, \\
+        A& \mapsto \big(I(x_1 \in A), \cdots, I(x_n \in A) \big), 
+    \end{aligned}
+    $$
+    其中, \(I(\cdot)\)是示性函数. 显然, \(T\)是良定的, 且\(T\)构成了一个一一映射. 于是
+    $$
+    |2^\Omega| = |\{(\theta_1, \cdots, \theta_n): \theta_i \in \{0,1\}, i = 1,\cdots,n\}| = 2^n.
+    $$
+    因此, 由于\(2^\Omega\)是有限集合.
+
+    要证明\(2^{\Omega}\)是\(\sigma\)-代数, 我们需要证明以下三点:
+    \begin{enumerate}
+        \item \(\varnothing \in 2^{\Omega}\). 这是因为\(\varnothing \subset \Omega\), 成立.
+        \item 若\(A \in 2^{\Omega}\), 则\(A^{c} \in 2^{\Omega}\). 这是因为\(A \subset \Omega\), 于是\(A^{c} = \Omega \backslash A \subset \Omega\), 成立.
+        \item 若\(A_{1}, A_{2}, \ldots \in 2^{\Omega}\), 则\(\bigcup_{i=1}^{\infty} A_{i} \in 2^{\Omega}\). 这是因为\(\forall x \in \bigcup_{i=1}^{\infty} A_{i}\), 存在\(j\)使得\(x \in A_{j} \subset \Omega\), 于是\(x \in \Omega\), 即\(\bigcup_{i=1}^{\infty} A_{i} \subset \Omega\), 成立.
+    \end{enumerate}
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}[\(\sigma\)-代数的交还是\(\sigma\)-代数]
+    令\(\{\mathcal{G}_\alpha\}_{\alpha \in A}\)是定义在抽象空间\(\Omega\)上的任意一族\(\sigma\)-代数. 证明: \(\mathcal{H} = \bigcap_{\alpha \in A} \mathcal{G}_\alpha\)也是一个\(\sigma\)-代数.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+
+要证明\(\bigcap_{\alpha \in A} \mathcal{G}_\alpha\)是一个\(\sigma\)-代数, 我们需要证明以下三点:
+\begin{enumerate}
+    \item \(\varnothing \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\).
+    \item 若\(A \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\), 则\(A^{c} \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\).
+    \item 若\(A_1, A_2, \cdots \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\), 则\(\bigcup_{i=1}^{\infty} A_i \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\).
+\end{enumerate}
+我们一一验证上述命题.
+
+1. 由于\(\mathcal{G}_\alpha\)是一个\(\sigma\)-代数, 因此\(\varnothing \in \mathcal{G}_\alpha, \forall \alpha \in A\), 即有\(\varnothing \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\).
+
+2. 若\(A \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\), 则\(A \in \mathcal{G}_\alpha, \forall \alpha \in A\). 由于\(\mathcal{G}_\alpha\)是一个\(\sigma\)-代数, 因此\(A^{c} \in \mathcal{G}_\alpha, \forall \alpha \in A\), 即有\(A^{c} \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\).
+
+3. 若\(A_1, A_2, \cdots \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\), 则\(A_i \in \mathcal{G}_\alpha, \forall \alpha \in A\). 由于\(\mathcal{G}_\alpha\)是一个\(\sigma\)-代数, 因此\(\bigcup_{i=1}^{\infty} A_i \in \mathcal{G}_\alpha, \forall \alpha \in A\), 从而有\(\bigcup_{i=1}^{\infty} A_i \in \bigcap_{\alpha \in A} \mathcal{G}_\alpha\).
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+令\(\{A_n\}_{n=1}^{\infty}\)是一列集合, 证明De Morgan公式:
+\begin{enumerate}[a)]
+    \item \(\left(\cup_{n=1}^{\infty} A_n\right)^c  =\cap_{n=1}^{\infty} A_n^c\)
+    \item \(\left(\cap_{n=1}^{\infty} A_n\right)^c  =\cup_{n=1}^{\infty} A_n^c\).
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+先证a). 一方面, 对于任意的\(x \in \left(\cup_{n=1}^{\infty} A_n\right)^c\), 有\(x \notin \cup_{n=1}^{\infty} A_n\), 即对于任意的\(n\), 有\(x \notin A_n\), 即\(x \in A_n^c\), 于是有\(x \in \cap_{n=1}^{\infty} A_n^c\). 
+因此, \(\left(\cup_{n=1}^{\infty} A_n\right)^c  \subset \cap_{n=1}^{\infty} A_n^c\).
+另一方面, 对于任意的\(x \in \cap_{n=1}^{\infty} A_n^c\), 有\(x \in A_n^c, \forall n\), 即对于任意的\(n\), 有\(x \notin A_n\), 于是有\(x \notin \cup_{n=1}^{\infty} A_n\), 即有\(x \in \left(\cup_{n=1}^{\infty} A_n\right)^c\). 因此, \(\left(\cup_{n=1}^{\infty} A_n\right)^c  =\cap_{n=1}^{\infty} A_n^c\).
+
+对于b), 取a)的结果的补集即可. 即令\(B_n = A_n^c\), 带入a)中的公式, 并在等式两边同时取补, 即可得到b)的结论.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+令\(\mathcal{A}\)是一个\(\sigma\)-代数, \(\{A_n\}_{n = 1}^\infty\)是\(\mathcal{A}\)中的一列事件, 证明:
+$$
+\liminf _{n \rightarrow \infty} A_n \in \mathcal{A} ; \quad \limsup _{n \rightarrow \infty} A_n \in \mathcal{A} ; \quad \text { 以及 } \quad \liminf _{n \rightarrow \infty} A_n \subset \limsup _{n \rightarrow \infty} A_n \text {. }
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据定义, 我们有
+$$
+\liminf_{n \rightarrow \infty} A_n = \bigcup_{n=1}^{\infty} \bigcap_{k=n}^{\infty} A_k, \quad \limsup_{n \rightarrow \infty} A_n = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} A_k.
+$$
+由于\(\sigma\)-代数关于可列的交并运算封闭, 因此\(\liminf_{n \rightarrow \infty} A_n \in \mathcal{A}\)和\(\limsup_{n \rightarrow \infty} A_n \in \mathcal{A}\)成立.
+
+显然, 记号\(x \in \limsup_{n\rightarrow \infty} A_n\)意味着\(x\)属于序列\(\{A_n\}\)中无穷多个集合, 记号\(x\in \liminf_{n\rightarrow} \infty\)意味着除去\(\{A_n\}\)中有限个元素外, \(x\)属于剩下的所有集合. 因此, \(\liminf_{n \rightarrow \infty} A_n \subset \limsup_{n \rightarrow \infty} A_n\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+令\(\{A_n\}_{n = 1}^\infty\)是一列集合, 证明:
+$$
+\limsup _{n \rightarrow \infty} 1_{A_n}-\liminf _{n \rightarrow \infty} 1_{A_n}=1_{\left\{\limsup _n A_n \backslash \liminf _n A_n\right\}}
+$$
+其中, $A \backslash B=A \cap B^c$ 当 $B \subset A$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+断言:
+\begin{enumerate}
+    \item \(I_{\{\liminf_{n\to \infty} A_n\}} = \liminf_{n\to \infty}I_{A_n}\).
+    \item \(I_{\{\limsup_{n\to \infty} A_n\}} = \limsup_{n\to \infty}I_{A_n}\).
+    \item 若\(A \supset B\), 则\(I_{A\backslash B} = I_A - I_B\).
+\end{enumerate}
+根据上述断言, 以及\(\liminf _{n \rightarrow \infty} A_n \subset \limsup _{n \rightarrow \infty} A_n\), 原命题得证. 下面一一验证上述断言.
+
+1. 一方面, 若\(I_{\{\liminf_{n\to \infty} A_n\}}(w) = 1\), 则\(w \in \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k\), 即存在\(n_0 \geq 1\), 当\(k \geq n_0\)时, 
+可知\(\inf_{k \geq n_0} I_{A_k}(w) = 1\).
+于是
+\(\liminf_{n\to \infty} I_{A_n}(w) = \lim_{n\to \infty} \inf_{k\geq n} I_{A_k}(w) = 1\). 
+另一方面, 若\(I_{\{\liminf_{n\to \infty} A_n\}}(w) = 0\), 则\(w \in \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k^c\), 即任取\(n\geq 1\), 存在\(k_0 \geq n\), 使得\(w \in A_{k_0}^c\).
+从而\(\inf_{k\geq n} I_{A_k}(w) \equiv 0\), 
+于是\(\liminf_{n\to \infty} I_{A_n}(w) = \lim_{n\to \infty} \inf_{k\geq n} I_{A_k}(w) = 0\). 
+综上, 
+$$
+I_{\{\liminf_{n\to \infty} A_n\}} = \liminf_{n\to \infty}I_{A_n}.
+$$
+
+2. 一方面, 若\(I_{\{\limsup_{n\to \infty} A_n\}}(w) = 1\), 则\(w \in \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k\), 即对任意的\(n\), 存在\(k_0 \geq n\), 使得\(w \in A_{k_0}\).
+从而\(\sup_{k\geq n} I_{A_k}(w) \equiv 1\), 于是\(\limsup_{n\to \infty} I_{A_n} (w) = \lim_{n\to\infty}\sup_{k\geq n} I_{A_k}(w) = 1\).
+另一方面, 若\(I_{\{\limsup_{n\to \infty} A_n\}}(w) = 0\), 则\(w \in \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k^c\), 即存在\(n_0 \geq 1\), 当\(k \geq n_0\)时, 有\(w \in A_k^c\).
+从而\(\sup_{k\geq n_0}I_{A_k}(w) = 0\), 于是\(\limsup_{n\to \infty} I_{A_n}(w) = \lim_{n\to \infty}\sup_{k\geq n} I_{A_k}(w) = 0\).
+综上, 
+$$
+I_{\{\limsup_{n\to \infty} A_n\}} = \limsup_{n\to \infty}I_{A_n}.
+$$
+
+3. 一方面, 当\(w \in A\backslash B\)时, \(I_A(w) = 1, I_B(w) = 0\), 满足\(I_{A\backslash B}(w) = I_A(w) - I_B(w) = 1\).
+另一方面, 当\(w \notin A\backslash B\)时, 即\(x\in B \subset A\), \(I_A(w) = 1, I_B(w) = 1\), 满足\(I_{A\backslash B}(w) = I_A(w) - I_B(w) = 0\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+令\(\mathcal{A}\)是\(\Omega\)上的\(\sigma\)-代数, \(B\in \mathcal{A}\). 证明\(\mathcal{F} = \{A\cap B : A\in\mathcal{A}\}\)也是一个\(\sigma\)-代数.
+试问: 当\(B \subset \Omega\), 但是\(B \notin \mathcal{A}\)时, 上述命题是否正确?
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+由于\(\sigma\)-代数需要指定定义在某个抽象空间\(\Omega\)上. 为证明, 这里接下来证明\(\mathcal{F}\)是\(B\)上的\(\sigma\)-代数.
+
+先考虑若\(B = \varnothing\), 则\(\mathcal{F} = \varnothing\), \((\varnothing, \varnothing)\)构成了一个平凡的可测空间.
+
+对于一般的\(B\subset \Omega\), 不失一般性, 可以考虑\(B \notin \mathcal{A}\), 我们需要证明以下三点:
+\begin{enumerate}
+    \item \(\varnothing, B \in \mathcal{F}\). 根据\(\mathcal{A}\)是一个\(\sigma\)-代数, \(\varnothing, \Omega \in \mathcal{A}\), 从而\(\varnothing, B \in \mathcal{F}\).
+    \item \(C \in \mathcal{F} \Rightarrow C^c = B \cap C^c \in \mathcal{F}\). 不妨设\(C = \tilde{A} \cap B\), 于是\(B\cap C^c = B\cap(B^c \cup \tilde{A}^c) = B\cap \tilde{A}^c\), 由于\(\tilde{A} \in \mathcal{A}\)是\(\sigma\)-代数, 于是\(\tilde{A}^c \in \mathcal{A}\), 则\(C^c \in \mathcal{F}\).
+    \item \(C_i \in \mathcal{F} \Rightarrow \cup_{i = 1}^\infty C_i \in \mathcal{F}\). 不妨设\(C_i = A_i \cap B\), 于是\(\cup_{i = 1}^\infty C_i = \cup_{i = 1}^\infty A_i \cap B = (\cup_{i = 1}^\infty A_i) \cap B\), 由于\(\cup_{i = 1}^\infty A_i \in \mathcal{A}\)是\(\sigma\)-代数, 于是\(\cup_{i = 1}^\infty C_i \in \mathcal{F}\).
+\end{enumerate}
+于是\((B, \mathcal{F})\)构成一个可测空间, 无论\(B\)是否在\(\mathcal{A}\)中.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+令\(f\)是从\(\Omega\)打到可测空间\((E, \mathcal{E})\)的映射. 令$$\mathcal{A} = \{A\subset \Omega: \exists B \in \mathcal{E} \text{ 满足 } A = f^{-1}(B)\}.$$ 证明: \(\mathcal{A}\)是\(\Omega\)上的\(\sigma\)-代数.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+根据题意, \({A}\)是可测空间中元素\(B\)的原像. 
+这里有必要事先定义原像. 以下关于原像的内容参考了\cite{prob}.
+对于任何\(B \subset Y\), 称 
+$$
+f^{-1}B \triangleq \{f\in B\} = \{x: f(x) \in B\}
+$$
+为{\bf 集合\(B\)在映射\(f\)下的原像}.
+对于任何\(Y\)上的集合系\(\mathcal{E}\), 称
+$$
+f^{-1} \mathcal{E} \triangleq \{f^{-1}B: B \in \mathcal{E}\}
+$$
+为{\bf 集合系\(\mathcal{E}\)在映射\(f\)下的原像}.
+
+这里使用集合原像的若干性质:
+\begin{enumerate}[(i)]
+    \item 对于集合的原像, 有\(f^{-1}(\varnothing) = \varnothing\).
+    事实上, 若存在\(w\in f^{-1}(\varnothing) = \{x: f(x) \in \varnothing\}\), 即\(f(w) \in \varnothing\), 而这与空集的定义矛盾, 因此\(f^{-1}(\varnothing) = \varnothing\).
+    \item \(\left(f^{-1}(B)\right)^c = f^{-1}(B^c), \forall B \in \mathcal{E}\). 事实上, \(\left(f^{-1}(B)\right)^c = \{x: f(x) \in B\}^c = \{x: f(x) \in B^c\} = f^{-1}(B^c)\).
+    \item 对于任意的指标集\(T\), 有\(\cup_{t\in T} f^{-1}(B_t) = f^{-1}\left(\cup_{t\in T} B_t\right)\). 事实上, \(\cup_{t\in T} f^{-1}(B_t) = \cup_{t\in T} \{x:f(x) \in B_t\} = \{x: f(x) \in \cup_{t\in T} B_t\} = f^{-1}\left(\cup_{t\in T} B_t\right)\).
+\end{enumerate}
+
+
+
+于是, 
+\begin{enumerate}
+    \item \(\varnothing \in \mathcal{A}\). 由于\(\varnothing = f^{-1}(\varnothing)\), 且\(\varnothing \in \mathcal{E}\), 因此\(\varnothing \in \mathcal{A}\).
+    \item \(A \in \mathcal{A} \Rightarrow A^c \in \mathcal{A}\). 对于\(A \in \mathcal{A}\), 不妨记\(A = f^{-1}(B)\), 于是有\(A^c = f^{-1}(B^c)\), 而根据\(\mathcal{E}\)是\(\sigma\)-代数, 有\(B^c \in \mathcal{E}\), 于是有\(A^c \in \mathcal{A}\).
+    \item \(A_i \in \mathcal{A} \Rightarrow \cup_{i=1}^\infty A_i \in \mathcal{A}\). 对于\(A_i \in \mathcal{A}\), 不妨记\(A_i = f^{-1}(B_i)\), 于是有\(\cup_{i=1}^\infty A_i = \cup_{i=1}^\infty f^{-1}(B_i) = f^{-1}(\cup_{i=1}^\infty B_i)\), 而根据\(\mathcal{E}\)是\(\sigma\)-代数, 有\(\cup_{i=1}^\infty B_i \in \mathcal{E}\), 于是有\(\cup_{i=1}^\infty A_i \in \mathcal{A}\).
+\end{enumerate}
+因此, \(\mathcal{A}\)是\(\Omega\)上的\(\sigma\)-代数.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+令\(f: \mathbb{R} \to \mathbb{R}\)是一个连续函数, 考察
+$$
+\mathcal{A} = \{A\subset \mathbb{R}: \exists B \in \mathcal{B} \text{ 满足 } A = f^{-1}(B)\}, 
+$$
+其中\(\mathcal{B}\)是像空间\(\mathbb{R}\)上的Borel \(\sigma\)-代数. 证明: \(\mathcal{A} \subset \mathcal{B}\), 这里\(\mathcal{B}\)是定义域\(\mathbb{R}\)上的Borel \(\sigma\)-代数.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+只需证任取\(\mathcal{A}\)中的元素\(A = f^{-1}(B)\)满足\(f^{-1}(B) \in \mathcal{B}\).
+根据连续映射的性质, 开集的原像是开集. 由于像空间中的\(\mathcal{B}\)是由开集生成的\(\sigma\)-代数, 因此包含所有的开集, 因此\(f^{-1}(B) \in \mathcal{B}\).
+\end{proof}
+
+
+对于习题2.9到2.15, 我们假设一个固定的抽象空间\(\Omega\), \(\sigma\)-代数\(\mathcal{A}\), 和一个定义在\((\Omega, \mathcal{A})\)上的概率测度\({P}\). 我们考虑一列事件\(\{A_n\}_{n=1}^\infty\), 以及事件\(A, B\)总在事件域\(\mathcal{A}\)中. 
+
+
+\begin{framed}
+\begin{exercise}
+对于\(A,B \in \mathcal{A}\), 若\(A \cap B = \varnothing\), 证明\(P(A\cup B) = P(A) + P(B)\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+先证明\(P(\varnothing) = 0\), 由于概率测度的可列可加性, 
+$$
+P(\varnothing) = P(\cup_{i=1}^\infty \varnothing) = \sum_{i=1}^\infty P(\varnothing) , 
+$$
+由于\(P(\varnothing) \in [0,1]\), 这使得\(P(\varnothing) = 0\).
+
+根据概率测度的可列可加性, 取 
+$$
+A_1 = A, A_2 = B, A_i = \varnothing, i \geq 3,
+$$
+显然满足\(A_n \cap A_m = \varnothing, n\neq m\), 于是有
+$$
+P(A\cup B) = P\left(\cup_{i=1}^\infty A_i\right) = \sum_{i = 1}^{\infty} P(A_i) = P(A) + P(B) + 0 = P(A) + P(B).
+$$
+\end{proof}
+
+
+
+
+
+\begin{framed}
+\begin{exercise}
+    对于\(A,B \in \mathcal{A}\), 证明\(P(A\cup B) = P(A) + P(B) - P(A\cap B)\).
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+    对于\(A,B \in \mathcal{A}\), 有\(A \cup B = A + B\cap A^c\), 其中\(+\)表示集合的无交并.
+    于是根据习题\#2.9, \#2.12, 有
+    $$
+    P(A\cup B) = P(A) + P(B\cap A^c) = P(A) + P(B) - P(A\cap B).
+    $$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+    对于\(A\in \mathcal{A}\), 证明: \(P(A) = 1 - P(A^c)\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据概率测度的有限可加性, 由于\(A, A^c \in \mathcal{A}, A\cap A^c = \varnothing, A\cup A^c = \Omega\), 因此, 
+$$
+1 = P(\Omega) = P(A \cup A^c) = P(A) + P(A^c), 
+$$
+即有\(P(A) = 1 - P(A^c)\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+    对于\(A,B \in \mathcal{A}\), 证明: \(P(A\cap B^c) = P(A) - P(A \cap B)\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+    对于\(A,B \in \mathcal{A}\), 有\(A = A\cap \Omega = A\cap (B\cup B^c) = (A\cap B) + (A\cap B^c)\), 其中\(A\cap B, A\cap B^c\)互不相交. 
+    于是根据概率测度的有限可加性, 有
+    $$
+    P(A) = P(A\cap B) + P(A\cap B^c), 
+    $$
+    即有
+    $$
+    P(A\cap B^c) = P(A) - P(A\cap B).
+    $$
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+    设\(A_1, \cdots, A_n\)是给定的事件. 证明容斥原理:
+$$
+\begin{aligned}
+& P\left(\cup_{i=1}^n A_i\right)=\sum_i P\left(A_i\right)-\sum_{i<j} P\left(A_i \cap A_j\right) \\
+& \quad+\sum_{i<j<k} P\left(A_i \cap A_j \cap A_k\right)-\ldots+(-1)^{n+1} P\left(A_1 \cap A_2 \cap \ldots \cap A_n\right)
+\end{aligned}
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+证明用数学归纳法.当\(n=1\)时, 等式显然成立, 当\(n = 2\)时, 根据习题\#2.10, 成立.
+
+假设当\(n = t\)时等式成立, 即
+$$
+\begin{aligned}
+& P\left(\cup_{i=1}^t A_i\right)=\sum_i P\left(A_i\right)-\sum_{i<j} P\left(A_i \cap A_j\right) \\
+& \quad+\sum_{i<j<k} P\left(A_i \cap A_j \cap A_k\right)-\ldots+(-1)^{t+1} P\left(A_1 \cap A_2 \cap \ldots \cap A_t\right)
+\end{aligned}
+$$
+则当\(n = t+1\)时, 
+$$
+\begin{aligned}
+    P(\cup_{i=1}^{t+1} A_i) =& P(\cup_{i=1}^t A_i) + P(A_{t+1}) - P(\cup_{i=1}^t A_i \cap A_{t+1})\\
+    =& \sum_{i=1}^t P(A_i) - \sum_{1\leq i<j \leq t} P(A_i \cap A_j) + \cdots + (-1)^{t+1} P(A_1 \cap \cdots \cap A_t) \\ &+ P(A_{t+1}) - P(\cup_{i=1}^t A_i \cap A_{t+1})\\
+    =& \sum_{i=1}^{t+1} P(A_i) - \sum_{1 \leq i<j \leq t+1} P(A_i \cap A_j) + \cdots + (-1)^{t+2} P(A_1 \cap \cdots \cap A_t \cap A_{t+1})\\
+\end{aligned}
+$$
+成立. 于是由数学归纳法, 原命题得证.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+    假设\(P(A) = {3\over 4}, P(B) = {1 \over 3}\). 证明: \({1 \over 12} \leq P(A \cap B) \leq {1 \over 3}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据概率测度的单调性, \(A\cap B \subset B\), 因此\(P(A\cap B) \leq P(B) = {1 \over 3}\).
+另一方面, 根据习题\#2.10, 有
+$$
+P(A\cap B) = P(A) + P(B) - P(A\cup B) \geq {3\over 4} + {1\over 3} - 1 = {1\over 12}.
+$$
+于是得证.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}[次可加性]
+    令\(A_i \in \mathcal{A}\)是一列事件. 证明:
+    $$
+P\left(\cup_{i=1}^n A_i\right) \leq \sum_{i=1}^n P\left(A_i\right)
+$$
+对于所有的\(n\), 以及 
+$$
+P\left(\cup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P\left(A_i\right)
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+只需证明
+$$
+P\left(\cup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P\left(A_i\right)
+$$
+因为对于有限\(n\), 可以通过设定\(A_{t} = \varnothing, t\geq n+1\)来得到第一个不等式.
+
+对这一列事件\(A_i\), 我们采用以下的不交化方法:
+$$
+\begin{aligned}
+    B_1 & \triangleq A_1, \\
+    B_2 & \triangleq A_2 \backslash A_1 \subset A_2, \\
+    B_3 & \triangleq A_3 \backslash (A_1 \cup A_2) \subset A_3, \\
+    & \cdots, \\
+    B_n & \triangleq A_n \backslash \left(\cup_{i=1}^{n-1} A_i\right) \subset A_n, \\
+    & \cdots.
+\end{aligned}
+$$
+于是有\(B_i \cap B_j = \varnothing, i\neq j\), 且\(\cup_{i=1}^n A_i = \cup_{i=1}^n B_i\), 于是根据概率测度的有限可加性, 有
+$$
+P\left(\cup_{i=1}^{\infty} A_i\right) = P\left(\sum_{i=1}^{\infty} B_i\right) = \sum_{i=1}^{\infty} P(B_i) \leq \sum_{i=1}^{\infty} P(A_i).
+$$
+
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}[Bonferroni不等式]
+    令\(A_i \in \mathcal{A}\)是一列事件. 证明:
+    \begin{enumerate}[a)]
+        \item $P\left(\cup_{i=1}^n A_i\right) \geq \sum_{i=1}^n P\left(A_i\right)-\sum_{i<j} P\left(A_i \cap A_j\right)$,
+        \item \(P\left(\cup_{i=1}^n A_i\right) \leq \sum_{i=1}^n P\left(A_i\right)-\sum_{i<j} P\left(A_i \cap A_j\right)+\sum_{i<j<k} P\left(A_i \cap A_j \cap A_k\right)\).
+    \end{enumerate}
+\end{exercise}
+\end{framed}
+\begin{proof}
+用归纳法完成我们的证明.
+\begin{enumerate}[a)]
+    \item 当\(n = 2\)时, 根据习题\#2.10, 有\(P(A_1 \cup A_2) = P(A_1) + P(A_2) - P(A_1 \cap A_2)\). 假设当\(n = t\)时不等式成立, 即
+    $$
+    P\left(\cup_{i=1}^t A_i\right) \geq \sum_{i=1}^t P\left(A_i\right)-\sum_{1 \leq i<j \leq t} P\left(A_i \cap A_j\right), 
+    $$
+    则当\(n = t+1\)时,
+    $$
+    \begin{aligned}
+        P\left(\cup_{i=1}^{t+1} A_i\right) =& P\left(\cup_{i=1}^t A_i\right) + P(A_{t+1}) - P\left(\cup_{i=1}^t A_i \cap A_{t+1}\right) \\
+        \geq & \sum_{i=1}^{t + 1} P\left(A_i\right)-\sum_{1 \leq i<j \leq t} P\left(A_i \cap A_j\right) - P\left(\cup_{i=1}^t A_i \cap A_{t+1}\right) \\
+        \geq & \sum_{i=1}^{t + 1} P\left(A_i\right)-\sum_{1 \leq i<j \leq t+1} P\left(A_i \cap A_j\right). \quad \quad \text{(根据次可加性)}
+    \end{aligned}
+    $$
+    \item 当\(n = 2\)时, 根据习题\#2.10, 有\(P(A_1 \cup A_2) = P(A_1) + P(A_2) - P(A_1 \cap A_2)\). 当\(n = 3\)时, 根据习题\#2.13(容斥原理), 有\(P(A_1 \cup A_2 \cup A_3) = P(A_1) + P(A_2) + P(A_3) - P(A_1 \cap A_2) - P(A_1 \cap A_3) - P(A_2 \cap A_3) + P(A_1 \cap A_2 \cap A_3)\). 假设当\(n \leq t\)时不等式成立, 即
+    $$
+    P\left(\cup_{i=1}^t A_i\right) \leq \sum_{i=1}^t P\left(A_i\right)-\sum_{1\leq i<j \leq t} P\left(A_i \cap A_j\right)+\sum_{1 \leq i<j<k \leq t} P\left(A_i \cap A_j \cap A_k\right), 
+    $$
+    则当\(n = t+1\)时, 需要用到a)的不等式, 
+    $$
+    \begin{aligned}
+        P\left(\cup_{i=1}^{t+1} A_i\right) =& P\left(\cup_{i=1}^{t - 1} A_i\right) + P(A_t) + P(A_{t+1}) - P\left(\cup_{i=1}^{t-1} A_i \cap A_{t}\right) - P\left(\cup_{i=1}^{t-1} A_i \cap A_{t + 1}\right) - P(A_t \cap A_{t+1}) \\&+ P\left(\left\{\cup_{i=1}^{t-1} A_i\right\} \cap A_t \cap A_{t+1}\right) \\
+        \leq & {\color{red}\sum_{i=1}^{t-1} P\left(A_i\right)}-\sum_{1\leq i<j \leq t-1} P\left(A_i \cap A_j\right)+\sum_{1 \leq i<j<k \leq t-1} P\left(A_i \cap A_j \cap A_k\right) +{\color{red} P(A_t)} + {\color{red} P(A_{t+1})} \\
+        & - {\color{purple}P\left(\cup_{i=1}^{t-1} A_i \cap A_t\right)} - {\color{purple}P\left(\cup_{i=1}^{t-1} A_i \cap A_{t+1}\right)} - P(A_t \cap A_{t+1}) + {\color{blue}P\left(\left\{\cup_{i=1}^{t-1} A_i\right\} \cap A_t \cap A_{t+1}\right)} \\
+        \leq & {\color{red}\sum_{i=1}^{t+1} P\left(A_i\right)}-\sum_{1\leq i<j \leq t-1} P\left(A_i \cap A_j\right)+\sum_{1 \leq i<j<k \leq t-1} P\left(A_i \cap A_j \cap A_k\right) + {\color{blue}\sum_{i=1}^{t-1}P(A_i \cap A_t \cap A_{t+1})} \\
+        & - {\color{purple} \sum_{i=1}^{t-1}P(A_i \cap A_t) - \sum_{1\leq i < j \leq t-1}P(A_i \cap A_j \cap A_t)} \\
+        & - {\color{purple} \sum_{i=1}^{t-1}P(A_i \cap A_{t+1}) - \sum_{1\leq i < j \leq t-1}P(A_i \cap A_j \cap A_{t+1})} \\
+        & - P(A_t \cap A_{t+1}) \\
+        \leq & \sum_{i=1}^{t+1} P\left(A_i\right)-\sum_{1\leq i<j \leq t+1} P\left(A_i \cap A_j\right)+\sum_{1 \leq i<j<k \leq t+1} P\left(A_i \cap A_j \cap A_k\right)。
+    \end{aligned}
+    $$
+\end{enumerate}
+
+\end{proof}
+
+
+
+
+
+\begin{framed}
+\begin{exercise}
+    假设\(\Omega\)是无穷集合(无论是否可数), 令\(\mathcal{A}\)是由要么有有限元素, 要么有有限元素的补集的集合构成的集族. 证明\(\mathcal{A}\)是代数, 但不是\(\sigma\)-代数.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+记
+$$
+\mathcal{A} = \{A \subset \Omega: A \text{ 是有限集, 或 } A^c \text{ 是有限集}\}.
+$$
+要证明\(\mathcal{A}\)是一个代数, 只需证空集, 余集, 有限并运算封闭.
+\begin{enumerate}
+    \item 空集没有元素, 因此在\(\mathcal{A}\)中.
+    \item 若\(E \in \mathcal{A}\), 则\(E\)是有限集, 或者\(E^c\)是有限集. 于是\(E^c\)是有限集, 或者\((E^c)^c = E\)是有限集. 因此, \(\mathcal{A}\)对于取余运算封闭.
+    \item 若\(\{E_i\}_{i=1}^n \subset \mathcal{A}\), 定义\(E = \cup_{i=1}^n E_i\). 若每一个\(E_i\)都是有限集合, 那么\(E\)也是有限集合. 若存在某个\(E_j\)是无限集合, 它的余集\(E_j^c\)是有限集合, 那么\(\left(\cup_{i=1}^n E_i\right)^c = \cap_{i=1}^n E_i^c \subset E_j^c\)是有限集合. 因此, \(\mathcal{A}\)对于有限并运算封闭. 
+\end{enumerate}
+
+下面说明\(\mathcal{A}\)不是\(\sigma\)-代数.
+
+问题出在``若\(E_i\)是有限集合, 那么\(\cup_{i=1}^\infty E_i\)是有限集合''这一点. 事实上, 对于无穷集合\(\Omega\), 无限并运算可能是无限集合. 例如, 取\(\Omega = \mathbb{N}\), 对于\(E_i = \{i\}\), 则\(\cup_{i=1}^\infty E_i = \mathbb{N}\)是无限集合. 因此, \(\mathcal{A}\)不是\(\sigma\)-代数.
+
+\end{proof}
+
+\begin{framed}
+\begin{proposition}[等价性]
+以下两种集合极限的定义是等价的:
+\begin{enumerate}
+    \item 若\(\liminf_{n\rightarrow \infty} A_n = \limsup_{n\rightarrow \infty} A_n\), 我们认为\(\{A_n\}\)的极限存在, 并把$$\lim_{n\rightarrow \infty} A_n \triangleq \liminf_{n\rightarrow \infty} A_n = \limsup_{n\rightarrow \infty} A_n$$称为它的极限.
+    \item 若存在集合\(A\)使得, $$\lim_{n\to \infty} I_{A_n}(w) = I_A(w), \forall w \in \Omega, $$则称\(A_n\)收敛到\(A\).
+\end{enumerate}
+\end{proposition}
+\end{framed}
+
+\begin{proof}
+\(1 \Rightarrow 2\). 定义集合\(A \triangleq \lim_{n\to \infty} A_n\). 往证\(\lim_{n\to \infty} I_{A_n}(w) = I_A(w)\)逐点收敛.
+当\(w \in A = \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k \)时, 
+存在\(n_0\)使得对于任意的\(k \geq n_0\), 有\(w \in  A_k\), \(I_{A_k}(w) = 1\), 于是有\(\lim_{k\to\infty}I_{A_k}(w) = 1, w\in A\). 
+当\(w\in A^c= \left(\bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k\right)^c = \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k^c\)时, 
+存在\(n_0^\prime\)使得对于任意的\(k \geq n_0^\prime\), 有\(w \in  A_k^c\), \(I_{A_k}(w) = 0\), 于是有\(\lim_{k\to\infty}I_{A_k}(w) = 0, w\in A^c\). 于是
+$$\lim_{n\to \infty} I_{A_n}(w) = I_A(w), \forall w \in \Omega.$$
+
+\(2 \Rightarrow 1\). 
+% 记\(B_n = \bigcap_{k=n}^\infty A_n, C_n = \bigcup_{k=n}^\infty A_n\), 显然, 存在集合\(B = \bigcup_{n=1}^\infty B_n, C = \bigcap_{n=1}^\infty C_n\)使得
+由于示性函数是二值函数, 因此若存在集合\(A\)使得, $$\lim_{n\to \infty} I_{A_n}(w) = I_A(w), \forall w \in \Omega, $$
+则有对\(w \in A\), 存在\(n_0\)使得对于任意的\(n \geq n_0\), 有\(I_{A_n}(w) = 1\), 即\(w \in \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k\), 即\(w \in \liminf_{n\to \infty} A_n, A \subset \liminf_{n\to \infty} A_n\).
+同理, 对\(w \in A^c\), 存在\(n_0^\prime\)使得对于任意的\(n \geq n_0^\prime\), 有\(I_{A_n}(w) = 0\), 即\(w \in \left(\bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k\right)^c\), 即\(w \in \left(\limsup_{n\to \infty} A_n\right)^c, A^c \subset \left(\limsup_{n\to \infty} A_n\right)^c\). 于是有
+$$
+A \subset \liminf_{n\to \infty} A_n \subset \limsup_{n\to \infty} A_n \subset A.
+$$
+从而有
+$$
+A = \liminf_{n\rightarrow \infty} A_n = \limsup_{n\rightarrow \infty} A_n.
+$$
+\end{proof}
+
+
+
+
+
+\medskip
+
+\printbibliography
+
+
+\end{document}

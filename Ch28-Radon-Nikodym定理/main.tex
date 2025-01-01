@@ -1,0 +1,132 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#28.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 28: Radon-Nikodym 定理}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}
+假设\(Q\)和\(P\)是有限测度, 且\(Q \ll P, P \ll Q\). 这时, 我们称\(Q\)和\(P\)是等价的, 记作\(Q \sim P\). 证明: \(X = \frac{dQ}{dP}\)满足\(X > 0, P\)-几乎处处.
+即\(P(X \leq 0) = 0\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+假设我们考虑的问题在可测空间\((\Omega, \mathcal{A})\)上. 
+由于\(Q \ll P\), 且是有限测度, 
+根据RN定理存在唯一(a.s. \(P\))的\(X = \frac{dQ}{dP} \geq 0\), 使得\(\int X dP = 1\)且对于任意\(A \in \mathcal{A}\), 有
+\[
+Q(A) = \int_A X dP.
+\]
+反证法. 若不然, 记\(B = \{X \leq 0\}\), 则\(P(B) > 0\). 
+根据测度的定义\(Q(B) \geq 0\),
+但是此时根据集合\(B\)的定义, 
+$$
+Q(B) = \int_B X dP \leq 0,
+$$
+于是\(Q(B) = 0\). 根据\(P \ll Q\), 有\(P(B) = 0\), 这与\(P(B) > 0\)矛盾! 因此, \(P(X \leq 0) = 0\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+如果\(Q \sim P\), 设\(X = \frac{dQ}{dP}\). 证明: \(\frac{1}{X} = \frac{dP}{dQ}\).
+\end{exercise}
+\end{framed}
+\begin{remark}
+参见习题9.8.
+\end{remark}
+
+
+\begin{proof}
+假设我们考虑的问题在可测空间\((\Omega, \mathcal{A})\)上. 
+要证明\(\frac{1}{X} = \frac{dP}{dQ}\), 根据RN定理中的唯一性, 只需证明对于任意\(A \in \mathcal{A}\), 有
+$$
+P(A) = \int_A \frac{1}{X} dQ.
+$$
+其中, \(X\)满足\(\int X \,dP = 1, X > 0\) (a.s. \(P\)), 且对于任意\(A \in \mathcal{A}\), 有
+\[
+Q(A) = \int_A X dP.
+\]
+根据习题9.7, 用标准方法可以证明积分变换公式, 则
+$$
+\int_A \frac{1}{X} dQ = \int_A \frac{1}{X} X dP = \int_A dP = P(A).
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\mu\)是测度使得\(\mu = \sum_{n=1}^{\infty} \alpha_n P_n\), 其中\(P_n\)是概率测度, \(\alpha_n > 0\).
+假设\(Q_n \ll P_n\)对每个\(n\)成立. 以及\(\nu = \sum_{n=1}^{\infty} \beta_n Q_n, \beta_n \geq 0, \forall n\).
+证明: \(\nu \ll \mu\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+假设我们考虑的问题在可测空间\((\Omega, \mathcal{A})\)上.
+根据Levi单调收敛定理, 显然, \(\mu, \nu\)是测度.
+
+设\(N \in \mathcal{A}\), 且\(\mu(N) = 0\).
+则
+$$
+\sum_{n=1}^{\infty} \alpha_n P_n(N) = 0 \Rightarrow P_n(N) = 0, \forall n.
+$$
+因此, 根据\(Q_n \ll P_n\), 对于任意\(n\), 有\(Q_n(N) = 0\), 即\(\nu(N) = 0\), 即\(\nu \ll \mu\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(P,Q\)是两个概率, 令\(R = \frac{P+Q}{2}\). 证明: \(P \ll R\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+考虑可测空间\((\Omega, \mathcal{A})\).
+先证: \(R\)是一个概率测度.
+\begin{enumerate}
+    \item \(R: \mathcal{A} \to [0, 1]\). 对于任意\(A \in \mathcal{A}\), 有\(R(A) = \frac{1}{2}P(A) + \frac{1}{2}Q(A) \in [0,1]\).
+    \item \(R(\Omega) = \frac{1}{2}P(\Omega) + \frac{1}{2}Q(\Omega) = \frac{1}{2} + \frac{1}{2} = 1\).
+    \item 对于任意互不相交的事件\(A_1, A_2, \ldots \in \mathcal{A}\), 有$$R\left(\sum_{j=1}^{\infty}A_j\right) = \frac{P\left(\sum_{j=1}^{\infty}A_j\right) + Q\left(\sum_{j=1}^{\infty}A_j\right)}{2} = \sum_{j=1}^{\infty} \frac{P(A_j) + Q(A_j)}{2} = \sum_{j=1}^{\infty} R(A_j).$$
+\end{enumerate}
+
+接下来证明\(P \ll R\). 设\(N\in \mathcal{A}\), 且\(R(N) = 0\). 则
+$$
+P(N) + Q(N) = 0 \Rightarrow P(N) = 0, Q(N) = 0.
+$$
+因此, \(P \ll R\).
+\end{proof}
+
+
+\begin{exercise}
+假设\(Q \sim P\). 给出一个\(P\)鞅但不是\(Q\)鞅的例子.
+再给出一个鞅过程的例子, 使它在\(P\)和\(Q\)下都是鞅.
+\end{exercise}
+
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}
