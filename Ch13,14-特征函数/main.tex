@@ -16,7 +16,7 @@
 \newtheorem*{remark}{注}
 \everymath{\displaystyle}
 
-\addbibresource{my.bib}
+% \addbibresource{my.bib}
 \title{Chapter 13\&14: 特征函数}
 \author{}
 \date{Latest Update: \today}
@@ -224,6 +224,14 @@ $$
 \varphi_X(u) = 1 - \frac{1}{2} u^2 \mathbb{E}X^2 + o(u^2).
 $$
 \end{proof}
+
+\begin{remark}
+已有复变中的结论表明:
+$$
+\left|e^{i x}-\sum_{m=0}^n \frac{(i x)^m}{m!}\right| \leq \min \left(\frac{|x|^{n+1}}{(n+1)!}, \frac{2|x|^n}{n!}\right)
+$$
+因此上面的Taylor展开是合理的.
+\end{remark}
 
 
 
