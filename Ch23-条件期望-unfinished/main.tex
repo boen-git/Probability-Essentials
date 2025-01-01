@@ -1,0 +1,272 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#23.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 23: 条件期望}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+
+对于习题23.1到23.6, 假设\(Y\)是\((\Omega, \mathcal{A}, P)\)正的或可积随机变量, \(\mathcal{G}\)是\(\mathcal{A}\)的子\(\sigma\)-代数.
+
+\begin{framed}
+\begin{exercise}
+证明: \(|\mathbb{E}\{Y|\mathcal{G}\}| \leq \mathbb{E}\{|Y| \mid \mathcal{G}\}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+若\(Y \geq 0\), 则\(|\mathbb{E}\{Y|\mathcal{G}\}| = \mathbb{E}\{|Y| \mid \mathcal{G}\}\).
+
+若\(Y\)可积, 根据绝对值函数\(\varphi(x) = |x|\)是凸函数, 则由Jensen不等式(Thm 23.9)立刻得出结论.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+假设\(\mathcal{H} \subset \mathcal{G}\), 其中\(\mathcal{H}\)是\(\mathcal{G}\)的子\(\sigma\)-代数. 证明: $$\mathbb{E}\{\mathbb{E}\{Y|\mathcal{G}\}|\mathcal{H}\} = \mathbb{E}\{Y|\mathcal{H}\}.$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由条件: \(\mathcal{H} \subset \mathcal{G}\).
+首先, \(\mathbb{E}(Y|\mathcal{G})\)是\(\mathcal{G}\)可测的.
+要证对于任意的\(H \in \mathcal{H} \subset \mathcal{G}\), 有
+$$
+\int_H \mathbb{E}\{\mathbb{E}\{Y|\mathcal{G}\}|\mathcal{H}\} dP = \int_H \mathbb{E}\{Y|\mathcal{H}\} dP \overset{by\,def}{=} \int_H Y dP.
+$$
+而左边的定义是\(\forall H \in \mathcal{H}\),
+$$
+\int_H \mathbb{E}\{\mathbb{E}\{Y|\mathcal{G}\}|\mathcal{H}\} dP = \int_H \mathbb{E}\{Y|\mathcal{G}\} dP.
+$$
+而\(H \in \mathcal{G}\), 
+$$
+\int_H \mathbb{E}\{Y|\mathcal{G}\} dP = \int_H Y dP.
+$$
+显然.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明: \(\mathbb{E}\{Y\mid Y\} = Y\) a.s.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+由定义, 显然.
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+证明若\(|Y| \leq c\) a.s. 则\(\mathbb{E}\{Y|\mathcal{G}\} \leq c\) a.s.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+根据引理23.1, 定理23.4, 显然.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+若\(Y = \alpha\) a.s., 其中\(\alpha\)是常数, 证明: \(\mathbb{E}\{Y|\mathcal{G}\} = \alpha\) a.s.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据定义, 只需验证, \(\forall G \in \mathcal{G}\), 
+$$
+\int_G \mathbb{E}\{Y|\mathcal{G}\} dP = \int_G \alpha dP.
+$$
+得证.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+若\(Y\)是正的, 证明\(\{\mathbb{E}\{Y \mid \mathcal{G}\} = 0\} \subset \{Y = 0\}\), 以及\(\{Y = +\infty\} \subset \{\mathbb{E}\{Y\mid \mathcal{G}\} = + \infty\}\) a.s.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+若不然, 根据\(Y \geq 0\)
+$$
+P(Y >0, \mathbb{E}\{Y|\mathcal{G}\} = 0) \neq 0.
+$$
+而根据概率的连续性, 
+$$
+\lim_{n\to \infty} P\left(Y \geq \frac{1}{n}, \mathbb{E}\{Y|\mathcal{G} = 0\}\right) = P( Y > 0, \mathbb{E}\{Y|\mathcal{G} = 0\}) \neq 0.
+$$
+于是, 存在充分大的\(N\)使得当\(n > N\)时, 
+$$
+P\left(Y \geq \frac{1}{n}, \mathbb{E}\{Y|\mathcal{G} = 0\}\right) > 0.
+$$
+
+
+根据\(\mathbb{E}(Y | \mathcal{G})\)的定义, \(\forall G \in\mathcal{G}\), 
+$$
+\langle G, \mathbb{E}\{Y|\mathcal{G}\}\rangle = \langle G, Y\rangle.
+$$
+取\(G = \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}\), 则
+$$
+\langle G, \mathbb{E}\{Y|\mathcal{G}\}\rangle = 0, \quad \text{(根据运算)}
+$$
+对于\(\langle G, Y \rangle, \forall n > 0\), 
+$$
+0 = \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, Y \rangle \geq \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, Y \mathbb{I}_{\{Y \geq 1/n\}} \rangle \geq \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, \frac{1}{n}  \rangle = \frac{1}{n} P(Y \geq 1/n, \mathbb{E}(Y|\mathcal{G}) = 0).
+$$
+矛盾! 所以\(\{\mathbb{E}\{Y \mid \mathcal{G}\} = 0\} \subset \{Y = 0\}\) a.s.
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X, Y\)是独立的, 设\(f\)是Borel的使得\(f(X,Y) \in L^1(\Omega, \mathcal{A}, P)\).
+令
+$$g(x)=\left\{\begin{array}{cc}\mathbb{E}\{f(x,Y)\}&\text{ if }|\mathbb{E}\{f(x,Y)\}|<\infty,\\0&\text{ otherwise.}\end{array}\right.$$
+证明: \(g(X)\)是\(\mathbb{R}^1\)上的Borel函数满足
+$$
+\mathbb{E}\{f(X, Y) \mid X\} = g(X).
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+$$
+g^{-1}(B) = \begin{cases}
+\{x \in \mathbb{R}: \mathbb{E}\{f(x, Y)\} \in B\}, & \text{if } 0 \not\in B, \\
+\end{cases}
+$$
+
+根据Fubini定理, 
+
+
+2. 用定理23.2, 23.6
+
+$$
+\begin{aligned}
+\mathbb{E}\{f(X, Y) \mid X\} &= \mathbb{E}\{\mathbb{E}\{f(X, Y) \mid X, Y\} \mid X\} \\
+\end{aligned}
+$$
+\end{proof}
+
+
+\begin{exercise}
+设\(Y\)是\(L^2(\Omega, \mathcal{A}, P)\)上的随机变量, 假设\(\mathbb{E}\{Y^2 \mid X\} = X^2\)以及\(\mathbb{E}\{Y \mid X\} = X\).
+证明\(Y = X\) a.s.
+\end{exercise}
+
+\begin{exercise}
+设\(Y\)是指数分布随机变量满足\(P(Y > t) = e^{-t}, t >0\).
+计算\(\mathbb{E}\{Y \mid Y \wedge t\}\), 其中\(Y \wedge t = \min(t,Y)\).
+\end{exercise}
+
+
+\begin{exercise}[Chebyshev不等式]
+证明对于\(X \in L^2\), \(a > 0, P(|X| \geq a \mid \mathcal{G}) \leq \frac{\mathbb{E}\{X^2 \mid \mathcal{G}\}}{a^2}\).
+其中\(P(A\mid \mathcal{G}) = \mathbb{E}\{\mathbb{I}_A \mid \mathcal{G}\}\).
+\end{exercise}
+
+
+\begin{exercise}[Cauchy-Schwarz不等式]
+对于\(X,Y \in L^2\), 证明: 
+$$(\mathbb{E}\{XY|\mathcal{G}\})^2\leq \mathbb{E}\{X^2|\mathcal{G}\}\mathbb{E}\{Y^2|\mathcal{G}\}.$$
+\end{exercise}
+
+
+\begin{exercise}
+    设\(X \in L^2\). 证明 $$\mathbb{E}\{(X-\mathbb{E}\{X|\mathcal{G}\})^2\}\leq \mathbb{E}\{(X-\mathbb{E}\{X\})^2\}.$$
+\end{exercise}
+
+
+
+
+\begin{exercise}
+设\(p \geq 1, r \geq p\).
+证明: 对于关于一个概率测度的期望来说\(L^p \supset L^r\). 
+\end{exercise}
+
+
+
+\begin{exercise}
+设\(Z\)是定义在\((\Omega, \mathcal{F}, P)\)上的随机变量, 其中\(Z \geq 0\), \(\mathbb{E}Z = 1\).
+定义一个新的概率测度\(Q\), 满足\(Q(\Lambda) = \mathbb{E}\{\mathbb{I}_{\Lambda} Z\}\).
+设\(\mathcal{G}\)是\(\mathcal{F}\)的一个子\(\sigma\)-代数, 设\(U = \mathbb{E}\{Z\mid \mathcal{G}\}\).
+证明: 
+$$
+\mathbb{E}_Q\{X \mid \mathcal{G}\} = \frac{\mathbb{E}\{XZ\mid \mathcal{G}\}}{U}, 
+$$
+其中\(X\)是任意的有界\(\mathcal{F}\)-可测随机变量.
+这里\(\mathcal{E}_Q\{X\mid \mathcal{G}\}\)表示随机变量\(X\)关于概率测度\(Q\)的条件期望.
+\end{exercise}
+
+
+
+
+\begin{exercise}
+证明: 赋范线性空间\(L^p(\Omega, \mathcal{F}, P)\)是完备的, 其中\(1\leq p < \infty\).
+\end{exercise}
+
+
+
+\begin{exercise}
+设\(X \in L^1(\Omega, \mathcal{F}, P)\)以及\(\mathcal{G}, \mathcal{H}\)是\(\mathcal{F}\)的子\(\sigma\)-代数.
+进一步假设\(\mathcal{H}\)独立于\(\sigma(\sigma(X), \mathcal{G})\).
+证明: \(\mathbb{E}\{X\mid \mathcal{G}\} = \mathbb{E}\{X\mid \sigma(\mathcal{G}, \mathcal{H})\}\) a.s.
+\end{exercise}
+
+
+\begin{exercise}
+设\(\{X_n\}_{n\geq 1}\)独立同分布, 且是\(L^1\)上的随机变量.
+令\(S_n = X_1 + \cdots + X_n\), \(\mathcal{G}_n = \sigma(S_n, S_{n+1}, ...)\).
+证明: \(\mathbb{E}\{X_1 \mid \mathcal{G}_n\} = \mathbb{E}\{X_1 \mid S_n\}\), \(\mathbb{E}\{X_j \mid \mathcal{G}_n\} = \mathbb{E}\{X_j \mid S_n\}, 1 \leq j \leq n\).
+证明: \(\mathbb{E}\{X_j \mid \mathcal{G}_n\} = \mathbb{E}\{X_1 \mid S_n\}, 1 \leq j \leq n\).
+\end{exercise}
+\begin{remark}
+用习题23.16的结论.
+\end{remark}
+
+
+
+\begin{exercise}
+设\(X_1, X_2, ..., X_n\)独立同分布, 且是\(L^1\)上的随机变量.
+证明对于每一个\(1 \leq j\leq n\), 有
+$$
+\mathbb{E}\left\{X_j \mid \sum_{i = 1}^{n}X_i\right\} = \frac{1}{n} \sum_{i = 1}^{n} X_i.
+$$
+\end{exercise}
+
+\begin{remark}
+用定理23.2的结论, 对称性来源于独立同分布条件.
+\end{remark}
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

@@ -1,0 +1,556 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#15.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 15: 独立随机变量的和}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}
+设\(X_1, ..., X_n\)是独立的随机变量, 假设\(\mathbb{E}\{X_j\} = \mu, \operatorname{Var}(X_j) = \sigma^2 < \infty, 1 \leq j\leq n\).
+令
+$$
+\bar{X}=\frac{1}{n} \sum_{j=1}^n X_j \quad \text { 以及 } \quad S^2=\frac{1}{n} \sum_{j=1}^n\left(X_j-\bar{X}\right)^2 .
+$$
+证明:
+\begin{enumerate}[a)]
+    \item \(\mathbb{E}\{\bar{X}\} = \mu\);
+    \item \(\operatorname{Var}(\bar{X}) = \sigma^2/n\);
+    \item \(\mathbb{E}\{S^2\} =\frac{n-1}{n} \sigma^2\);
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{enumerate}[a)]
+    \item \(\mathbb{E}\{\bar{X}\} = \mathbb{E}\{\frac{1}{n} \sum_{j=1}^n X_j\} = \frac{1}{n} \sum_{j=1}^n \mathbb{E}\{X_j\} = \mu\);
+    \item \(\operatorname{Var}(\bar{X}) = \operatorname{Var}(\frac{1}{n} \sum_{j=1}^n X_j) = \frac{1}{n^2} \sum_{j=1}^n \operatorname{Var}(X_j) = \frac{\sigma^2}{n}\);
+    \item \(\mathbb{E}\{S^2\} = \mathbb{E}\{\frac{1}{n} \sum_{j=1}^n\left(X_j-\bar{X}\right)^2\} = \frac{1}{n} \sum_{j=1}^n \mathbb{E}\{(X_j-\bar{X})^2\}\).
+    \begin{align*}
+        \sum_{j=1}^n\mathbb{E}\{(X_j-\bar{X})^2\} &= \sum_{j=1}^n \mathbb{E}\{X_j^2\} - n\mathbb{E}\{\bar{X}^2\} = (n-1)\sigma^2  \\
+    \end{align*}
+    于是\(\mathbb{E}\{S^2\} = \frac{n-1}{n}\sigma^2\).
+\end{enumerate}
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_1, ..., X_n\)是独立的随机变量, 且有有限的方差.
+设\(S_n = \sum_{j=1}^{n}Y_j\). 证明:
+$$
+\sigma_{\frac{1}{n} S_n}^2=\frac{1}{n^2} \sum_{j=1}^n \sigma_{X_j}^2
+$$
+并推导出若\(\sigma_{X_j}^2 = \sigma^2, 1 \leq j \leq n\), 则\(\sigma_{\frac{1}{n} S_n}^2 = \sigma^2/n\).
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+\begin{align*}
+    \sigma_{\frac{1}{n} S_n}^2 &= \operatorname{Var}\left(\frac{1}{n} \sum_{j=1}^{n} Y_j\right) = \frac{1}{n^2} \sum_{j=1}^{n} \operatorname{Var}(Y_j) = \frac{1}{n^2} \sum_{j=1}^{n} \sigma_{X_j}^2.
+\end{align*}
+若\(\sigma_{X_j}^2 = \sigma^2, 1 \leq j \leq n\), 则\(\sigma_{\frac{1}{n} S_n}^2 = \sigma^2/n\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明: 若\(X_1, ..., X_n\)是独立同分布的随机变量, 则
+$$
+\varphi_{S_n}(u)=\left(\varphi_X(u)\right)^n,
+$$
+其中\(S_n = \sum_{j=1}^{n}X_j\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{align*}
+    \varphi_{S_n}(u) &= \mathbb{E}\left\{e^{i u S_n}\right\} \\
+    &= \mathbb{E}\left\{e^{i u \sum_{j=1}^{n}X_j}\right\} \\
+    &= \mathbb{E}\left\{\prod_{j=1}^{n}e^{i u X_j}\right\} \\
+    &= \prod_{j=1}^{n}\mathbb{E}\left\{e^{i u X_j}\right\} \quad \text{(独立性)}\\
+    &= \left(\varphi_X(u)\right)^n.
+\end{align*}
+\end{proof}
+
+
+问题4-8是在讨论{\it 和数是一个随机数的} 独立随机变量的和.
+我们设\(X_1, X_2, ...\)是一个独立同分布的随机变量无穷序列, 且\(N\)是正的, 取值为整数的随机变量, 它于序列\(\{X_n\}\)独立. 进一步地, 令
+$$
+S_n=\sum_{i=1}^n X_i, \quad \text { 以及 } \quad S_N=X_1+X_2+\ldots+X_N
+$$
+并约定当\(N = 0\)时, \(S_N = 0\).
+
+\begin{framed}
+\begin{exercise}
+对于任意一个Borel集\(A\), 证明: 
+$$
+P\left(S_N \in A \mid N=n\right)=P\left(S_n \in A\right) .
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{align*}
+    P\left(S_N \in A \mid N=n\right) &= P\left(\sum_{i=1}^{n}X_i \in A \mid N=n\right) \\
+    &= P\left(\sum_{i=1}^{n}X_i \in A\right) \quad \text{(独立性)}\\
+    &= P\left(S_n \in A\right).
+\end{align*}
+\end{proof}
+
+% 下面的题目先假设\(X_i\)是正的随机变量, 然后用单调收敛定理证明可交换.
+
+
+\begin{framed}
+\begin{exercise}
+假设\(\mathbb{E}\{N\} < \infty\)以及\(\mathbb{E}\{|X_j|\} < \infty\).
+证明: 
+$$
+\mathbb{E}\left\{S_N\right\}=\sum_{n=0}^{\infty} \mathbb{E}\left\{S_n\right\} P(N=n)
+$$
+\end{exercise}
+
+\begin{remark}
+$$
+\mathbb{E}\left\{S_N\right\}=\mathbb{E}\left\{\sum_{n=0}^{\infty} S_n \mathbb{I}_{\{N=n\}}\right\}=\sum_{n=0}^{\infty} \mathbb{E}\left\{S_n \mathbb{I}_{\{N=n\}}\right\}.
+$$
+\end{remark}
+\end{framed}
+
+\begin{proof}
+由于
+$$
+\sum_{n=0}^{\infty} \mathbb{E}\{|S_n \mathbb{I}_{\{N=n\}}|\} \leq \sum_{n=0}^{\infty} \mathbb{E}\{|S_n|\} P(N = n) \leq \sum_{n=0}^{\infty} n\mathbb{E}\{|X_j|\} P(N = n) = \mathbb{E}\{|X_j|\} \mathbb{E}\{N\}< \infty,
+% = \sum_{n=0}^{\infty} \mathbb{E}\{|X_j|\} < \infty,
+$$
+于是根据控制收敛定理, 我们有期望求和可交换. 于是
+
+\begin{align*}
+    \mathbb{E}\left\{S_N\right\} &= \mathbb{E}\left\{S_N 1_{\{N \neq 0\}}\right\} + \mathbb{E}\left\{S_N 1_{\{N = 0\}}\right\} \\
+    % &= \mathbb{E}\left\{S_N 1_{\{N \neq 0\}}\right\} \\
+    &=  \mathbb{E}\left\{\sum_{n=0}^{\infty} S_n 1_{\{N = n\}}\right\} \\
+    &= \sum_{n=0}^{\infty} \mathbb{E}\left\{S_n 1_{\{N = n\}}\right\} \quad \text{(控制收敛定理)}\\
+    &= \sum_{n=0}^{\infty} \mathbb{E}\left\{S_n\right\} P(N=n). \\
+    % &= \sum_{n=0}^{\infty} \mathbb{E}\left\{S_n\right\} P(N=n).
+\end{align*}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+假设\(\mathbb{E}\{N\} < \infty\)以及\(\mathbb{E}\{|X_j|\} < \infty\).
+证明: 
+$$
+\mathbb{E}\{S_N\} = \mathbb{E}\{N\}\mathbb{E}\{X_j\}.
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{align*}
+    \mathbb{E}\{S_N\} &= \sum_{n=0}^{\infty} \mathbb{E}\{S_n\} P(N=n) \quad \text{(习题15.5)}\\
+    &= \sum_{n=0}^{\infty} n\mathbb{E}\{X_j\} P(N=n) \\
+    &= \mathbb{E}\{X_j\} \sum_{n=0}^{\infty} n P(N=n) \\
+    &= \mathbb{E}\{X_j\} \mathbb{E}\{N\}.
+\end{align*}
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+假设\(\mathbb{E}\{N\} < \infty\)以及\(\mathbb{E}\{X_j\} < \infty\).
+证明:
+$$
+\varphi_{S_N}(u)=E\left\{\left(\varphi_{X_j}(u)\right)^N\right\} .
+$$
+\end{exercise}
+
+\begin{remark}
+$$
+\varphi_{S_N}(u)=\sum_{n=1}^{\infty} E\left\{e^{i u S_n} 1_{\{N=n\}}\right\} .
+$$
+\end{remark}
+\end{framed}
+
+\begin{proof}
+\begin{align*}
+    \varphi_{S_N}(u) &= \mathbb{E}\{e^{i u S_N}\} \\
+    % &= \mathbb{E}\{e^{i u S_N} 1_{\{N \neq 0\}}\} + \mathbb{E}\{e^{i u S_N} 1_{\{N = 0\}}\} \\
+    &= \mathbb{E}\left\{\sum_{n=0}^{\infty} e^{i u S_N} \mathbb{I}_{\{N = n\}}\right\} \\
+    % &= \mathbb{E}\{e^{i u \sum_{n=0}^{\infty} S_n \mathbb{I}_{\{N = n\}}}\} \\
+    &= \sum_{n=0}^{\infty} \mathbb{E}\left\{e^{i u S_n} \mathbb{I}_{\{N = n\}}\right\} \quad \text{(控制收敛定理)}\\
+    &= \sum_{n=0}^{\infty} \mathbb{E}\{e^{i u S_n}\} P(N=n) \\
+    &= \sum_{n=0}^{\infty} \varphi_{S_n}(u) P(N=n) \\
+    &= \sum_{n=0}^{\infty} \varphi_{X_j}(u)^n P(N=n) \\
+    % &= \sum_{n=1}^{\infty} \varphi_{X_j}(u)^n P(N=n) \\
+    &= \mathbb{E}\left\{\left(\varphi_{X_j}(u)\right)^N\right\}.
+\end{align*}
+其中, 期望求和可交换是由于控制收敛定理: 
+$$
+\sum_{n=0}^{\infty} \mathbb{E}\{|e^{i u S_n} \mathbb{I}_{\{N = n\}}|\} = \sum_{n=0}^{\infty} \mathbb{E}\{|e^{i u S_n}|\} P(N = n) \leq \sum_{n=0}^{\infty} P(N = n) = 1< \infty.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+用15.7证明15.6.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+这里的推导是形式的. 
+$$
+\begin{aligned}
+    i \mathbb{E}\{S_N\} &= \left.\frac{\partial}{\partial u} \varphi_{S_N}(u) \right|_{u = 0} \\
+    &= \left.\frac{\partial}{\partial u} \mathbb{E}\left\{\left(\varphi_{X_j}(u)\right)^N\right\} \right|_{u = 0} \\
+    &= \mathbb{E}\left\{N\left(\varphi_{X_j}(0)\right)^{N-1}i\varphi_{X_j}'(0)\right\} \\
+    &= \mathbb{E}\{N\}i\mathbb{E}\{X_j\}.
+\end{aligned}
+$$
+从而
+$$
+\mathbb{E}\{S_N\} = \mathbb{E}\{N\}\mathbb{E}\{X_j\}.
+$$
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(X,Y\)是实值独立的随机变量. 
+假设\(X, X+Y\)同分布. 证明: \(Y\)几乎处处为\(0\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于\(X, X+Y\)同分布, 那么\(X\)和\(X+Y\)的特征函数相等, 即
+$$
+\varphi_X(u) = \varphi_{X+Y}(u) = \mathbb{E}\{e^{i u (X+Y)}\} = \mathbb{E}\{e^{i u X}e^{i u Y}\} = \mathbb{E}\{e^{i u X}\}\mathbb{E}\{e^{i u Y}\} = \varphi_X(u)\varphi_Y(u).
+$$
+由于\(X\)是实值随机变量, 于是\(\varphi_Y(u) = 1\), 
+这是退化分布\(\delta_{0}(x)\)的特征函数. 根据唯一性定理, \(Y\)服从取值为\(0\)的退化分布, 从而几乎处处为\(0\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(f, g\)是\(\mathbb{R}\)到\(\mathbb{R}_+\)上的函数, 满足
+$$
+\int_{-\infty}^{\infty} f(x) d x<\infty \quad \text { and } \quad \int_{-\infty}^{\infty} g(x) d x<\infty .
+$$
+证明:
+\begin{enumerate}
+    \item \(f * g(x) = \int_{-\infty}^{\infty} f(x - y)g(y) \,dy\){\color{red}几处}存在;
+    \item \(f*g(x) = g*f(x)\);
+    \item 若\(f, g\)中的一个是连续函数, 则\(f*g\)也是连续函数. {\color{red}需要加条件: \(f\)有界/\(g\)有界/\(f\)有紧支撑/\(g\)有紧支撑}.
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{enumerate}
+    \item $$
+\begin{aligned}
+& \int_{\mathbb{R}} f * g(x) d x=\int_{\mathbb{R}} \int_{\mathbb{R}} f(x-y) g(y) d y d x \\
+& =\int g(y) \int f(x-y) d x d y=\|f\|_{L^{1}}\|g\|_{L^{1}} \\
+& \Rightarrow \left\|f * g\right\|_{L^{1}}=\left\| f\right\|_{L^{1}}  \cdot\left\| g\right\|_{L^{1}} <\infty \Rightarrow f * g  \overset{\text { a.s. }}{<}\infty.
+\end{aligned}
+$$
+\item $$
+f * g=\int_{\mathbb{R}} f(x-y) g(y) d y \quad g * f=\int_{\mathbb{R}} g(x-y) f(y) d y
+$$
+\item 
+设\(x_n \to x\), 则有逐点收敛性, 
+$$
+f\left(x_n-y\right) g(y) \rightarrow f(x-y) g(y)
+$$
+首先, 假设\(f\)有界, 那么
+$$
+\left|f\left(x_n-y\right) g(y)\right| \leqslant(\sup f) g(y) \in L^{\prime}
+$$
+由控制收敛定理, 有
+$$
+f*g(x_n) \to f*g(x).
+$$
+
+其次, 假设\(f\)有紧支撑, 那么\(f\)有界, 成立.
+
+假设\(g\)紧支, 即存在\(K\)紧, 使得\(g(x) = 0, x \in K^c\), 那么
+定义
+$$
+K^{\prime}=\overline{\{x-y+2: y \in R , \alpha \in[-1,1]\}}
+$$
+那么\(K^{\prime}\)也是紧的, 
+则对于充分大的\(N\), 
+$$
+\begin{aligned}
+& f\left(x_n-y\right) g(y)=f\left(x_n-y\right) g(y) \mathbb{I}_{(y \in k)} \\
+= & f(t) \cdot g(y) \mathbb{I}_{(y \in K)} \mathbb{I}_{t \in K^{\prime}} \leqslant\left|\sup _{t \in K^{\prime}} f(t)\right| \cdot g(y) \in L^{1}.
+\end{aligned}
+$$
+由控制收敛定理, 有
+$$
+f*g(x_n) \to f*g(x).
+$$
+
+最后, 若\(g\)是有界的. 
+取简单函数\(f_m \uparrow f\)逼近, 
+有 
+$$
+\|f_m - f\|_{L^1} \to 0.
+$$
+根据\(f\)有界时的讨论, 
+$$
+\begin{aligned}
+& \left|\int f_m\left(x_n-y\right) g(y) d y-\int f\left(x_n-y\right) g(y) d y\right| \\
+ \leqslant& \int\left|f_m\left(x_n-y\right)-f\left(x_n-y\right)\right| g(y) d y \\
+ \quad \leqslant&|\sup g| \cdot \int\left|f_m\left(x_n-y\right)-f\left(x_n-y\right)\right| d y \\
+ \quad=&|\sup g| \cdot \| f_m-f\|_{L^1}
+\end{aligned}
+$$
+同理 
+$$
+\left|\int f_m(x-y) g(y) d y-\int f(x-y) g(y) d y\right| \leqslant|\sup g| \| f_m-f\|_{L^1} .
+$$
+对于任意的\(m\), 当\(n\)充分大时, 有
+$$
+\left|\int f_m\left(x_n-y\right) g(y) d y-\int f_m(x-y) g(y) d y\right|<\varepsilon
+$$
+联合以上不等式, 即得结论.
+\end{enumerate}
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X,Y\)是独立同分布的. 进一步假设\(X+Y\)和\(X-Y\)独立.
+证明: 
+$$
+\varphi_X(2u) = \{\varphi_X(u)\}^3\varphi_X(-u).
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{align*}
+    \varphi_X(2u) &= \mathbb{E}\{e^{i 2u X}\} \\
+    &= \mathbb{E}\{e^{i u (X+Y)}e^{i u (X-Y)}\} \\
+    &= \mathbb{E}\{e^{i u (X+Y)}\}\mathbb{E}\{e^{i u (X-Y)}\} \quad \text{(独立性)}\\
+    &= \varphi_X^2(u)\varphi_X(u)\varphi_X(-u) \\
+    &= \{\varphi_X(u)\}^3\varphi_X(-u).
+\end{align*}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X,Y\)满足15.11的条件. 此外, \(\mathbb{E}\{X\} = 0, \mathbb{E}\{X^2\} = 1\).
+证明: \(X\)服从标准正态分布.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+证明存在\(a > 0\)使得\(\varphi(u) \neq 0, \forall |u| \leq a\).
+设\(\psi(u) = \frac{\varphi(u)}{\varphi(-u)}\), 其中\(|u| \leq a\), 证明\(\psi(u) = \{\psi(u/2^n)\}^{2^n}\);
+接着证明\(\psi(u) \to 1\), 当\(n\to\infty\).
+这推导出\(\varphi(t) = \{\varphi(t/2^n)\}^{4^n}\), 最后令\(n\to\infty\).
+\end{remark}
+
+
+\begin{proof}
+由于\(\mathbb{E}\{X\} = 0\), 于是\(\varphi_X(0) = 1\).
+由于\(\mathbb{E}\{X^2\} = 1\), 于是\(\varphi_X''(0) = -1\).
+由于\(\varphi_X(u)\)是特征函数, 那么\(\varphi_X(u)\)是连续的, 且\(\varphi_X(u)\)在\(u = 0\)处有连续的二阶导数.
+于是\(\varphi_X(u)\)在\(u = 0\)处的泰勒展开是
+$$
+\varphi_X(u) = 1 - \frac{u^2}{2} + o(u^2).
+$$
+由于\(\varphi_X(u)\)是特征函数, 那么\(\varphi_X(u)\)是有界的, 即存在\(a > 0\)使得\(\varphi(u) \neq 0, \forall |u| \leq a\).
+设\(\psi(u) = \frac{\varphi(u)}{\varphi(-u)}\), 其中\(|u| \leq a\), 于是
+$$
+\psi(u) = \frac{\varphi(u)}{\varphi(-u)} = \frac{\{\varphi(u/2)\}^3 \varphi(-u/2)}{\{\varphi(-u/2)\}^3 \varphi(u/2)} = \{\psi(u/2)\}^2.
+$$
+于是用归纳法易证\(\psi(u) = \{\psi(u/2^n)\}^{2^n}\).
+断言:
+$$
+\lim_{n\to\infty} \{\psi(u/2^n)\}^{2^n} = 1.
+$$
+这是因为
+$$
+\{\psi(u/2^n)\}^{2^n}  = \left\{\frac{\varphi(u/2^n)}{\varphi(-u/2^n)}\right\}^{2^n} 
+$$
+分子:
+$$
+\left\{\left[1 + \frac{-\frac{1}{2}u^2}{4^n} + o\left(\frac{u^2}{4^n}\right)\right]^{4^n}\right\}^{2^{-n}} \xrightarrow{n \to \infty} \left(e^{-\frac{u^2}{2}}\right)^{2^{-n}}.
+$$
+同理, 分母趋于\(\left(e^{\frac{u^2}{2}}\right)^{2^{-n}}\), 最后令\(n\to\infty\), 得到\(\lim_{n\to\infty} \{\psi(u/2^n)\}^{2^n} = 1.\)
+
+记\(\{\psi(u/2^n)\}^{2^n} = \psi_n(u)\), 
+$$
+\varphi_X(2u) = \varphi_X^3(u)\varphi_X(-u) = \varphi_X^4(u) \cdot \frac{\varphi_X(-u)}{\varphi_X(u)} = \varphi_X^4(u) \cdot \frac{1}{\psi_n(u)} \xrightarrow{n\to\infty} \varphi_X^4(u).
+$$
+用归纳法, 易证 
+$$
+\varphi(t) = \{\varphi(t/2^n)\}^{4^n} = \left[1 + \frac{-\frac{t^2}{2}}{4^n} + o\left(\frac{t^2}{4^n}\right)\right]^{4^n} \xrightarrow{n\to\infty} e^{-\frac{t^2}{2}}.
+$$
+根据唯一性定理, \(X\)服从标准正态分布.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_1, X_2, ...\)是独立同分布的随机变量, 服从\(N(\mu, \sigma^2)\).
+设\(\bar{X} = \frac{1}{n}\sum_{j=1}^{n}X_j\)以及\(Y_j = X_j - \bar{X}\).
+求出\((\bar{X}, Y_1, ..., Y_n)\)的联合特征函数.
+设\(S^2 = \frac{1}{n}\sum_{j = 1}^{n}Y_j^2\).
+并推导出\(\bar{X}\)和\(S^2\)是独立的.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+联合特征函数为
+$$
+\varphi_{\bar{X}, Y_1, \ldots, Y_n}\left(u_0, u_1, \ldots, u_n\right)=\mathbb{E}\left[\exp \left\{i u_0 \frac{1}{n} \sum_{j=1}^n X_j+i \sum_{j=1}^n u_j\left(X_j-\frac{1}{n} \sum_{k=1}^n X_k\right)\right\}\right]
+$$
+合并同类项, 
+$$
+\exp \left(i u_0 \frac{1}{n} \sum_{j=1}^n X_j+i \sum_{j=1}^n u_j\left\{X_j-\frac{1}{n} \sum_{k=1}^n X_k\right\}\right)=\exp \left(i \sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right) X_j\right)
+$$
+由于\(X_i\)独立同正态分布, 
+$$
+\mathbb{E}\left[e^{i t X_j}\right]=\exp \left(i t \mu-\frac{1}{2} t^2 \sigma^2\right)
+$$
+而
+$$
+\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right)^2 = \sum_{i = 1}^{}
+$$
+于是, 联合特征函数为
+$$
+\begin{aligned}
+    \varphi_{\bar{X}, Y_1, \ldots, Y_n}\left(u_0, u_1, \ldots, u_n\right)&=\exp \left\{i\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right) \mu-\frac{1}{2}\left(\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right)^2\right) \sigma^2\right\} \\
+    &= \exp\{iu_0 \mu\} 
+\end{aligned}
+$$
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明: \(\left|1-e^{i x}\right|^2=2(1-\cos x) \leq x^2, \forall x \in \mathbb{R}\).
+用这个断言证明: $\left|1-\varphi_X(u)\right| \leq E\{|u X|\}$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\begin{align*}
+    \left|1-e^{i x}\right|^2 &= \left|1-\cos x - i\sin x\right|^2 \\
+    &= (1-\cos x)^2 + \sin^2 x \\
+    &= 2(1-\cos x) \\
+    &\leq x^2.
+\end{align*}
+最后一个不等号由求导易得.
+从而\(|1-e^{i x}| \leq |x|\), 于是
+\begin{align*}
+    \left|1-\varphi_X(u)\right| &= 
+    \left|1-\mathbb{E}\{e^{i u X}\}\right| \\
+    &\leq \mathbb{E}\{\left|1-e^{i u X}\right| \}\\
+    &\leq \mathbb{E}\{|u X|\}.
+\end{align*}
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(A = \left[-\frac{1}{u}, \frac{1}{u}\right]\). 证明:
+$$
+\int_A x^2 \mu_X(d x) \leq \frac{12}{11 u^2}\left\{1-\operatorname{Re} \varphi_X(u)\right\} .
+$$
+\end{exercise} 
+\end{framed}
+
+\begin{remark}
+\(1-\cos(x) \geq 0, 1-\cos(x) \geq \frac{1}{2}x^2 - \frac{1}{24}x^4, x\in \mathbb{R}\).
+若\(z = a+ib\), 则\(\Re z = a\), 其中\(a, b \in \mathbb{R}\).
+\end{remark}
+
+
+\begin{proof}
+
+\end{proof}
+
+
+
+
+\begin{framed}
+\begin{exercise}
+若\(\varphi\)是一个特征函数, 证明\(|\varphi|^2\)也是一个特征函数.
+\end{exercise}
+\begin{remark}
+设\(X,Y\)是独立的随机变量, 考察\(Z = X - Y\).
+\end{remark}
+\end{framed}
+
+\begin{proof}
+设\(X, Y\)独立同分布, 特征函数是\(\varphi\), 那么\(Z = X-Y\)的特征函数是
+$$
+\varphi_Z(u) = \mathbb{E}\{e^{i u Z}\} = \mathbb{E}\{e^{i u (X-Y)}\} = \mathbb{E}\{e^{i u X}\}\mathbb{E}\{e^{-i u Y}\} = \varphi(u)\varphi(-u) = \varphi(u)\overline{\varphi(u)} = |\varphi|^2.
+$$
+\(|\varphi|^2\)是一个特征函数.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(X_1, ..., X_\alpha\)是独立指数随机变量, 其参数为\(\beta > 0\).
+证明\(Y = \sum_{i=1}^{\alpha} X_i \sim \Gamma(\alpha, \beta)\).
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+\(Exp(\beta) \sim \Gamma(1, \beta)\).
+\end{remark}
+
+\begin{proof}
+\(\Gamma(\alpha, \beta)\)分布的特征函数是\(\frac{\beta^\alpha}{(\beta - iu)^\alpha}\).
+于是, \(Y\)的特征函数是
+$$
+\begin{aligned}
+\varphi_Y(u) &= \varphi_X(u)^\alpha=  \left(\frac{\beta}{\beta - iu}\right)^\alpha \\
+\end{aligned}
+$$
+这是\(\Gamma(\alpha, \beta)\)分布的特征函数. 根据唯一性定理, \(Y \sim \Gamma(\alpha, \beta)\).
+
+\end{proof}
+
+
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

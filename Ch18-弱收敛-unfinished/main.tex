@@ -1,0 +1,503 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newcommand{\Perp}{\perp\!\!\!\!\perp}
+\newtheorem{exercise}{Exercise \#18.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 18: 弱收敛}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+弱收敛存在连续映射定理.
+若\(X_n \xrightarrow{\mathcal{D}} X\), 
+则
+$$
+\mathbb{E}\{f(X_n)\} \xrightarrow{n\to\infty} \mathbb{E}\{f(X)\}, \quad \forall f \in \mathscr{C}_b(\mathbb{R}).
+$$
+只需证:
+$$
+\mathbb{E}\{f(g(X_n))\} \xrightarrow{n\to\infty} \mathbb{E}\{f(g(X))\}, \quad \forall f \in \mathscr{C}_b(\mathbb{R}).
+$$
+当\(g\)是连续函数时, 有\(F = f\circ g\)是有界连续函数. 根据定义即得连续映射定理.
+\end{framed}
+
+
+
+\begin{framed}
+\begin{exercise}
+证明: 若$X_n \xrightarrow{L^p} X(p \geq 1)$, 则$X_n \xrightarrow{D} X$.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据Liapunov不等式, 对\(\forall p \geq 1\), 有
+$$
+\mathbb{E}\{|X|\} \leq \left[\mathbb{E}\{|X|^p\}^{\frac{1}{p}}\right].
+$$
+由于\(X_n \xrightarrow{L^p} X\), 所以\(\mathbb{E}\{|X_n - X|^p\} \to 0\).
+
+根据定理18.7, 考察\(\forall f \in \mathscr{C}_{\mathrm{b,Lip}}(\mathbb{R})\), 
+存在常数\(K\)使得
+\begin{align*}
+    |\mathbb{E}\{f(X_n)\} - \mathbb{E}\{f(X)\}| &\leq K\mathbb{E}\{|X_n - X|\} \\
+    &\leq K\left[\mathbb{E}\{|X_n - X|^p\}^{\frac{1}{p}}\right] \\
+    & \to 0 \,\,(n\to \infty).
+\end{align*}
+
+\end{proof}
+
+
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(\alpha \in \mathbb{R}^d\). 用构造方法证明: 存在一个连续函数\(f: \mathbb{R}^d \to \mathbb{R}\), 使得
+\(0 \leq f(x) \leq 1, \forall x \in \mathbb{R}^d\), \(f(\alpha) = 0\)且对给定的\(\varepsilon >0\), 当满足\(\|x - \alpha\| \geq \varepsilon\)时, 有\(f(x) = 1\).
+\end{exercise}
+\end{framed}
+\begin{remark}
+首先在\(d = 1\)时解决这个问题, 再模仿证明到\(d > 1\)的情况.
+\end{remark}
+
+\begin{proof}
+只需取
+$$
+f(x) = \max \left\{\frac{1}{\varepsilon} \|x - \alpha\|,  1\right\}.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X\)是一个实值随机变量, 分布函数为\(F\). 证明: \(F(x-) = F(x)\)当且仅当\(P(X = x) = 0\).
+\end{exercise}
+\end{framed}
+\begin{proof}
+    根据引理7.1, 有\(P(X = x) = F(x) - F(x-)\).
+\end{proof}
+
+\begin{framed}
+\begin{exercise}
+设\(g: \mathbb{R} \to \mathbb{R}, 0 \leq g(\alpha) \leq 1\), \(g\)是非增的, 并假设\(g\)是右连续的(即\(\lim_{y \downarrow x}g(y) = g(x), \forall x \)).
+证明: \(g\)处处有左极限(即\(\lim_{y \uparrow x}g(y) = g(x-)\)存在, \(\forall x\)), 并且集合\(\Lambda = \{x: g(x-) \neq g(x)\}\)是至多可列集.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+首先证明: 仅有有限的\(x\)使得\(g(x) - g(x-) > \frac{1}{k}\), 然后令\(k\)趋于无穷. 在习题7.16中已经证过.
+\end{remark}
+
+\begin{proof}
+首先, 
+$$
+\Lambda = \{x: g(x-) \neq g(x)\} = \{x: g(x-) < g(x)\} = \bigcup_{k=1}^{\infty}\left\{x: g(x) - g(x-) > \frac{1}{k}\right\}.
+$$
+由于\(g \in [0,1]\)
+$$
+\sharp \left\{x: g(x) - g(x-) > \frac{1}{k}\right\} \leq k.
+$$
+仅有有限的\(x\)使得\(g(x) - g(x-) > \frac{1}{k}\), 从而\(\Lambda\)是至多可列的.
+
+接下来证明\(g\)处处有左极限. 令\(t \in \mathbb{R}^1\), 考察\(M = \{g(x): x < t\}\).
+则\(M\)非空, 且有上界\(g(t)\), 于是根据确界存在定理, 存在\(\alpha = \sup M\).
+根据上确界的定义, 对\(\forall \varepsilon > 0\), 存在\(x_0 < t\)使得\(\alpha - \varepsilon < g(x) \leq \alpha\).
+取\(\delta = \alpha - x_0\), 则当\(x \in (t - \delta, t)\)时, \(M-\varepsilon < g(x) \leq M\).
+从而\(\lim_{y \uparrow t}g(y) = \alpha = g(t-)\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(F\)是一个实值随机变量的分布函数. 令\(D = \{x : F(x - ) = F(x)\}\).
+证明: \(D\)在\(\mathbb{R}\)上是稠密的.
+\end{exercise}
+\end{framed}
+\begin{remark}
+可以用18.4证明\(D\)的补集是至多可列的.
+\end{remark}
+
+\begin{proof}
+根据18.4, 令\(D = \{x : F(x - ) = F(x)\}\), 则\(D^c = \{x : F(x - ) < F(x)\}\)是至多可列的.
+反证法, 若不然, 则存在\(x_0 \in D^c, \delta > 0\)使得\(B(x_0, \delta) \subset D^c\). 而这与\(D^c\)是至多可列的矛盾.
+
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_n\}_{n\geq 1 }\)是一列实值随机变量, 且\(X_n \sim Unif[-n,n]\).
+在何种意义下, 有\(X_n\)收敛到某个随机变量\(X\)?
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于依分布收敛的收敛性是最弱的. 因此先考察依分布收敛.
+若存在一个随机变量\(X\)使得\(X_n \xrightarrow{D} X\),
+则根据依分布收敛的定义, 记\(F_n\)和\(F\)分别是\(X_n\)和\(X\)的分布函数, 则对于\(F\)的连续点\(x\), 有
+$$
+F_n(x) \to F(x) \quad (n \to \infty).
+$$
+注意到
+$$
+F_n(x) = P(X_n \leq x) = \int_{-n}^{x} \frac{1}{2n} d t = \frac{x+n}{2n} \mathbb{I}_{(-n, n)}(x) + \mathbb{I}_{[n, \infty)}(x).
+$$
+则对于\(x \in \mathbb{R}^1\), 当\(n\to\infty\)有\(F_n(x) \to \frac{1}{2}\).
+而这与\(\lim_{x\to\infty} F(x) = 1\)矛盾! 因此\(X_n\)不依分布收敛.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(f_n(x)\)是\(\mathbb{R}\)上的密度函数. 假设\(\lim_{n\to\infty} f_n(x) = e^{-x}\mathbb{I}_{(X>0)}\).
+若\(f_n\)是随机变量\(X_n\)的密度. 考察当\(n\)趋于无穷时, \(X_n\)的收敛性.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据定理18.5(Scheff\'{e}定理), \(f_n\)几乎处处逐点收敛于\(f\), 其中\(f(x) = e^{-x}\mathbb{I}_{(X>0)}\)是参数为1的指数分布的密度函数.
+则\(X_n \xrightarrow{\mathcal{D}} X\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_n\}_{n\geq 1}\)是独立同分布的Cauchy(0,1)随机变量.
+令\(Y_n = \frac{X_1 + ... + X_n}{n}\). 证明: \(Y_n\)依分布收敛, 并求出极限分布. \(Y_n\)是否也依概率收敛?
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+在习题17.7中, 已经证明\(Y_n\)也服从Cauchy(0,1)分布. 
+显然, \(Y_n\)的分布函数逐点收敛于Cauchy(0,1)的分布函数. 于是, \(Y_n\)依分布收敛于Cauchy(0,1)分布.
+
+\(Y_n\)不依概率收敛. 反证法, 若不然, 存在\(Y\)使得\(Y_n \xrightarrow{p} Y\). 
+由于
+$$
+\{|Y_n -Y_m| > \varepsilon\} \subset \{|Y_n - Y| + |Y_m - Y| > \varepsilon\} \subset \{|Y_n - Y| > \varepsilon/2\} \cup \{|Y_m - Y| > \varepsilon/2\}.
+$$
+如果\(Y_n \xrightarrow{p} Y\), 则应有\(\lim_{\substack{n \to \infty \\ m \to \infty}} P(|Y_n - Y_m| > \varepsilon) = 0(\forall \varepsilon > 0)\).
+但是, 若取\(m=2n\), 则有
+$$
+\left|Y_n-Y_m\right|=\frac{1}{2}\left|\frac{1}{n} \sum_{i=1}^n X_i-\frac{1}{n} \sum_{i=n+1}^{2 n} X_i\right|
+$$
+但是此时, \(\frac{1}{n} \sum_{i=1}^n X_i, \frac{1}{n} \sum_{i=n+1}^{2 n} X_i\)独立同Cauchy(0,1)分布, 从而\(\left|Y_n-Y_m\right|\)的分布于\(n\)无关.
+即\(\lim_{n\to \infty} P(|Y_{n} - Y_{2n}| > \varepsilon) = P(|U-V| > 2\varepsilon) > 0\), 其中\(U,V\)是独立同分布的Cauchy(0,1)随机变量.
+而这产生了矛盾. 
+因此, \(Y_n\)不依概率收敛. 
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_n\}_{n\geq 1}\)是一列随机变量, 且\(\sup_{n} \mathbb{E}\{X^2\} < \infty\).
+设\(\mu_n\)是\(X_n\)诱导的分布测度. 证明: 序列\(\mu_n\)是紧的.
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+可以用Chebyshev不等式.
+\end{remark}
+
+\begin{proof}
+用Chebyshev不等式, 对任意的\(m > 0\), 有
+$$
+P\{|X_n| > m\} \leq \frac{1}{m^2}\mathbb{E}\{X_n^2\} .
+$$
+于是, 
+$$
+\sup_{n}\mu_n([-m, m]^c) = \sup_{n}P\{|X_n| > m\}\leq \frac{1}{m^2}\sup_{n}\mathbb{E}\{X^2\} < \infty.
+$$
+即 
+$$
+\lim_{m\to\infty}\sup_{n}\mu_n([-m, m]^c) =0.
+$$
+从而, \(\mu_n\)是紧的.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_n, X, Y\)是实值随机变量, 定义在同一个样本空间\((\Omega, \mathcal{A}, P)\)上.
+假设
+$$
+\lim _{n \rightarrow \infty} \mathbb{E}\left\{f\left(X_n\right) g(Y)\right\}=\mathbb{E}\{f(X) g(Y)\}
+$$
+当\(f,g\)有界, \(f\)连续, \(g\)是Borel可测时成立.
+证明: \((X_n, Y)\)依分布收敛到\((X, Y)\).
+进一步假设有Borel可测函数\(h\)满足\(X = h(Y)\), 证明: \(X_n \xrightarrow{P} X\).
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+    注意, \(X_n \xrightarrow{\mathcal{D}} X, Y_n \xrightarrow{\mathcal{D}} Y\) 不能推出 \((X_n, Y_n) \xrightarrow{\mathcal{D}} (X, Y)\).
+以下是一个反例:
+设\(X, Y\)独立同分布服从\(\mathcal{N}(0,1)\), 
+设\((X_n, Y_n) \equiv (-Y,Y), \forall n\).
+则\((X_n, Y_n)\)依分布收敛到\((X, Y)\), 但是\(X_n + Y_n = 0\).
+取\(f(x,y) = x+y\), 则与依分布收敛的定义矛盾.
+
+此外, 依分布收敛的不同之处在于不满足一些运算法则, 只满足Slutsky定理.
+比如, 
+$$
+X_n \xrightarrow{\mathcal{D}} X, Y_n \xrightarrow{\mathcal{D}} Y \nRightarrow X_n + Y_n \xrightarrow{\mathcal{D}} X + Y.
+$$
+反例是\(X_n = Z, Y_n = -Z\), 其中\(Z\)是标准正态分布.
+\end{remark}
+
+\begin{proof}
+称\((X_n, Y)\)依分布收敛到\((X, Y)\)是指 
+$$
+\mathbb{E}\{\phi(X_n, Y)\} \xrightarrow{n\to\infty} \mathbb{E}\{\phi(X,Y)\},
+$$
+其中\(\phi \in \mathscr{C}_b(\mathbb{R}^2)\).
+
+% 先取\(g \equiv 1\), 
+% $$
+% \lim _{n \rightarrow \infty} \mathbb{E}\left\{f\left(X_n\right) \right\}=\mathbb{E}\{f(X) \},
+% $$
+% 则有\(X_n \xrightarrow{\mathcal{D}} X\).
+
+% 取\(f(x) = e^{it_1 x} = \cos(t_1 x) + i\sin(t_1 x), g(x) = e^{it_2x} = \cos(t_2 x) + i\sin(t_2x)\), 
+考察\((X_n, Y)\)的特征函数, 
+$$
+\begin{aligned}
+    \mathbb{E}\{e^{it_1 X_n}e^{it_2 Y}\} &= \mathbb{E}\left[\{\cos(t_1 X) + i \sin(t_1 X)\} \{\cos(t_2 Y) + i \sin(t_2 Y)\}\right] \\
+    &= \mathbb{E}\{\cos(t_1 X)\cos(t_2 Y) - \sin(t_1 X)\sin(t_2 Y)\} + i\mathbb{E}\{\sin(t_1 X)\cos(t_2 Y) + \cos(t_1 X)\sin(t_2 Y)\} \\
+\end{aligned}
+$$
+显然, \(\sin(t_1 x), \cos(t_1 x), \sin(t_2 y), \cos(t_2 y)\)都是有界函数, 且连续. 
+根据题中的条件, 有
+$$
+\mathbb{E}\{e^{it_1 X_n}e^{it_2 Y}\} \xrightarrow{n\to\infty} \mathbb{E}\{e^{it_1 X}e^{it_2 Y}\}.
+$$
+根据Le\'{v}y连续定理, 有\((X_n, Y) \xrightarrow{\mathcal{D}} (X, Y)\).
+
+% 对\(\phi \in \mathscr{C}_b(\mathbb{R}^2)\), 
+% 取\(\psi_y(x) := \phi(x, y) \in \mathscr{C}_b(\mathbb{R}^1)\), 则根据定义
+% $$
+% \lim_{n\to\infty} \mathbb{E}\{\psi_y(X_n)\} = \mathbb{E}\{\psi_y(X)\}.
+% $$
+% 最后, 取\(y = Y\), 有
+% $$
+% \mathbb{E}\{\phi(X_n, Y)\} \xrightarrow{n\to\infty} \mathbb{E}\{\phi(X,Y)\}.
+% $$
+
+
+根据\((X_n, Y)\)依分布收敛于\((X,Y)\), \(h\)是Borel可测的, 则根据题中的条件,
+$$
+(X_n, h(Y)) \xrightarrow{\mathcal{D}} (X, h(Y)).
+$$
+应用Slutsky定理(习题18.15), 有
+$$
+X_n - X \xrightarrow{\mathcal{D}} X- X = 0 \quad \Rightarrow \quad X_n - X\xrightarrow{\mathcal{D}} 0 \quad \Rightarrow \quad X_n \xrightarrow{P} X.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\mu_\alpha\)表示参数为\(\alpha\)的Pareto分布(Zeta分布). 设\(\alpha_n \to \alpha\), 证明: \(\mu_{\alpha_n}\)弱收敛于\(\mu_{\alpha}\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+
+\end{proof}
+\begin{exercise}
+设\(\mu_\alpha\)表示参数为\(\alpha\)的几何分布. 设\(\alpha_n \to \alpha > 0\), 证明: \(\mu_{\alpha_n}\)弱收敛于\(\mu_{\alpha}\).
+\end{exercise}
+
+
+\begin{exercise}
+设\(\mu_{(N,b,n)}\)是一个超几何分布. 假设在\(N\)趋于无穷时, \(p = \frac{b}{N}\)保持是一个常数.
+参数\(n\)固定. 证明当\(N\)趋于无穷时, \(\mu_{(N,b,n)}\)弱收敛到一个二项分布\(B(p,n)\).
+\end{exercise}
+ 
+
+
+\begin{framed}
+\begin{exercise}[Slusky定理]
+设\(X_n\)依分布收敛于\(X\), \(Y_n\)依概率收敛于\(c\). 证明: 
+\begin{enumerate}[(a)]
+\item \(X_nY_n \xrightarrow{D} cX\),
+\item \(\frac{X_n}{Y_n} \xrightarrow{D} \frac{X}{c}, (c \neq 0)\).
+\end{enumerate}
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+断言:
+$$
+X_n \xrightarrow{\mathcal{D}} X, Y_n \xrightarrow{P} c \quad \Rightarrow \quad (X_n, Y_n) \xrightarrow{\mathcal{D}} (X, c).
+$$
+若上述断言成立, 根据连续映射定理, 分别取
+$$
+g(x,y) = x + y, \quad g(x,y) = xy, \quad g(x,y) = \frac{x}{y},
+$$
+即可得出
+$$
+X_n + Y_n \xrightarrow{D} X + c, \quad X_nY_n \xrightarrow{D} cX, \quad \frac{X_n}{Y_n} \xrightarrow{D} \frac{X}{c}.
+$$
+
+下证上述断言.
+\begin{enumerate}[Step 1]
+    \item 断言\((X_n, c) \xrightarrow{\mathcal{D}} (X,c)\). 这等价于$$
+    \mathbb{E}\{f(X_n, c)\} \xrightarrow{\mathcal{D}} \mathbb{E}\{f(X, c)\}, \quad \forall f \in \mathscr{C}_b(\mathbb{R}^2).
+    $$
+    考察一元函数\(g_c(x) := f(x, c)\). 则显然\(g_c \in \mathscr{C}_b(\mathbb{R}^1)\), 根据\(X_n \xrightarrow{\mathcal{D}} X\), 则
+    $$
+    \mathbb{E}\{g_c(X_n)\} \xrightarrow{n\to\infty} \mathbb{E}\{g_c(X)\}.
+    $$
+    从而\((X_n, c) \xrightarrow{\mathcal{D}} (X,c)\).
+    \item 断言: \(|(X_n, Y_n) - (X_n, c)| \xrightarrow{p} 0\). 事实上, $$
+    |(X_n, Y_n) - (X_n, c)| = |Y_n - c| \xrightarrow{p} 0.
+    $$
+\end{enumerate}
+应用定理18.8, 即得证.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_n\}_{n\geq 1}, \{Y_n\}_{n\geq 1}\)是定义在同一个概率空间上的随机变量列, 
+设\(X_n \xrightarrow{D}X\)且\(Y_n \xrightarrow{P} 0\). 证明: \(X_n + Y_n\)依分布收敛于\(X\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+这是上一个习题的特例.
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设实值随机变量列\(\{X_n\}_{n\geq 1}\)有分布函数\(F_n\), 且\(X_n \xrightarrow{D}X\).
+设\(p>0\), 证明: 对任意的正数\(N\), 
+$$
+\int_{-N}^N|x|^p F(d x) \leq \limsup _{n \rightarrow \infty} \int_{-N}^N|x|^p F_n(d x)<\infty .
+$$
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+由于\(X_n \xrightarrow{\mathcal{D}} X\), 则取\(f_N(x) = |x|^p \mathbb{I}_{[-N,N]}(x) \in \mathscr{C}_b(\mathbb{R}^1)\), 有\(\lim_{n\to\infty} \mathbb{E}\{f_N(X_n)\} = \mathbb{E}\{f_N(X)\}\). 于是, 
+$$
+\int_{-N}^N|x|^p F(d x) = \mathbb{E}\{f_N(X)\} \leq \limsup_{n\to\infty} \mathbb{E}\{f_N(X_n)\} = \limsup _{n \rightarrow \infty} \int_{-N}^N|x|^p F_n(d x) \leq N^p < \infty.
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+设实值随机变量列\(\{X_n\}_{n\geq 1}\)有分布函数\(F_n\), 且\(X\)有分布函数\(F\). 假设对某些\(r >0\), 
+$$
+\lim _{n \rightarrow \infty} \int_{-\infty}^{\infty}\left|F_n(x)-F(x)\right|^r d x=0
+$$
+证明: \(X_n \xrightarrow{D}X\).
+\end{exercise}
+\end{framed}
+
+\begin{remark}
+假设存在\(F\)上的连续点\(y\)使得\(\lim_{n\to\infty} F_n(y) \neq F(y)\).
+则存在\(\varepsilon > 0\)和一个子列\(\{n_k\}\)使得\(|F_{n_k}(y) - F(y)| > {\varepsilon}, \forall k\).
+证明: 对于适当的\(y_1,y_2\), \(|F_{n_k}(y) - F(y)| > \frac{\varepsilon}{2}\), 对要么\(x \in [y_1, y)\), 要么\(x \in (y, y_2]\)成立.
+而这产生了矛盾.
+\end{remark}
+
+\begin{proof}
+这里的证明沿着提示的思路. 用反证法, 若不然, 则存在分布函数的子列使得在某一连续点\(y\)上不收敛.
+
+\end{proof}
+
+
+
+
+
+
+\begin{exercise}
+假设\(\{F_n\}_{n\geq 1}\)是一列\(\mathbb{R}\)上的分布函数, 且它们收敛到\(\mathbb{R}\)上的连续的分布函数\(F\).
+证明: 这样的收敛关于\(x\)是一致收敛.
+\end{exercise}
+
+
+
+
+
+\begin{remark}
+首先证明存在点\(x_1, ..., x_m\)使得\(F(x_1) < \varepsilon, F(x_{j+1}) - F(x_{j}) < \varepsilon\), 以及\(1 - F(x_m) < \varepsilon\).
+接下来说明: 存在\(N\)使得当\(n>N\)时, \(|F_n(x_j) - F(x_j)| < \varepsilon, 1 \leq j \leq m\).
+\end{remark}
+
+
+\begin{exercise}
+设\(f\)是一致连续函数. \(X,Y\)是两个实值随机变量.
+假设当\(|x-y| < \delta\)时, 有\(|f(x) - f(y)| < \varepsilon\). 证明:
+$$
+|\mathbb{E}\{f(X)\}-\mathbb{E}\{f(X+Y)\}| \leq \varepsilon+2 \sup _x|f(x)| P\{|Y| \geq \delta\} .
+$$
+\end{exercise}
+
+
+\begin{exercise}
+设\(\{X_n\}_{n \geq 1}, X, Y\)是实值随机变量, 定义在同一个概率空间上.
+假设\(X_n + \sigma Y\)依分布收敛于\(X + \sigma Y\), 对于任意的\(\sigma > 0\).
+证明: \(X_n\)依分布收敛于\(X\).
+\end{exercise}
+\begin{remark}
+可以用18.19的结论.
+\end{remark}
+
+
+\begin{exercise}
+设\(X\)和\(Y\)是定义在同一个概率空间上的实值独立随机变量. 
+假设\(Y\)服从标准正态分布, 令\(f\)是有界连续函数. 证明:
+$$
+\mathbb{E}\{f(X+\sigma Y)\}=\mathbb{E}\left\{f_\sigma(X)\right\}
+$$
+其中, 
+$$
+f_\sigma(x)=\frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{\infty} f(z) e^{-\frac{1}{2}|z-x|^2 / \sigma^2} d z
+$$
+证明\(f_\sigma(x)\)是有界的, 且是任意阶阶可导的.
+\end{exercise}
+
+
+
+\begin{exercise}
+设\(\{X_n\}_{n\geq 1}, X\)是实值随机变量. 证明: \(X_n \xrightarrow{D}X\)当且仅当对任意的有界\(\mathcal{C}^\infty\)函数\(f\), 有\(\mathbb{E}\{f(X_n)\} \to \mathbb{E}\{f(X)\}\).
+\end{exercise}
+
+
+
+
+
+
+
+
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}

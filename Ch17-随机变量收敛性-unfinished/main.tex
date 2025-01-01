@@ -1,0 +1,305 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#17.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 17: 随机变量收敛性}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+
+\begin{framed}
+\(X_n \xrightarrow{P}X\)并不意味着\(X_n \xrightarrow{a.s.} X\).
+假设取\(\Omega = [0, 1]\), \(\mathcal{A}\)是\([0, 1]\)上的Borel集合族, \({P}\)是\([0, 1]\)上的Lebesgue测度.
+
+设\(A_n\)是\([0,1]\)上长度为\(a_n\)的任一区间, 并取\(X_n = \mathbb{I}_{A_n}\). 则有 
+\(P(|X_n| > \varepsilon) = a_n\), 只要\(\lim_{n\to\infty} a_n = 0\), 则\(X_n \xrightarrow{P} 0\)(即\(X_n\)依概率收敛于常数\(0\)).
+
+进一步, 可以设\(X_{n,j}\)表示区间\(\left[\frac{j-1}{n}, \frac{j}{n}\right]\)上的示性函数. 适当地将它们排成一列, 记之为\(\{Y_i\}_{i \geq 1}\).
+$$
+\begin{aligned}
+& X_{1,1}, X_{2,1}, X_{2,2}, X_{3,1}, X_{3,2}, X_{3,3}, X_{4,1}, \ldots \\
+\leadsto & Y_1, Y_2, Y_3, Y_4, Y_5, Y_6, Y_7, \ldots
+\end{aligned}
+$$
+则按定义, 有
+$$
+\limsup_{m\to \infty} Y_m = 1 \quad a.s., \quad \liminf_{m\to \infty} Y_m = 0 \quad a.s.
+$$
+从而\(Y_n\)不几乎处处收敛, 但是\(Y_n\)依概率收敛于\(0\).
+\end{framed}
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_{n,j}\)的定义如例2中定义. 
+令\(Z_{n, j} = n^{\frac{1}{p}}X_{n,j}\).
+令\(Y_m\)是一列排序后的\(Z_{n,j}\), 排序方法与例2相同. 证明:
+\(Y_m\)依概率收敛于\(0\), 但是\(Y_m\)不\(L^p\)收敛于\(0\).
+尽管\(Y_n \in L^p\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+对任给的\(\varepsilon > 0\), 当\(n > \varepsilon^p\)使得\(\varepsilon n^{-\frac{1}{p}} < 1\), 有
+$$
+P(|Z_{n,j}| > \varepsilon) = P(|X_{n,j}| > \varepsilon n^{-\frac{1}{p}}) = \frac{1}{n}\to 0 (n \to \infty).
+$$
+因此\(Z_{n,j}\)依概率收敛于\(0\), 即\(Y_m\)依概率收敛于\(0\).
+
+由于 
+$$
+\mathbb{E}\{|Z_{n,j}|^p\} = n \cdot \frac{1}{n} =1 < \infty.
+$$
+从而\(Y_n \in L^p\). 但是\(Y_n\)不\(L^p\)收敛于\(0\), 因为
+$$
+\lim _{n \rightarrow \infty} \mathbb{E}\left\{\left|Y_n\right|^p\right\}=1 \neq 0 .
+$$
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+证明: 依概率收敛的连续映射定理,在去掉连续性条件之后是错的.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+    取\(\Omega = [0, 1]\), \(\mathcal{A}\)是\([0, 1]\)上的Borel集合族, \({P}\)是\([0, 1]\)上的Lebesgue测度.
+
+取\(f(x) = \mathbb{I}_{\{0\}}(x)\), \(X_n = 1/n\), 则\(X_n\)依概率收敛于\(X = 0\), 因为
+$$
+\lim _{n \rightarrow \infty} \mathbb{E}\left\{\frac{\left|X_n-X\right|}{1+\left|X_n-X\right|}\right\}= \lim_{n\to\infty} \frac{1}{1+n} = 0 .
+$$
+
+但是\(f(X_n) = 0\)对任意\(n\)成立, 因此\(f(X_n)\)不依概率收敛于\(f(0) = 1\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_n\)是独立同分布随机变量, 满足\(P(X_n = 1) = \frac{1}{2}, P(X_n = -1) = \frac{1}{2}\).
+证明:
+$$
+\frac{1}{n} \sum_{j=1}^n X_j
+$$
+依概率收敛于\(0\).
+可以令\(S_n = \sum_{j=1}^{n}X_j\), 再用chebyshev不等式证明.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+根据 
+$$
+\mathbb{E}\left\{\frac{1}{n}\sum_{j=1}^{n}X_j\right\} = \mathbb{E}\{X_1\} = 0, \quad \text{Var}\left(\frac{1}{n}\sum_{j=1}^{n}X_j\right) = \frac{1}{n}\text{Var}(X_1) = \frac{1}{n},
+$$
+根据Chebyshev不等式, 对
+\(\forall \varepsilon > 0\), 
+$$
+P\left(\left|\frac{1}{n}\sum_{j=1}^{n}X_j\right| > \varepsilon\right) \leq \frac{1/n}{\varepsilon^2} \to 0 \quad (n\to \infty).
+$$
+从而\(\frac{1}{n}\sum_{j=1}^n X_j\)依概率收敛于\(0\).
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(X_n, S_n\)的定义如习题17.3. 证明:
+\(\frac{1}{n^2}S_{n^2}\)几乎处处收敛于\(0\).
+
+证明可以用\(\sum_{n=1}^{\infty}P\left\{\frac{1}{n^2}|S_{n^2}| > \varepsilon\right\} < \infty\), 再用Borel-Cantelli引理.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+
+\end{proof}
+
+
+\begin{exercise}
+假设\(|X_n| \leq Y\) a.s., \(n = 1,2,3,...\).
+证明: \(\sup_{n}|X_n| \leq Y\) a.s..
+\end{exercise}
+
+
+\begin{exercise}
+设\(X_n \overset{p}{\to} X\). 证明: 特征函数\(\varphi_{X_n}\)逐点收敛于\(\varphi_X\).
+\end{exercise}
+
+
+
+\begin{exercise}
+设\(X_1, ..., X_n\)是独立同分布的Cauchy随机变量, 参数\(\alpha = 0, \beta = 1\).
+即它们的密度是
+$$
+f(x) = \frac{1}{\pi(1+x^2)}, -\infty < x < \infty.
+$$
+证明: \(\frac{1}{n}\sum_{j=1}^{n}X_j\)服从Cauchy分布.
+\end{exercise}
+
+\begin{exercise}
+    设\(X_1, ..., X_n\)是独立同分布的Cauchy随机变量, 参数\(\alpha = 0, \beta = 1\).
+证明: 不存在常数\(\gamma\)使得\(\frac{1}{n}\sum_{j=1}^{n}X_j\)依概率收敛于\(\gamma\).
+进一步说明了, 不存在常数\(\gamma\)使得\(\frac{1}{n}\sum_{j=1}^{n}X_j\)几乎处处收敛于\(\gamma\).
+\end{exercise}
+
+
+
+\begin{exercise}
+令\(\{X_n\}_{n\geq 1}\)零均值, 方差有限. 
+假设\(\lim_{n\to \infty} \sigma_{X_n}^2 = 0\).
+证明: \(X_n\)依概率收敛于\(0\), 以及\(L^2\)收敛于\(0\).
+\end{exercise}
+
+
+
+\begin{exercise}
+设\(X_n\)是独立同分布的随机变量, 零均值, 方差有限.
+令\(S_n = \sum_{j=1}^{n}X_j\).
+证明:\(\frac{1}{n}S_n\)依概率收敛于\(0\), 也\(L^2\)收敛于\(0\).
+\end{exercise}
+
+
+\begin{framed}
+\begin{exercise}
+假设\(\lim_{n\to\infty} X_n = X\) a.s. 以及\(|X| < \infty\) a.s. 令\(Y = \sup_n |X_n|\).
+证明: \(Y < \infty\) a.s.
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+记
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+假设\(\lim_{n\to\infty} X_n = X\) a.s. 令\(Y = \sup_n|X_n - X|\).
+证明\(Y < \infty\) a.s., 定义新测度\(Q\):
+$$
+Q(A)=\frac{1}{c} E\left\{1_A \frac{1}{1+Y}\right\} \text {, where } c=E\left\{\frac{1}{1+Y}\right\} \text {. }
+$$
+证明: \(X_n\)在测度\(Q\)下\(L^1\)收敛于\(X\).
+\end{exercise}
+\end{framed}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(A\)是例1中定义的事件. 证明: \(P(A) = 0\).
+
+可以令\(A_n = \{\text{第n次投掷为正面}\}\).
+用BC引理证明\(\sum_{n=1}^{\infty} P(A_n) = \infty\).
+\end{exercise}
+\end{framed}
+
+
+
+\begin{framed}
+\begin{exercise}
+令\(X_n\)和\(X\)是\(L^2\)的实值的随机变量, 假设\(X_n\)\(\,L^2\)收敛于\(X\).
+证明: \(\mathbb{E}\{X^2\}\)收敛于\(\mathbb{E}\{X^2\}\).
+
+可以用不等式:
+$$
+|x^2 - y^2| \leq (x - y)^2 + 2|y||x - y|
+$$
+和Cauchy-Schwarz不等式证明.
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+不等式的证明可以根据, 
+$$
+|x+y| \leq |x - y| + 2|y| \quad \Rightarrow \quad |x^2 - y^2| = |x-y||x+y| \leq |x-y|(|x-y| + 2|y|).
+$$
+要证: \(\mathbb{E}\{X_n^2\}\)收敛于\(\mathbb{E}\{X^2\}\), 考察
+$$
+\begin{aligned}
+    \big|\mathbb{E}\{X_n^2\} - \mathbb{E}\{X^2\}\big| &\leq \mathbb{E}\left|X_n^2 - X^2\right| \quad \text{(积分的性质)} \\
+    &\leq \mathbb{E}\left\{|X_n - X|^2 + 2|X||X_n - X|\right\} \quad \text{(上面的不等式)}\\
+    &\leq \mathbb{E}\left\{|X_n - X|^2\right\} + 2\mathbb{E}\left\{|X||X_n - X|\right\} \quad \text{(线性)} \\
+    &\leq \mathbb{E}\left\{|X_n - X|^2\right\} + 2\sqrt{\mathbb{E}\{X^2\}}\sqrt{\mathbb{E}\{(X_n - X)^2\}} \quad \text{(H\"older不等式)} \\
+    & \to 0 \quad (n\to \infty).
+\end{aligned}
+$$
+收敛性证毕.
+\end{proof}
+
+\begin{framed}
+\begin{exercise}[另一种控制收敛定理]
+设\(\{X_n\}_{n\geq 1}\)是随机变量, 满足\(X_n \overset{P}{\to} X\).
+假设存在常数\(C>0\)满足对任意的\(w\)满足\(|X_n(w)| \leq C\).
+证明: \(\lim_{n\to\infty} \mathbb{E}\{|X_n - X|\} = 0\).
+
+可以先证明: \(P(|X| \leq C) = 1\).
+\end{exercise}
+\end{framed}
+
+
+
+\begin{proof}
+先考察\(X\)是否几乎处处有上界. 由于\(\forall \varepsilon > 0\),
+$$
+\begin{aligned}
+    \{|X| \leq C + \varepsilon\} &= \{|X-X_n +X_n| \leq  C + \varepsilon\} \\
+    &\supset \{|X-X_n| + |X_n| \leq C + \varepsilon\} \\
+    &\supset \{|X_n| \leq C\} \cap \{|X_n - X| \leq \varepsilon\}.
+\end{aligned}
+$$
+于是, 
+\begin{align*}
+    P\{|X| \leq C + \varepsilon\} &\geq P\{|X_n| \leq C\} - P\{|X_n - X| > \varepsilon\} \\
+    & = 1 - P\{|X_n - X| > \varepsilon\} \\
+    &\to 1 \quad (n\to \infty).
+\end{align*}
+根据概率的连续性, \(\{|X| \leq C\} = \bigcap_{m = 1}^\infty \{|X| \leq C + 1/m\}\), 从而\(P\{|X| \leq C\} = 1\). 于是\(|X_n - X| \leq 2C\).
+
+以下\(\forall \varepsilon > 0\), 由于\(X_n \overset{P}{\to} X\), 有\(N = N(\varepsilon)\)使得当\(n > N\)时, 有
+$$
+P\left(|X_n - X| \geq \frac{\varepsilon}{2}\right) < \frac{\varepsilon}{4C}.
+$$
+于是
+$$
+\begin{aligned}
+    \mathbb{E}\{|X_n - X|\} &= \int_{\{|X_n - X| \geq \varepsilon/2\}} |X_n - X| dP + \int_{\{|X_n - X| < \varepsilon/2\}} |X_n - X| dP \\
+    &\leq \int_{\{|X_n - X| \geq \varepsilon/2\}} 2C dP + \int_{\{|X_n - X| < \varepsilon/2\}} \varepsilon/2 dP \\
+    &\leq 2C \cdot \frac{\varepsilon}{4C} + \frac{\varepsilon}{2} = \varepsilon.
+\end{aligned}
+$$
+从而\(\lim_{n\to\infty} \mathbb{E}\{|X_n - X|\} = 0\).
+\end{proof}
+
+
+
+
+
+% \medskip
+
+
+
+% \printbibliography
+
+
+\end{document}

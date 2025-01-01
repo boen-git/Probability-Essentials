@@ -1,0 +1,126 @@
+\documentclass[UTF8, a4paper]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage[backend=bibtex, style=alphabetic]{biblatex}
+\usepackage{framed}
+\usepackage{mathrsfs} 
+\usepackage{xcolor}
+\newtheorem{exercise}{Exercise \#19.}
+\newtheorem*{proposition}{命题}
+\newtheorem*{remark}{注}
+\everymath{\displaystyle}
+
+\addbibresource{my.bib}
+\title{Chapter 19: 弱收敛和特征函数}
+\author{}
+\date{Latest Update: \today}
+\begin{document}
+\maketitle
+
+\begin{framed}
+\begin{exercise}
+令\(\{X_n\}_{n \geq 1}\)服从\(N(\mu_n, \sigma_n^2)\)的随机变量.
+假设\(\mu_n \to \mu\)和\(\sigma_n^2 \to \sigma^2 \geq 0\), 当\(n \to \infty\).
+证明: \(X_n \xrightarrow{D} X\), 其中\(X \sim N(\mu, \sigma^2)\).
+\end{exercise}
+\end{framed}
+
+\begin{proof}
+\(X_n\)的特征函数为\(\varphi_{X_n}(u) = \exp\left(iu \mu_n - \frac{u^2 \sigma_n^2}{2}\right)\).
+\(X\)的特征函数为\(\varphi_X(u) = \exp\left(iu \mu - \frac{u^2 \sigma^2}{2}\right)\).
+根据L\'evy 连续性定理, 由于我们有\(\varphi_{X_n} \to \varphi_X\), 当\(n \to \infty\). 
+且\(\varphi_{X} \)在\(u = 0\)处连续,
+所以, \(X_n \xrightarrow{D} X\).
+\end{proof}
+
+
+\begin{framed}
+\begin{exercise}
+令\(\{X_n\}_{n \geq 1}\)服从\(N(\mu_n, \sigma_n^2)\)的随机变量.
+设\(X_n \xrightarrow{D} X\)对某些随机变量\(X\).
+证明: 以下极限存在: \(\mu_n \to \mu\)和\(\sigma_n^2 \to \sigma^2 \geq 0\), 当\(n \to \infty\). 以及\(X \sim N(\mu, \sigma^2)\).
+\end{exercise}
+\end{framed}
+\begin{remark}
+记\(\varphi_{X_n}\)和\(\varphi_X\)是\(X_n\)和\(X\)的特征函数.
+于是, \(\varphi_{X_n} = \exp\left(iu \mu_u - \frac{u^2 \sigma_n^2}{2}\right)\),
+使用L\'evy 连续性定理, 我们有\(\varphi_{X_n} \to \varphi_X\), \(\varphi_X(u) = \exp\left(iu \mu - \frac{u^2 \sigma^2}{2}\right)\), 对于某些\(\mu\)和\(\sigma^2 \geq 0\).
+\end{remark}
+
+\begin{proof}
+由于\(X_n \xrightarrow{D} X\), 采用注记中的记号, 设\(X\)的特征函数为\(\varphi_X(u) \).
+根据正极限定理, 特征函数\(\varphi_{X_n}\)逐点收敛到\(\varphi_X\).
+$$
+e^{i\mu_n u} e^{-\frac{u^2 \sigma_n^2}{2}} \to \varphi_X(u), \quad \forall u \in \mathbb{R}.
+$$
+两边取模, 得到\(e^{-\frac{u^2 \sigma_n^2}{2}}\)收敛, 下证\(\sigma_n^2\)收敛.
+若不然, 则仅可能\(\sigma_n^2 \to \infty(n \to \infty)\).
+在这种情况下, \(|\varphi_X(u)| = 0(u\neq 0)\), 但是\(|\varphi_X(0)| = 1\), 这与\(\varphi(u)\)的连续性矛盾.
+因此存在\(\sigma^2 \geq 0\), 使得\(\sigma_n^2 \to \sigma^2 < \infty\).
+
+接下来, 由于对于任意固定的\(u\), \({e^{iu\mu_n}}\)收敛, 下证\(\mu_n\)收敛.
+记
+$$
+f(u) := \frac{1}{|\varphi(u)|}\varphi(u), \quad u \in \mathbb{R}^1.
+$$
+根据控制收敛定理, 
+$$
+\lim_{n\to\infty}\int_{u_1}^{u_2}e^{iu\mu_n}du=\int_{u_1}^{u_2}f(u)du,\quad\forall u_1<u_2.
+$$
+由于\(|f(u)| \equiv 1, \forall u \in \mathbb{R}^1\), 则存在\(a<b\)使得\(\int_{a}^{b} f(u) du \neq 0\).
+则对充分大的\(n\), 有\(\int_{a}^{b} e^{iu\mu_n} du \neq 0\), 此时, 
+$$
+\mu_n = i\frac{e^{ia\mu_n } - e^{ib\mu_n}}{\int_{a}^{b} e^{iu\mu_n} du}, \quad n\text{充分大, }
+$$
+两边关于\(n\)取极限, 得到\(\mu_n \to \mu\), 其中\(\mu = i\frac{f(a) - f(b)}{\int_{a}^{b} f(u) du}\). 
+
+于是, \(\varphi_{X_n} = \exp\left(iu \mu_u - \frac{u^2 \sigma_n^2}{2}\right)\),
+我们有\(\varphi_{X_n} \to \varphi_X\), \(\varphi_X(u) = \exp\left(iu \mu - \frac{u^2 \sigma^2}{2}\right)\), 对于某些\(\mu\)和\(\sigma^2 \geq 0\).
+这表明\(X \sim N(\mu, \sigma^2)\).
+% 若不然, 则考察子列\(\mu_{n_k} \to p(k \to \infty), \mu_{n_l} \to q(l \to \infty)\), 且\(p \neq q\). 
+% 若\(p = \infty\), 则\(\mu_{n_k}\)使得\(\varphi_{X_{n_k}}(u)\)不收敛, 这与条件矛盾, 以下假设\(p,q < \infty\).
+
+% 由于\(\frac{1}{|\varphi(u)|}\varphi(u)\)在\(u = 0\)处连续, 于是存在充分小的\(\delta\)使得\(|\varphi(u)|e^{iu\mu_n} \to \varphi(u), \forall u \in B(0, \delta)\).
+
+
+\end{proof}
+
+
+
+\begin{framed}
+\begin{exercise}
+设\(\{X_n\}_{n \geq 1}, \{Y_n\}_{n \geq 1}\)是一列随机变量, 它们定义在相同的概率空间上.
+假设\(X_n \xrightarrow{D} X\)和\(Y_n \xrightarrow{D} Y\).
+假设\(X_n\)和\(Y_n\)独立(对任意的\(n\)), \(X\)和\(Y\)独立.
+证明: \(X_n + Y_n \xrightarrow{D} X + Y\).
+\end{exercise}
+\end{framed}
+
+
+\begin{proof}
+设\(X_n\)的特征函数为\(\varphi_{X_n}\), \(Y_n\)的特征函数为\(\varphi_{Y_n}\).
+\(X\)的特征函数为\(\varphi_X\), \(Y\)的特征函数为\(\varphi_Y\).
+根据L\'evy 连续性定理(正极限定理), 由于我们有\(\varphi_{X_n} \to \varphi_X\)和\(\varphi_{Y_n} \to \varphi_Y\), 当\(n \to \infty\).
+
+根据\(X_n\)和\(Y_n\)的独立性, 我们有\(\varphi_{X_n + Y_n} = \varphi_{X_n} \varphi_{Y_n}\).
+根据\(X\)和\(Y\)的独立性, 我们有\(\varphi_{X + Y} = \varphi_X \varphi_Y\).
+根据逐点收敛性, 我们有\( \varphi_{X_n} \varphi_{Y_n} = \varphi_{X_n + Y_n} \to \varphi_{X + Y} = \varphi_X \varphi_Y\), 当\(n \to \infty\).
+且\(\varphi_{X + Y}\)在\(u = 0\)处连续,
+根据L\'evy 连续性定理(逆极限定理), 我们有\(X_n + Y_n \xrightarrow{D} X + Y\).
+\end{proof}
+
+
+
+
+% \medskip
+
+% \printbibliography
+
+
+\end{document}
