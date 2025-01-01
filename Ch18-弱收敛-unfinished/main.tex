@@ -398,11 +398,50 @@ $$
 \end{exercise}
 \end{framed}
 
-\begin{proof}
-由于\(X_n \xrightarrow{\mathcal{D}} X\), 则取\(f_N(x) = |x|^p \mathbb{I}_{[-N,N]}(x) \in \mathscr{C}_b(\mathbb{R}^1)\), 有\(\lim_{n\to\infty} \mathbb{E}\{f_N(X_n)\} = \mathbb{E}\{f_N(X)\}\). 于是, 
+\begin{remark}
+由于\(X_n \xrightarrow{\mathcal{D}} X\), 则取\(f_N(x) = |x|^p \mathbb{I}_{[-N,N]}(x) \in \mathscr{C}_b(\mathbb{R}^1)\), {\color{red}没}有{\color{red}\(\lim_{n\to\infty} \mathbb{E}\{f_N(X_n)\} = \mathbb{E}\{f_N(X)\}\)}. 于是, 
 $$
 \int_{-N}^N|x|^p F(d x) = \mathbb{E}\{f_N(X)\} \leq \limsup_{n\to\infty} \mathbb{E}\{f_N(X_n)\} = \limsup _{n \rightarrow \infty} \int_{-N}^N|x|^p F_n(d x) \leq N^p < \infty.
 $$
+\end{remark}
+
+\begin{proof}
+上述证明看上去很美好, 但是\(f_N(x) = |x|^p \mathbb{I}_{[-N,N]}(x)\)不是连续函数!
+怎么办? 用线性函数连起来!
+
+取
+$$
+g_{m,N}(x) = \begin{cases}
+    |x|^p, & |x| \leq N - \frac{1}{m}, \\
+    (|x| - N) \cdot \frac{\left(N - \frac{1}{m}\right)^p}{-\frac{1}{m}}, & N - \frac{1}{m} \leq |x| \leq N, \\
+    0, & |x| > N.
+\end{cases}
+$$
+则此时\(g_{m,N}(x) \in \mathscr{C}_b(\mathbb{R}^1)\), 且满足对任意的\(m,N > 0\), 都有 
+$$
+\lim_{n\to \infty} \mathbb{E}\{g_{m,N}(X_n)\} = \mathbb{E}\{g_{m,N}(X)\}.
+$$
+而且还有当\(m \to\infty\)时, 有\(g_{m,N}(x) \uparrow f_N(x) = |x|^p \mathbb{I}_{[-N,N]}(x)\), 从而根据单调收敛定理,
+$$
+\begin{aligned}
+    \int_{-N}^{N} |x|^p dF(x) &= \mathbb{E}\{f_N(X)\} = \lim_{m\to\infty} \mathbb{E}\{g_{m,N}(X)\} \quad \forall N. \\
+    \int_{-N}^{N} |x|^p dF_n(x) &= \mathbb{E}\{f_N(X_n)\} = \lim_{m\to\infty} \mathbb{E}\{g_{m,N}(X_n)\} \quad \forall N.
+\end{aligned}
+$$
+由于 \(g_{m,N}(x) \leq f_N(x)\), 
+$$
+\lim_{n\to\infty} \mathbb{E}\{g_{m,N}(X_n)\} \leq \limsup_{n\to\infty} \mathbb{E}\{f_N(X_n)\}.
+$$
+于是有
+$$
+\lim_{m\to\infty} \mathbb{E}\{g_{m,N}(X)\} = \lim_{m\to\infty} \lim_{n\to\infty} \mathbb{E}\{g_{m,N}(X_n)\} \leq \limsup_{n\to\infty} \lim_{m\to\infty} \mathbb{E}\{g_{m,N}(X_n)\} = \limsup_{n\to\infty} \mathbb{E}\{f_N(X_n)\}.
+$$
+从而 
+$$
+\int_{-N}^{N} |x|^p dF(x) \leq \limsup_{n\to\infty} \int_{-N}^{N} |x|^p dF_n(x) \leq N^p < \infty, \quad \forall N.
+$$
+
+
 \end{proof}
 
 
