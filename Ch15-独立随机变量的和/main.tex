@@ -431,29 +431,63 @@ $$
 \end{framed}
 
 \begin{proof}
-联合特征函数为
+% 联合特征函数为
+% $$
+% \varphi_{\bar{X}, Y_1, \ldots, Y_n}\left(u_0, u_1, \ldots, u_n\right)=\mathbb{E}\left[\exp \left\{i u_0 \frac{1}{n} \sum_{j=1}^n X_j+i \sum_{j=1}^n u_j\left(X_j-\frac{1}{n} \sum_{k=1}^n X_k\right)\right\}\right]
+% $$
+% 合并同类项, 
+% $$
+% \exp \left(i u_0 \frac{1}{n} \sum_{j=1}^n X_j+i \sum_{j=1}^n u_j\left\{X_j-\frac{1}{n} \sum_{k=1}^n X_k\right\}\right)=\exp \left(i \sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right) X_j\right)
+% $$
+% 由于\(X_i\)独立同正态分布, 
+% $$
+% \mathbb{E}\left[e^{i t X_j}\right]=\exp \left(i t \mu-\frac{1}{2} t^2 \sigma^2\right)
+% $$
+% 而
+% $$
+% \sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right)^2 = \sum_{i = 1}^{}
+% $$
+% 于是, 联合特征函数为
+% $$
+% \begin{aligned}
+%     \varphi_{\bar{X}, Y_1, \ldots, Y_n}\left(u_0, u_1, \ldots, u_n\right)&=\exp \left\{i\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right) \mu-\frac{1}{2}\left(\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right)^2\right) \sigma^2\right\} \\
+%     &= \exp\{iu_0 \mu\} 
+% \end{aligned}
+% $$
+
+用Gaussian分布的性质说明:
+首先, \(\bar{X} \sim N(\mu, \sigma^2/n)\), 
+\(\mathbb{E}Y_j = 0, Var(Y_j) = \frac{n-1}{n} \sigma^2\),
+且 
 $$
-\varphi_{\bar{X}, Y_1, \ldots, Y_n}\left(u_0, u_1, \ldots, u_n\right)=\mathbb{E}\left[\exp \left\{i u_0 \frac{1}{n} \sum_{j=1}^n X_j+i \sum_{j=1}^n u_j\left(X_j-\frac{1}{n} \sum_{k=1}^n X_k\right)\right\}\right]
+\operatorname{Cov}\left(\bar{X}, Y_i\right)=\operatorname{Cov}\left(\frac{1}{n} \sum_{k=1}^n X_k, X_i-\bar{X}\right)=\frac{1}{n} \operatorname{Cov}\left(X_i, X_i\right)-\frac{1}{n} \operatorname{Var}\left(X_i\right)=\frac{\sigma^2}{n}-\frac{\sigma^2}{n}=0
 $$
-合并同类项, 
-$$
-\exp \left(i u_0 \frac{1}{n} \sum_{j=1}^n X_j+i \sum_{j=1}^n u_j\left\{X_j-\frac{1}{n} \sum_{k=1}^n X_k\right\}\right)=\exp \left(i \sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right) X_j\right)
-$$
-由于\(X_i\)独立同正态分布, 
-$$
-\mathbb{E}\left[e^{i t X_j}\right]=\exp \left(i t \mu-\frac{1}{2} t^2 \sigma^2\right)
-$$
-而
-$$
-\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right)^2 = \sum_{i = 1}^{}
-$$
-于是, 联合特征函数为
-$$
-\begin{aligned}
-    \varphi_{\bar{X}, Y_1, \ldots, Y_n}\left(u_0, u_1, \ldots, u_n\right)&=\exp \left\{i\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right) \mu-\frac{1}{2}\left(\sum_{j=1}^n\left(u_0/n+u_j - \bar{u}\right)^2\right) \sigma^2\right\} \\
-    &= \exp\{iu_0 \mu\} 
-\end{aligned}
-$$
+以及
+\[
+\text{Cov}(Y_i, Y_j) = \text{Cov}(X_i - \bar{X}, X_j - \bar{X}) = \text{Cov}(X_i, X_j) - \text{Cov}(X_i, \bar{X}) - \text{Cov}(X_j, \bar{X}) + \text{Var}(\bar{X}) = 0 - \frac{\sigma^2}{n} - \frac{\sigma^2}{n} + \frac{\sigma^2}{n} = -\frac{\sigma^2}{n}.
+\]
+
+因此，\((\bar{X}, Y_1, ..., Y_n)\)的协方差矩阵为：
+\[
+\begin{pmatrix}
+\frac{\sigma^2}{n} & 0 & \cdots & 0 \\
+0 & \frac{n-1}{n}\sigma^2 & \cdots & -\frac{\sigma^2}{n} \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & -\frac{\sigma^2}{n} & \cdots & \frac{n-1}{n}\sigma^2
+\end{pmatrix}.
+\]
+
+\((\bar{X}, Y_1, ..., Y_n)\)的联合特征函数为：
+\[
+\phi_{\bar{X}, Y_1, ..., Y_n}(t_0, t_1, ..., t_n) = \exp\left(i t_0 \mu + \frac{i^2}{2} \left( \frac{\sigma^2}{n} t_0^2 + \sum_{j=1}^{n} \left( \frac{n-1}{n}\sigma^2 t_j^2 - \frac{\sigma^2}{n} t_j \sum_{k \neq j} t_k \right) \right) \right).
+\]
+
+
+我们考虑\(S^2 = \frac{1}{n}\sum_{j=1}^{n}Y_j^2\)。由于\((\bar{X}, Y_1, ..., Y_n)\)是多维正态分布，且\(\bar{X}\)和\(Y_j\)的协方差为0，因此\(\bar{X}\)和\(Y_j\)是独立的。由于\(S^2\)是\(Y_j\)的函数，因此\(\bar{X}\)和\(S^2\)也是独立的。
+
+
+
+
 
 \end{proof}
 
@@ -499,7 +533,22 @@ $$
 
 
 \begin{proof}
-
+$$
+\Re \varphi_X(u) = \mathbb{E}\{\cos(uX)\}
+$$
+由于\(\cos(x) \geq 1 - \frac{1}{2}x^2 + \frac{1}{24}x^4\), 于是
+$$
+1- \Re \varphi_X(u) = \mathbb{E}\{1 - \cos(uX)\} \geq \mathbb{E}\{\frac{1}{2}u^2 X^2 - \frac{1}{24}u^4 X^4\}.
+$$
+注意到\(1-\cos(ux) \geq 0\), 以及当\(x \in [-1/u, 1/u]\)时, \(|ux| \leq 1\), 于是
+$$
+1 - \cos (ux) \geq \frac{11}{24} u^2 x^2, \quad x \in A.
+$$
+于是, 
+$$
+1 - \Re \varphi_X(u) \geq \frac{11}{24} u^2 \mathbb{E}\{X^2 \mathbb{I}_A\} + 0.
+$$
+证毕.
 \end{proof}
 
 

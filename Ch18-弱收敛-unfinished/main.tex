@@ -319,17 +319,81 @@ $$
 \end{framed}
 
 \begin{proof}
+Zeta分布的pmf是
+$$
+P(X = j) = c \frac{1}{j^{\alpha + 1}}, j = 1,2,3,...
+$$
+其中\(\alpha > 0, c = \frac{1}{\zeta(\alpha + 1)}\), \(\zeta\)是Riemann zeta函数.
+则 
+$$
+P(X_n = j) = c_n \frac{1}{j^{\alpha_n + 1}}, j = 1,2,3,...
+$$
+其中\(\alpha_n > 0, c_n = \frac{1}{\zeta(\alpha_n + 1)}\).
 
+从而
+$$
+P(X_n = j) \xrightarrow{n\to\infty} P(X = j), \forall j = 1,2,3,...
+$$
+根据可列取值情况下的弱收敛, \(\mu_{\alpha_n}\)弱收敛于\(\mu_{\alpha}\).
 \end{proof}
-\begin{exercise}
+
+
+
+\begin{framed}
+    \begin{exercise}
 设\(\mu_\alpha\)表示参数为\(\alpha\)的几何分布. 设\(\alpha_n \to \alpha > 0\), 证明: \(\mu_{\alpha_n}\)弱收敛于\(\mu_{\alpha}\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+几何分布的pmf是
+$$
+P(X = k) = (1 - p)^k p, k = 0,1,2,...
+$$
+其中, \(p \in (0,1)\).
+
+则
+$$
+P(X_n = k) = (1 - p_n)^k p_n, k = 0,1,2,...
+$$
+其中, \(p_n \in (0, 1)\).
+
+从而
+$$
+P(X_n = k) \xrightarrow{n\to\infty} P(X = k), \forall k = 0,1,2,...
+$$
+根据可列取值情况下的弱收敛, \(\mu_{\alpha_n}\)弱收敛于\(\mu_{\alpha}\).
+\end{proof}
 
 
+\begin{framed}
 \begin{exercise}
 设\(\mu_{(N,b,n)}\)是一个超几何分布. 假设在\(N\)趋于无穷时, \(p = \frac{b}{N}\)保持是一个常数.
 参数\(n\)固定. 证明当\(N\)趋于无穷时, \(\mu_{(N,b,n)}\)弱收敛到一个二项分布\(B(p,n)\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+超几何分布的pmf是
+$$
+P(X = x) = \frac{\binom{b}{x}\binom{N-b}{n-x}}{\binom{N}{n}}, x = 0,1,...,n.
+$$
+令\(p = \frac{b}{N}\), 则\(b = pN\), \(N-b = (1-p)N\).
+注意到, 当\(N\)充分大时, 
+$$
+\binom{N}{n} \approx \frac{N^n}{n!}
+$$
+于是
+$$
+\begin{aligned}
+P(X = x) &= \frac{\binom{pN}{x}\binom{(1-p)N}{n-x}}{\binom{N}{n}} \\
+&= \frac{\frac{(pN)!}{x!(pN-x)!}\frac{((1-p)N)!}{(n-x)!((1-p)N-(n-x))!}}{\frac{N!}{n!(N-n)!}} \\
+&\xrightarrow{N\to\infty} \frac{\frac{(pN)^x}{x!}\frac{((1-p)N)^{n-x}}{(n-x)!}}{\frac{N^n}{n!}} \\
+&= \binom{n}{x}p^x(1-p)^{n-x}.
+\end{aligned}
+$$
+根据可列取值情况下的弱收敛, \(\mu_{(N,b,n)}\)弱收敛于\(\mu_{(p,n)}\).
+\end{proof}
  
 
 
