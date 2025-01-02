@@ -673,66 +673,74 @@ $$
 \end{exercise}
 \end{framed}
 
-\begin{proof}
-由于\(Z_n\)是二值取值的随机变量, 因此只需考虑一个事件即可.
-因为若\(P(Z_i = 1, Z_j = 1) = P(Z_i = 1)P(Z_j = 1)\), 则
-\(P(Z_i = 1, Z_j = -1) = P(Z_i = 1) - P(Z_i = 1, Z_j = 1) = P(Z_i = 1)P(Z_j = -1)\).
+% \begin{proof}
+% 由于\(Z_n\)是二值取值的随机变量, 因此只需考虑一个事件即可.
+% 因为若\(P(Z_i = 1, Z_j = 1) = P(Z_i = 1)P(Z_j = 1)\), 则
+% \(P(Z_i = 1, Z_j = -1) = P(Z_i = 1) - P(Z_i = 1, Z_j = 1) = P(Z_i = 1)P(Z_j = -1)\).
 
 
-用数学归纳法完成证明. 先考察\(Z_1, Z_2\).
-$$
-\begin{aligned}
-    P(Z_1 = 1, Z_2 = -1) &= P(X_1 = 1, X_1 X_2 = -1) \\
-    &= P(X_1 = 1, X_2 = -1) \\ 
-    &= \frac{1}{4} 
-\end{aligned}
-$$
-而边际概率
-$$
-P(Z_1 = 1) = P(X_1 = 1) = \frac{1}{2}, \quad P(Z_2 = -1) = P(X_1 = 1, X_2 = -1) + P(X_1 = -1, X_2 = 1) = \frac{1}{2}.
-$$
-于是\(Z_1 \Perp Z_2\).
+% 用数学归纳法完成证明. 先考察\(Z_1, Z_2\).
+% $$
+% \begin{aligned}
+%     P(Z_1 = 1, Z_2 = -1) &= P(X_1 = 1, X_1 X_2 = -1) \\
+%     &= P(X_1 = 1, X_2 = -1) \\ 
+%     &= \frac{1}{4} 
+% \end{aligned}
+% $$
+% 而边际概率
+% $$
+% P(Z_1 = 1) = P(X_1 = 1) = \frac{1}{2}, \quad P(Z_2 = -1) = P(X_1 = 1, X_2 = -1) + P(X_1 = -1, X_2 = 1) = \frac{1}{2}.
+% $$
+% 于是\(Z_1 \Perp Z_2\).
 
-考虑\(Z_1, Z_2, Z_3\), 
-$$
-\begin{aligned}
-    P(Z_1 = 1, Z_2 = -1, Z_3 = 1) &= P(X_1 = 1, X_1X_2 = -1, X_1X_2X_3 = 1) \\
-    &= P(X_1 = 1, X_2 = -1, X_3 = 1) \\
-    &= \frac{1}{8}.
-\end{aligned}
-$$
-边际概率
-$$
-P(Z_3 = 1) = \frac{1}{2^3} \times \sum_{k=0}^{1}\binom{3}{2k} = \frac{1}{2}.
-$$
-重复上述流程, 即可证明\(Z_1, Z_2, ...\)是独立的.
-\end{proof}
+% 考虑\(Z_1, Z_2, Z_3\), 
+% $$
+% \begin{aligned}
+%     P(Z_1 = 1, Z_2 = -1, Z_3 = 1) &= P(X_1 = 1, X_1X_2 = -1, X_1X_2X_3 = 1) \\
+%     &= P(X_1 = 1, X_2 = -1, X_3 = 1) \\
+%     &= \frac{1}{8}.
+% \end{aligned}
+% $$
+% 边际概率
+% $$
+% P(Z_3 = 1) = \frac{1}{2^3} \times \sum_{k=0}^{1}\binom{3}{2k} = \frac{1}{2}.
+% $$
+% 重复上述流程, 即可证明\(Z_1, Z_2, ...\)是独立的.
+% \end{proof}
 
 \begin{remark}
 以下是一个严格的写法. 往证
 $$
 P(Z_n = 1) = P(Z_n = -1) = \frac{1}{2}.
 $$
-由于
+不妨设\(i_1 < ...< i_n\), 则
 \begin{align*}
-P(Z_1 = z_1, ..., Z_n = z_n) &= P\left(X_1 = z_1, X_2 = \frac{z_2}{z_1}, ..., X_n = \frac{z_n}{z_{n-1}}\right) \\
-&= P(X_1 = z_1) P\left(X_2 = \frac{z_2}{z_1}\right) \cdots P\left(X_n = \frac{z_n}{z_{n-1}}\right) \\
+    \frac{1}{2^n}= P(Z_{i_1} = z_{i_1}, ..., Z_{i_n} = z_{i_n}) 
+&= P\left(\prod_{j=0}^{i_1} X_j = z_{i_1}, \prod_{j = i_{1} + 1}^{i_2} X_j = \frac{z_{i_2}}{z_{i_1}}, ..., \prod_{j=i_{n-1}+1}^{i_{n}}X_j = \frac{z_{i_n}}{z_{i_{n-1}}}\right) \\
+&= P\left(\prod_{j=0}^{i_1} X_j = z_{i_1}\right) P\left( \prod_{j = i_{1} + 1}^{i_2} X_j = \frac{z_{i_2}}{z_{i_1}}\right)  ...  P\left(\prod_{j=i_{n-1}+1}^{i_{n}}X_j = \frac{z_{i_n}}{z_{i_{n-1}}}\right) \\
+&= P(Z_{i_1} = z_{i_1}) P\left(\frac{Z_{i_2}}{Z_{i_1}} = \frac{z_{i_2}}{z_{i_1}}\right) \cdots P\left(\frac{Z_{i_n}}{Z_{i_{n-1}}} = \frac{z_{i_n}}{z_{i_{n-1}}}\right) \\
 &= \frac{1}{2^n}.
 \end{align*}
-从而, \(Z_1, Z_2, ..., Z_n\)的联合分布是均匀分布, \(\forall n\).
-由于 
-\begin{align*}
-P(Z_1 = z_1, ..., Z_n = z_n) &= P(Z_1 = z_1) P(Z_2 = z_2 | Z_1 = z_1) \cdots P(Z_n = z_n | Z_1 = z_1, ..., Z_{n-1} = z_{n-1}). \\
-\end{align*}
-若有
-{\color{blue}
-$$
-P(Z_n = z_n) = P(Z_n = z_n | Z_1 = z_1, ..., Z_{n-1} = z_{n-1}), \quad \forall n.
-$$
-}
-则独立性得证.
 
-于是, 只需证明\(P(Z_n = 1) = P(Z_n = -1) = \frac{1}{2}\), 即\(Z_n\)是均匀分布.
+其中最后一个等号
+$$
+P\left(\frac{Z_{i_{t+1}}}{Z_{i_t}} = \frac{z_{i_{t+1}}}{z_{i_t}}\right) = \frac{1}{2}
+$$
+是根据以下的对称性.
+% 从而, \(Z_1, Z_2, ..., Z_n\)的联合分布是均匀分布, \(\forall n\).
+% 由于 
+% \begin{align*}
+% P(Z_1 = z_1, ..., Z_n = z_n) &= P(Z_1 = z_1) P(Z_2 = z_2 | Z_1 = z_1) \cdots P(Z_n = z_n | Z_1 = z_1, ..., Z_{n-1} = z_{n-1}). \\
+% \end{align*}
+% 若有
+% {\color{blue}
+% $$
+% P(Z_n = z_n) = P(Z_n = z_n | Z_1 = z_1, ..., Z_{n-1} = z_{n-1}), \quad \forall n.
+% $$
+% }
+% 则独立性得证.
+
+只需证明\(P(Z_n = 1) = P(Z_n = -1) = \frac{1}{2}\), 即\(Z_n\)是均匀分布.
 由于\(\{Z_n = 1\} = \{\text{偶数个} X_n = -1\}\), 只需证明, \(\sharp\{\text{偶数个} X_n = -1\} = 2^{n-1}\). 
 
 当\(n = 2m\)为偶数时, 
