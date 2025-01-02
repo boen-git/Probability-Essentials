@@ -341,9 +341,9 @@ $$
 $$
 \mathbb{E}\{S_n^2\} = Var(S_n) + (\mathbb{E}\{S_n\})^2 = n\sigma^2.
 $$
-根据Chebyshev不等式, 
+根据{\color{red}放缩}:
 $$
-\mathbb{E}\left\{\frac{|S_n|}{\sqrt{n}} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\} \leq t \Pr \left(\frac{|S_n|}{\sqrt{n}} \geq t\right) \leq t\cdot \frac{1}{t^2} \mathbb{E}\left(\frac{|S_n|^2}{{n}}\right) \leq \frac{\sigma^2}{t}.
+\mathbb{E}\left\{\frac{|S_n|}{\sqrt{n}} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\} \leq \mathbb{E}\left\{\frac{S_n^2}{nt} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\} \leq \frac{\sigma^2}{t}.
 $$
 不等式两边对\(n\)取极限, 有 
 \begin{equation}

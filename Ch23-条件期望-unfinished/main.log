@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.6.27)  1 JAN 2025 21:22
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.6.27)  2 JAN 2025 15:35
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -787,12 +787,7 @@ LaTeX Font Warning: Font shape `U/rsfs/m/n' in size <10.53937> not available
 
 [1
 
-]
-Overfull \hbox (36.28127pt too wide) detected at line 139
-\OT1/cmr/m/n/10.53937 0 = \OMS/cmsy/m/n/10.53937 h\U/msb/m/n/10.53937 I\OMS/cmsy/m/n/10.53937 f\U/msb/m/n/10.53937 E\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 Y\OMS/cmsy/m/n/10.53937 jG\OT1/cmr/m/n/10.53937 ) = 0\OMS/cmsy/m/n/10.53937 g\OML/cmm/m/it/10.53937 ; Y\OMS/cmsy/m/n/10.53937 i ^^U h\U/msb/m/n/10.53937 I\OMS/cmsy/m/n/10.53937 f\U/msb/m/n/10.53937 E\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 Y\OMS/cmsy/m/n/10.53937 jG\OT1/cmr/m/n/10.53937 ) = 0\OMS/cmsy/m/n/10.53937 g\OML/cmm/m/it/10.53937 ; Y\U/msb/m/n/10.53937 I[]\OMS/cmsy/m/n/10.53937 i ^^U h\U/msb/m/n/10.53937 I\OMS/cmsy/m/n/10.53937 f\U/msb/m/n/10.53937 E\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 Y\OMS/cmsy/m/n/10.53937 jG\OT1/cmr/m/n/10.53937 ) = 0\OMS/cmsy/m/n/10.53937 g\OML/cmm/m/it/10.53937 ; []\OMS/cmsy/m/n/10.53937 i \OT1/cmr/m/n/10.53937 = []\OML/cmm/m/it/10.53937 P\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 Y \OMS/cmsy/m/n/10.53937 ^^U \OT1/cmr/m/n/10.53937 1/\OML/cmm/m/it/10.53937 n; \U/msb/m/n/10.53937 E\OT1/cmr/m/n/10.53937 (\OML/cmm/m/it/10.53937 Y\OMS/cmsy/m/n/10.53937 jG\OT1/cmr/m/n/10.53937 ) = 0)\OML/cmm/m/it/10.53937 :
- []
-
-[2] [3] (./main.aux)
+] [2] [3] [4] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/07/14>
@@ -809,10 +804,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Here is how much of TeX's memory you used:
  18380 strings out of 476720
  412203 string characters out of 5800058
- 1937842 words of memory out of 5000000
+ 1935842 words of memory out of 5000000
  40167 multiletter control sequences out of 15000+600000
  568424 words of font info for 104 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  93i,10n,97p,1865b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (3 pages).
+Output written on main.pdf (4 pages).

@@ -123,9 +123,7 @@ $$
 $$
 P\left(Y \geq \frac{1}{n}, \mathbb{E}\{Y|\mathcal{G} = 0\}\right) > 0.
 $$
-
-
-根据\(\mathbb{E}(Y | \mathcal{G})\)的定义, \(\forall G \in\mathcal{G}\), 
+根据\(\mathbb{E}(Y | \mathcal{G})\)的定义, \(\forall G \in\mathcal{G}\)-meas, 
 $$
 \langle G, \mathbb{E}\{Y|\mathcal{G}\}\rangle = \langle G, Y\rangle.
 $$
@@ -135,9 +133,33 @@ $$
 $$
 对于\(\langle G, Y \rangle, \forall n > 0\), 
 $$
-0 = \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, Y \rangle \geq \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, Y \mathbb{I}_{\{Y \geq 1/n\}} \rangle \geq \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, \frac{1}{n}  \rangle = \frac{1}{n} P(Y \geq 1/n, \mathbb{E}(Y|\mathcal{G}) = 0).
+0 = \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, Y \rangle \geq \langle \mathbb{I}\{\mathbb{E}(Y|\mathcal{G}) = 0\}, Y \mathbb{I}_{\{Y \geq 1/n\}} \rangle \geq \frac{1}{n} P(Y \geq 1/n, \mathbb{E}(Y|\mathcal{G}) = 0).
 $$
 矛盾! 所以\(\{\mathbb{E}\{Y \mid \mathcal{G}\} = 0\} \subset \{Y = 0\}\) a.s.
+
+
+同理, 要证 
+$$
+\{Y = \infty\} \subset \{\mathbb{E}\{Y|\mathcal{G}\} = + \infty\} a.s.
+$$
+反证法, 若不然, 
+$$
+P(Y = \infty, \mathbb{E}\{Y|\mathcal{G}\} <\infty) > 0.
+$$
+于是存在充分大的\(N\)使得
+$$
+P(Y > M, \mathbb{E}\{Y|\mathcal{G}\} <\infty) > 0.
+$$
+根据\(\mathbb{E}\{Y|\mathcal{G}\}\)的定义, \(\forall G \in \mathcal{G}\),
+$$
+\int_G \mathbb{E}\{Y|\mathcal{G}\} dP = \int_G Y dP.
+$$
+取\(G = \{\mathbb{E}\{Y|\mathcal{G}\} < \infty\}\), 则
+$$
+\infty > \int_G YdP = \int_G Y \left(\mathbb{I}_{Y>M} + \mathbb{I}_{Y \leq M}\right) dP \geq M P(Y \leq M, ) + P(Y > M, \mathbb{E}\{Y|\mathcal{G}\} < \infty) > 0.
+$$
+
+
 
 \end{proof}
 
