@@ -522,13 +522,34 @@ $$
 \begin{remark}
 假设存在\(F\)上的连续点\(y\)使得\(\lim_{n\to\infty} F_n(y) \neq F(y)\).
 则存在\(\varepsilon > 0\)和一个子列\(\{n_k\}\)使得\(|F_{n_k}(y) - F(y)| > {\varepsilon}, \forall k\).
-证明: 对于适当的\(y_1,y_2\), \(|F_{n_k}(y) - F(y)| > \frac{\varepsilon}{2}\), 对要么\(x \in [y_1, y)\), 要么\(x \in (y, y_2]\)成立.
+证明: 对于适当的\(y_1,y_2\), \(|F_{n_k}(x) - F(x)| > \frac{\varepsilon}{2}\), 对要么\(x \in [y_1, y)\), 要么\(x \in (y, y_2]\)成立.
 而这产生了矛盾.
 \end{remark}
 
 \begin{proof}
 这里的证明沿着提示的思路. 用反证法, 若不然, 则存在分布函数的子列使得在某一连续点\(y\)上不收敛.
 
+\begin{itemize}
+    \item 若\(F_{n_K}(y) - F(y) < -\varepsilon, \forall k\), 则当\(x \leq y\)时, $$
+    F_{n_k}(x) - F(x) \leq F_{n_k}(y) - F(y) + F(y) - F(x) < -\varepsilon + \{F(y) - F(x)\}.
+    $$
+    由于\(F\)在\(y\)点处连续, 于是, 存在区间\([y_1, y)\)使得\(F(y) - F(x) < \varepsilon/2\), 从而有
+    $$
+    F_{n_k}(x) - F(x) < -\varepsilon/2, \forall x \in [y_1, y).
+    $$
+    \item 若\(F_{n_K}(y) - F(y) > \varepsilon, \forall k\), 则当\(x \geq y\)时, $$
+    F_{n_k}(x) - F(x) \geq F_{n_k}(y) - F(y) + F(y) - F(x) > \varepsilon + \{F(y) - F(x)\}.
+    $$
+    由于\(F\)在\(y\)点处连续, 于是, 存在区间\((y, y_2]\)使得\(F(y) - F(x) < \varepsilon/2\), 从而有
+    $$
+    F_{n_k}(x) - F(x) > \varepsilon/2, \forall x \in (y, y_2].
+    $$
+\end{itemize}
+上述两种情况都蕴含着
+$$
+\int_{-\infty}^{\infty} |F_{n_k}(x) - F(x)|^r dx \geq |y_1-y|\frac{\varepsilon}{2} > 0.
+$$
+这与题设矛盾. 因此, \(X_n \xrightarrow{D}X\).
 \end{proof}
 
 
@@ -536,21 +557,51 @@ $$
 
 
 
-\begin{exercise}
+\begin{framed}
+\begin{exercise}[Polya一致收敛定理]
 假设\(\{F_n\}_{n\geq 1}\)是一列\(\mathbb{R}\)上的分布函数, 且它们收敛到\(\mathbb{R}\)上的连续的分布函数\(F\).
 证明: 这样的收敛关于\(x\)是一致收敛.
 \end{exercise}
-
-
-
-
+\end{framed}
 
 \begin{remark}
 首先证明存在点\(x_1, ..., x_m\)使得\(F(x_1) < \varepsilon, F(x_{j+1}) - F(x_{j}) < \varepsilon\), 以及\(1 - F(x_m) < \varepsilon\).
 接下来说明: 存在\(N\)使得当\(n>N\)时, \(|F_n(x_j) - F(x_j)| < \varepsilon, 1 \leq j \leq m\).
 \end{remark}
 
+\begin{proof}
+对每个固定的正整数 $k$ , 考虑以下的序列
+$$
+-\infty=x_{0, k} \leq x_{1, k} \leq \cdots \leq x_{j, k} \leq \cdots \leq x_{k, k}=\infty
+$$
+其中 $x_{j, k}=\inf \left\{x: F(x) \geq \frac{j}{k}\right\}$ . 
+于是根据 $F$ 的连续性, $F\left(x_{j, k}\right) \leq \frac{j}{k}$ , 因此
+$$
+0 \leq F\left(x_{j+1, k}\right)-F\left(x_{j, k}\right) \leq \frac{1}{k}, \quad 0 \leq j<k
+$$
+于是对于任给的 $x$ , 存在 $j$ 使得 $x \in\left(x_{j, k}, x_{j+1, k}\right]$ 满足
+$$
+F_n(x)-F(x) \leq F_n\left(x_{j+1, k}\right)-F\left(x_{j, k}\right) \leq F_n\left(x_{j+1, k}\right)-F\left(x_{j+1, k}\right)+\frac{1}{k}
+$$
+和
+$$
+F_n(x)-F(x) \geq F_n\left(x_{j, k}\right)-F\left(x_{j+1, k}\right) \geq F_n\left(x_{j, k}\right)-F\left(x_{j, k}\right)-\frac{1}{k}
+$$
+于是
+$$
+\sup _{x \in\left(x_{j, k}, x_{j+1, k}\right]}\left|F_n(x)-F(x)\right| \leq\left|F_n\left(x_{j+1, k}\right)-F\left(x_{j+1, k}\right)\right|+\left|F_n\left(x_{j, k}\right)-F\left(x_{j, k}\right)\right|+\frac{1}{k}
+$$
+因此
+$$
+\sup _x\left|F_n(x)-F(x)\right| \leq \max _{1 \leq j \leq k}\left|F_n\left(x_{j, k}\right)-F\left(x_{j, k}\right)\right|+\max _{0 \leq j \leq k}\left|F_n\left(x_{j, k}\right)-F\left(x_{j, k}\right)\right|+\frac{2}{k}
+$$
+先固定 $k$ 对 $n$ 取极限, 再对 $k$ 取极限即可。
+\end{proof}
 
+
+
+
+\begin{framed}
 \begin{exercise}
 设\(f\)是一致连续函数. \(X,Y\)是两个实值随机变量.
 假设当\(|x-y| < \delta\)时, 有\(|f(x) - f(y)| < \varepsilon\). 证明:
@@ -558,18 +609,66 @@ $$
 |\mathbb{E}\{f(X)\}-\mathbb{E}\{f(X+Y)\}| \leq \varepsilon+2 \sup _x|f(x)| P\{|Y| \geq \delta\} .
 $$
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+设\(Z = (X,Y)\)诱导的测度是\(\mu\), 则
+$$
+\begin{aligned}
+    \left|\int f(x) d\mu - \int f(x + y) d\mu\right| &\leq \left(\int_{|y| < \delta} + \int_{|y| \geq \delta}\right) |f(x) - f(x+y)| d\mu \\
+    &\leq \varepsilon  + 2\sup_x |f(x)| \mu\{|y| \geq \delta\} \\
+    &= \varepsilon + 2\sup_x |f(x)| P\{|Y| \geq \delta\}.
+\end{aligned}
+$$
+\end{proof}
 
 
+\begin{framed}
 \begin{exercise}
 设\(\{X_n\}_{n \geq 1}, X, Y\)是实值随机变量, 定义在同一个概率空间上.
 假设\(X_n + \sigma Y\)依分布收敛于\(X + \sigma Y\), 对于任意的\(\sigma > 0\).
 证明: \(X_n\)依分布收敛于\(X\).
 \end{exercise}
+\end{framed}
 \begin{remark}
 可以用18.19的结论.
 \end{remark}
 
+\begin{proof}
+\(\forall f\in \mathscr{C}_{b,Lip}(\mathbb{R}^1), \sigma > 0\), 
+$$
+\begin{aligned}
+    &\left|\mathbb{E}\{f(X_n)\} - \mathbb{E}\{f(X)\}\right| \\ = &\left|\mathbb{E}\{f(X_n)\} - \mathbb{E}\{f(X_n + \sigma Y)\} + \mathbb{E}\{f(X_n + \sigma Y)\} - \mathbb{E}\{f(X + \sigma Y)\} + \mathbb{E}\{f(X + \sigma Y)\} - \mathbb{E}\{f(X)\}\right| \\
+    \leq & I_1 + I_2 + I_3.
+\end{aligned}
+$$
+其中,
+$$
+\begin{aligned}
+    I_1 &= \left|\mathbb{E}\{f(X_n)\} - \mathbb{E}\{f(X_n + \sigma Y)\}\right|, \\
+    I_2 &= \left|\mathbb{E}\{f(X_n + \sigma Y)\} - \mathbb{E}\{f(X + \sigma Y)\}\right|, \\
+    I_3 &= \left|\mathbb{E}\{f(X + \sigma Y)\} - \mathbb{E}\{f(X)\}\right|.
+\end{aligned}
+$$
+首先, 根据题目中弱收敛的条件, 
+$$
+I_2 \xrightarrow{n\to\infty} 0, \quad \forall \sigma > 0.
+$$
+对于\(I_1\), 由于\(f\)是Lipschitz连续的, \(\forall \varepsilon > 0\),
+$$
+I_1 \leq \varepsilon + 2\sup_x |f(x)| P\{|\sigma Y| \geq \delta\}, \quad \forall n, \sigma > 0.
+$$
+先令\(n\to\infty\), 再令\(\sigma \to 0\), 有\(I_1 \to 0 \), 同理, \(I_3 \to 0\).
 
+综上, 
+$$
+\lim_{n\to\infty} \left|\mathbb{E}\{f(X_n)\} - \mathbb{E}\{f(X)\}\right| = 0, \quad \forall f\in \mathscr{C}_{b,Lip}(\mathbb{R}^1).
+$$
+这表明\(X_n\)依分布收敛于\(X\).
+\end{proof}
+
+
+\begin{framed}
 \begin{exercise}
 设\(X\)和\(Y\)是定义在同一个概率空间上的实值独立随机变量. 
 假设\(Y\)服从标准正态分布, 令\(f\)是有界连续函数. 证明:
@@ -580,16 +679,69 @@ $$
 $$
 f_\sigma(x)=\frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{\infty} f(z) e^{-\frac{1}{2}|z-x|^2 / \sigma^2} d z
 $$
-证明\(f_\sigma(x)\)是有界的, 且是任意阶阶可导的.
+证明\(f_\sigma(x)\)是有界的, 且是任意阶可导的.
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+设\(Z = (X,Y)\)的分布函数是\(P^{Z}\), \(X,Y\)的分布函数分别是\(P^X, P^Y\).
+则根据独立性(Cor 10.1), 
+$$
+P^{Z} = P^X \otimes P^Y.
+$$
+于是根据\(f\)有界, 应用Fubini定理,
+$$
+\begin{aligned}
+    \mathbb{E}\{f(X+\sigma Y)\} &= \iint f(x+\sigma y) dP^{Z}(x,y) \\
+    &= \iint f(x+\sigma y) dP^X(x) dP^Y(y) \\
+    &= \int \left(\int f(x+\sigma y) dP^Y(y)\right) dP^X(x) \\
+    &= \int \int_{-\infty}^{\infty} f(x+\sigma y) \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}y^2} dy dP^X(x) \\
+    &= \int \int_{-\infty}^{\infty} f(z) \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{1}{2}|z-x|^2/\sigma^2} dz dP^X(x) \quad \text{(令\(z = x + \sigma y\))} \\
+\end{aligned}
+$$
+于是, 
+$$
+\mathbb{E}\{f(X+\sigma Y)\} = \mathbb{E}\{f_\sigma(X)\}.
+$$
+
+接下来证明\(f_\sigma(x)\)是有界的. 由于\(f\)有界, 存在\(M > 0\)使得\(|f(x)| \leq M\), 于是
+$$
+|f_\sigma(x)| \leq \frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^{\infty} |f(z)| e^{-\frac{1}{2}|z-x|^2/\sigma^2} dz \leq \frac{M}{\sqrt{2\pi}\sigma} \int_{-\infty}^{\infty} e^{-\frac{1}{2}|z-x|^2/\sigma^2} dz = M.
+$$
+
+最后证明\(f_\sigma(x)\)是任意阶可导的. 
+先考虑一阶导数.
+由于 
+$$
+h'(x) = \lim_{\Delta x \to 0} \frac{h(x+\Delta x) - h(x)}{\Delta x},
+$$
+为了交换极限和积分, 我们需要找到一个积分内的函数的控制函数.
+考察\(\Delta x\)充分小时, 
+$$
+\left|f(z) \left(e^{-(z - x - \Delta x)^2} - e^{-(z - x )^2}\right)\right| \leq |f(z)| e^{-(z - x)^2} |e^{2z\Delta x + \Delta x^2} - 1| \leq M e^{-(z - x)^2} (2|z| + |\Delta x|) |\Delta x|.
+$$
+可积, 从而可以交换积分和极限.
+\end{proof}
 
 
 
+\begin{framed}
 \begin{exercise}
 设\(\{X_n\}_{n\geq 1}, X\)是实值随机变量. 证明: \(X_n \xrightarrow{D}X\)当且仅当对任意的有界\(\mathcal{C}^\infty\)函数\(f\), 有\(\mathbb{E}\{f(X_n)\} \to \mathbb{E}\{f(X)\}\).
 \end{exercise}
+\end{framed}
 
+\begin{proof}
+只需证反方向. 取(构造)\(Y\)与\(X, \{X_n\}\)独立, 且服从标准正态分布.
 
+若\(\forall f \in \mathscr{C}_b^\infty\), \(\mathbb{E}\{f(X_n)\} \to \mathbb{E}\{f(X)\}\),
+特别地, 习题18.21中的函数\(f_\sigma(x)\)是有界的, 且是任意阶可导的.
+于是\(\forall \sigma > 0\),
+$$
+\mathbb{E}\{f(X_n + \sigma Y)\} \xrightarrow{{n\to\infty}} \mathbb{E}\{f(X + \sigma Y)\}.
+$$
+根据习题18.20, 有\(X_n \xrightarrow{D}X\).
+\end{proof}
 
 
 
