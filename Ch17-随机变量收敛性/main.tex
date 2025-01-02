@@ -287,7 +287,7 @@ $$
 
 \begin{proof}
 只需证\(P(|X_n| = \infty) = 0\).
-记\(N_1 = \{w\in \Omega: \lim_{n\to\infty} X_n \neq X\}, N_2 = \{w\in\Omega: |X| < \infty\}\).
+记\(N_1 = \{w\in \Omega: \lim_{n\to\infty} X_n \neq X\}, N_2 = \{w\in\Omega: |X| = \infty\}\).
 则\(\forall w\in N_1^c \cap N_2^c\), 
 $$
 \lim_{n\to\infty} X_n(w) = X(w), \quad |X(w)| < \infty.
@@ -303,18 +303,22 @@ $$
 $$
 于是 
 $$
-P(|X_n| = \infty) \leq P(N_1 \cup N_2) = 0.
+Y = \sup_n |X_n| \leq \max\{|X_1|, ..., |X_N|, \varepsilon + |X|\} < \infty.
 $$
-从而\(|X_n| < \infty\) a.s.
+从而\(Y < \infty\) a.s..
+% $$
+% P(|X_n| = \infty) \leq P(N_1 \cup N_2) = 0.
+% $$
+% 从而\(|X_n| < \infty\) a.s.
 
 
-记\(N = \{Y = \infty\}\). 于是
-$$
-\begin{aligned}
-    P(N) &= P\left(\bigcup_{n=1}^{\infty}\{|X_n| = \infty\}\right) \\
-    &\leq \sum_{n=1}^{\infty}P\{|X_n| = \infty\} = 0.
-\end{aligned}
-$$
+% 记\(N = \{Y = \infty\}\). 于是
+% $$
+% \begin{aligned}
+%     P(N) &= P\left(\bigcup_{n=1}^{\infty}\{|X_n| = \infty\}\right) \\
+%     &\leq \sum_{n=1}^{\infty}P\{|X_n| = \infty\} = 0.
+% \end{aligned}
+% $$
 \end{proof}
 
 
