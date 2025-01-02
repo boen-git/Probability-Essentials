@@ -131,21 +131,76 @@ $$
 
 \begin{proof}
 
+$$
+\frac{1}{n^2} S_{n^2} = \frac{1}{n^2} \sum_{j=1}^{n^2} X_j .
+$$
+此时, 
+$$
+Var\left(\frac{1}{n^2} S_{n^2}\right) = \frac{1}{n^4} n^2 \text{Var}(X_1) = \frac{1}{n^2}.
+$$
+根据Chebyshev不等式, 对\(\forall \varepsilon > 0\),
+$$
+P\left\{\left|\frac{1}{n^2}S_{n^2}\right| > \varepsilon\right\} \leq \frac{1/n^2}{\varepsilon^2} = \frac{1}{n^2\varepsilon^2}.
+$$
+于是, 
+$$
+\sum_{n=1}^{\infty}P\left\{\frac{1}{n^2}|S_{n^2}| > \varepsilon\right\} = \sum_{n=1}^{\infty} \frac{1}{n^2\varepsilon^2} = \frac{1}{\varepsilon^2}\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6\varepsilon^2} < \infty.
+$$
+
+
+若
+$$
+\sum_{n=1}^{\infty}P\left\{\frac{1}{n^2}|S_{n^2}| > \varepsilon\right\} < \infty, \forall \varepsilon > 0,
+$$
+则根据Borel-Cantelli引理, 有\(P\left\{\frac{1}{n^2}|S_{n^2}| > \varepsilon \text{ i.o.}\right\} = 0\), 即
+$$
+P\left(\limsup_{n\to\infty} \left\{\left|\frac{1}{n^2}S_{n^2} - 0\right| > \varepsilon\right\}\right) = 0, \forall \varepsilon > 0.
+$$
+从而\(\frac{1}{n^2}S_{n^2}\)几乎处处收敛于\(0\).
 \end{proof}
 
 
+\begin{framed}
 \begin{exercise}
 假设\(|X_n| \leq Y\) a.s., \(n = 1,2,3,...\).
 证明: \(\sup_{n}|X_n| \leq Y\) a.s..
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+记\(N = \{w\in \Omega: \sup_n|X_n| > Y\}\).  于是
+$$
+\begin{aligned}
+    P(N) &= P\left(\bigcup_{n=1}^{\infty}\{|X_n| > Y\}\right) \\
+    &\leq \sum_{n=1}^{\infty}P\{|X_n| > Y\} = 0.
+\end{aligned}
+$$
+从而\(\sup_{n}|X_n| \leq Y\) a.s..
+\end{proof}
 
 
+\begin{framed}
 \begin{exercise}
 设\(X_n \overset{p}{\to} X\). 证明: 特征函数\(\varphi_{X_n}\)逐点收敛于\(\varphi_X\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+由于 
+$$
+\varphi_{X_n}(t) = \mathbb{E}\{e^{itX_n}\} = \mathbb{E}\{\cos(tX_n)\} + i\mathbb{E}\{\sin(tX_n)\},
+$$
+由于\(X_n \xrightarrow{P} X\), 有\(\cos(tX_n) \xrightarrow{P} \cos(tX)\)和\(\sin(tX_n) \xrightarrow{P} \sin(tX)\). 
+且\(|\cos(tX_n)|, |\sin(tX_n) \leq 1 \in L^p\), 根据\(L^p\)版本的控制收敛定理, 有
+$$
+\cos(tX_n) \xrightarrow{L^p} \cos(tX), \quad \sin(tX_n) \xrightarrow{L^p} \sin(tX).
+$$
+从而\(\varphi_{X_n}(t) \to \varphi_X(t)\).
+\end{proof}
 
 
 
+\begin{framed}
 \begin{exercise}
 设\(X_1, ..., X_n\)是独立同分布的Cauchy随机变量, 参数\(\alpha = 0, \beta = 1\).
 即它们的密度是
@@ -154,28 +209,73 @@ f(x) = \frac{1}{\pi(1+x^2)}, -\infty < x < \infty.
 $$
 证明: \(\frac{1}{n}\sum_{j=1}^{n}X_j\)服从Cauchy分布.
 \end{exercise}
+\end{framed}
 
+\begin{proof}
+由于Cauchy分布的特征函数为
+$$
+\varphi(t) = e^{-|t|}.
+$$
+于是\(\frac{1}{n} \sum_{j=1}^{n}X_j\)的特征函数为 
+$$
+\varphi_{\frac{1}{n}\sum_{j=1}^{n}X_j}(t) = \left(\varphi_{X_1}\left(\frac{t}{n}\right)\right)^n = e^{-|t|}.
+$$
+根据唯一性定理, \(\frac{1}{n}\sum_{j=1}^{n}X_j\)服从Cauchy分布.
+\end{proof}
+
+
+
+\begin{framed}
 \begin{exercise}
     设\(X_1, ..., X_n\)是独立同分布的Cauchy随机变量, 参数\(\alpha = 0, \beta = 1\).
 证明: 不存在常数\(\gamma\)使得\(\frac{1}{n}\sum_{j=1}^{n}X_j\)依概率收敛于\(\gamma\).
 进一步说明了, 不存在常数\(\gamma\)使得\(\frac{1}{n}\sum_{j=1}^{n}X_j\)几乎处处收敛于\(\gamma\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+考察任取\(\varepsilon > 0\), 
+$$
+P \left(\left|\frac{1}{n} \sum_{j = 1}^{n}X_j\right| > \varepsilon\right) = 2\int_{\varepsilon}^{\infty} \frac{1}{\pi(1+x^2)}dx = 1 -  \frac{2}{\pi} \arctan(\varepsilon) \not\to 0 (n\to\infty).
+$$
+\end{proof}
 
 
 
+\begin{framed}
 \begin{exercise}
 令\(\{X_n\}_{n\geq 1}\)零均值, 方差有限. 
 假设\(\lim_{n\to \infty} \sigma_{X_n}^2 = 0\).
 证明: \(X_n\)依概率收敛于\(0\), 以及\(L^2\)收敛于\(0\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+只需证\(L^2\)收敛性.
+$$
+\mathbb{E}\{X_n^2\} = \text{Var}(X_n) = \sigma_{X_n}^2 \to 0 \quad (n\to \infty).
+$$
+从而\(X_n\)在\(L^2\)意义下收敛于\(0\). 
+于是\(X_n\)依概率收敛于\(0\).
+\end{proof}
 
 
 
+\begin{framed}
 \begin{exercise}
 设\(X_n\)是独立同分布的随机变量, 零均值, 方差有限.
 令\(S_n = \sum_{j=1}^{n}X_j\).
 证明:\(\frac{1}{n}S_n\)依概率收敛于\(0\), 也\(L^2\)收敛于\(0\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+只需证\(L^2\)收敛性.
+$$
+\mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\} = \frac{1}{n^2}\text{Var}(S_n) = \frac{1}{n^2}n\text{Var}(X_1) = \frac{1}{n}\text{Var}(X_1) \to 0 \quad (n\to \infty).
+$$
+从而\(\frac{1}{n}S_n\)在\(L^2\)意义下收敛于\(0\).
+\end{proof}
 
 
 \begin{framed}
@@ -186,7 +286,35 @@ $$
 \end{framed}
 
 \begin{proof}
-记
+只需证\(P(|X_n| = \infty) = 0\).
+记\(N_1 = \{w\in \Omega: \lim_{n\to\infty} X_n \neq X\}, N_2 = \{w\in\Omega: |X| < \infty\}\).
+则\(\forall w\in N_1^c \cap N_2^c\), 
+$$
+\lim_{n\to\infty} X_n(w) = X(w), \quad |X(w)| < \infty.
+$$
+即\(\forall \varepsilon > 0, \exists N = N(\varepsilon), \forall n \geq N, |X_n(w) - X(w)| < \varepsilon\).
+于是对\(n \geq N\), 
+$$
+|X_n(w)| \leq |X(w)| + |X_n(w) - X(w)| < \infty.
+$$
+对\(n = 1,...,N\), 有
+$$
+|X_n(w)| \leq \max\{|X_1(w)|, ..., |X_N(w)|\} < \infty.
+$$
+于是 
+$$
+P(|X_n| = \infty) \leq P(N_1 \cup N_2) = 0.
+$$
+从而\(|X_n| < \infty\) a.s.
+
+
+记\(N = \{Y = \infty\}\). 于是
+$$
+\begin{aligned}
+    P(N) &= P\left(\bigcup_{n=1}^{\infty}\{|X_n| = \infty\}\right) \\
+    &\leq \sum_{n=1}^{\infty}P\{|X_n| = \infty\} = 0.
+\end{aligned}
+$$
 \end{proof}
 
 
@@ -196,11 +324,29 @@ $$
 假设\(\lim_{n\to\infty} X_n = X\) a.s. 令\(Y = \sup_n|X_n - X|\).
 证明\(Y < \infty\) a.s., 定义新测度\(Q\):
 $$
-Q(A)=\frac{1}{c} E\left\{1_A \frac{1}{1+Y}\right\} \text {, where } c=E\left\{\frac{1}{1+Y}\right\} \text {. }
+Q(A)=\frac{1}{c} E\left\{1_A \frac{1}{1+Y}\right\} \text {, 其中 } c=E\left\{\frac{1}{1+Y}\right\} \text {. }
 $$
 证明: \(X_n\)在测度\(Q\)下\(L^1\)收敛于\(X\).
 \end{exercise}
 \end{framed}
+
+\begin{proof}
+
+首先, 证明\(Y < \infty\) a.s.    
+记\(N = \{\lim_{n\to\infty} X_n \neq X\}\). 于是
+\(\forall w\in N^c\), \(\forall \varepsilon >0, \exists N = N(\varepsilon), \forall n \geq N\), 有
+\(|X_n(w) - X(w)| < \varepsilon\).
+此时, 
+$$
+Y = \sup_n|X_n - X| \leq \max\{|X_1 - X|, ..., |X_N - X|, \varepsilon\} < \infty.
+$$
+因此, \(Y < \infty\) a.s..
+
+接下来, 证明\(X_n\)在测度\(Q\)下\(L^1\)收敛于\(X\). 根据习题9.7积分变换公式, 
+$$
+\mathbb{E}_Q\{|X_n - X|\} = \frac{1}{c}\mathbb{E}\left\{\frac{1}{1+Y}|X_n - X|\right\}\to 0 \quad (n\to \infty).
+$$
+\end{proof}
 
 
 
@@ -209,10 +355,30 @@ $$
 设\(A\)是例1中定义的事件. 证明: \(P(A) = 0\).
 
 可以令\(A_n = \{\text{第n次投掷为正面}\}\).
-用BC引理证明\(\sum_{n=1}^{\infty} P(A_n) = \infty\).
+证明\(\sum_{n=1}^{\infty} P(A_n) = \infty\), 用BC引理.
 \end{exercise}
 \end{framed}
 
+\begin{proof}
+应用例1中的记号, \(X_n\)独立同Bernoulli(p), 
+记 
+$$
+A_n = \{X_n = 1\}
+$$
+则 
+$$
+A^c = A_n \text{ i.o.}.
+$$
+则\(A_n\)相互独立且\(P(A_n) = p\), 于是
+$$
+\sum_{n=1}^{\infty} P(A_n) = \infty.
+$$
+根据独立场合的BC引理, 有
+$$
+P(A^c) = P\left(\limsup_{n\to\infty} A_n\right) = 1.
+$$
+从而\(P(A) = 0\).
+\end{proof}
 
 
 \begin{framed}

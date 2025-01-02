@@ -657,8 +657,8 @@ $$
 \begin{itemize}
     \item 当\(p < \frac{1}{2}\)时, \(P(A_k) \leq (2^k - k + 1) p^k <(2p)^k\), 从而\(\sum_{k=1}^{\infty} P(A_k) \leq \sum_{k=1}^{\infty} (2p)^k = \frac{2p}{1-2p} < \infty\), 根据Borel-Cantelli引理, \(P(A_k \text{ i.o. }) = 0\).
     \item 当\(p > \frac{1}{2}\)时, 考察\(\ln(1 - P(A_k)) \leq \lfloor \frac{2^k}{k} \rfloor \ln(1 - p^k) \leq -\frac{2^k}{k}p^k = -\frac{(2p)^k}{k} \to -\infty(k \to \infty)\). 于是\(1 - P(A_k) \to 0\), 从而\(P(A_k) \to 1(k \to \infty)\). 因此\(\sum_{k=1}^{\infty}P(A_k) = \infty\), 根据独立条件下的Borel-Cantelli引理, \(P(A_k \text{ i.o. }) = 1\).
+    \item 对\(p = \frac{1}{2}\), 事实上, 可以按照上述的方法, 证明\(\sum_{k = 1}^{\infty} 1 - (1- p^k)^{\lfloor \frac{2^k}{k} \rfloor}\)的收敛性与\(\sum_{k= 1}^{\infty} \frac{(2p)^k}{k}\)相同, 从而\(P(A_k \text{ i.o. }) = 1\).
 \end{itemize}
-
 
 \end{proof}
 
