@@ -11,6 +11,7 @@
 \usepackage{framed}
 \usepackage{mathrsfs} 
 \usepackage{xcolor}
+\newcommand{\Perp}{\perp\!\!\!\!\perp}
 \newtheorem{exercise}{Exercise \#23.}
 \newtheorem*{proposition}{命题}
 \newtheorem*{remark}{注}
@@ -148,17 +149,21 @@ P(Y = \infty, \mathbb{E}\{Y|\mathcal{G}\} <\infty) > 0.
 $$
 于是存在充分大的\(N\)使得
 $$
-P(Y > M, \mathbb{E}\{Y|\mathcal{G}\} <\infty) > 0.
+P(Y = \infty, \mathbb{E}\{Y|\mathcal{G}\} \leq N) > 0.
 $$
 根据\(\mathbb{E}\{Y|\mathcal{G}\}\)的定义, \(\forall G \in \mathcal{G}\),
 $$
 \int_G \mathbb{E}\{Y|\mathcal{G}\} dP = \int_G Y dP.
 $$
-取\(G = \{\mathbb{E}\{Y|\mathcal{G}\} < \infty\}\), 则
+取\(G = \{\mathbb{E}\{Y|\mathcal{G}\} \leq N\}\), 则
 $$
-\infty > \int_G YdP = \int_G Y \left(\mathbb{I}_{Y>M} + \mathbb{I}_{Y \leq M}\right) dP \geq M P(Y \leq M, ) + P(Y > M, \mathbb{E}\{Y|\mathcal{G}\} < \infty) > 0.
+LHS = \int_{\{\mathbb{E}\{Y|\mathcal{G}\} \leq N\}} \mathbb{E}\{Y|\mathcal{G}\} dP \leq N P(\mathbb{E}\{Y|\mathcal{G}\} \leq N) < \infty.
 $$
-
+但是, 
+$$
+RHS = \int_{\{\mathbb{E}\{Y|\mathcal{G}\} \leq N\}} Y dP \geq \int_{\{Y = \infty, \mathbb{E}\{Y|\mathcal{G} \leq N\}\}} Y dP = \infty.
+$$
+矛盾! 所以\(\{Y = \infty\} \subset \{\mathbb{E}\{Y|\mathcal{G}\} = + \infty\} a.s.\).
 
 
 \end{proof}
@@ -177,62 +182,153 @@ $$
 \end{framed}
 
 \begin{proof}
+注意到, 
 $$
 g^{-1}(B) = \begin{cases}
-\{x \in \mathbb{R}: \mathbb{E}\{f(x, Y)\} \in B\}, & \text{if } 0 \not\in B, \\
+\{x \in \mathbb{R}: \mathbb{E}\{f(x, Y)\} \in B\}, & \text{ 若 } 0 \not\in B, \\
+\{x \in \mathbb{R}: \mathbb{E}\{f(x, Y)\} =0\} \cup \{x \in \mathbb{R}: \mathbb{E}\{f(x, Y)\} = \infty\}, & \text{ 若 } 0 \in B.
 \end{cases}
 $$
-
-根据Fubini定理, 
-
-
-2. 用定理23.2, 23.6
-
+只需证\(\mathbb{E}\{f(x, Y)\}\)是关于\(x\)的Borel函数即可.
+事实上, 根据截口函数的可测性, 
+$
+f(x,Y)
+$
+是可积的, 再根据Fubini定理, 
 $$
-\begin{aligned}
-\mathbb{E}\{f(X, Y) \mid X\} &= \mathbb{E}\{\mathbb{E}\{f(X, Y) \mid X, Y\} \mid X\} \\
-\end{aligned}
+\mathbb{E}\{f(x,Y)\} = \int_{\mathbb{R}} f(x,y) dP_Y(y), 
 $$
+是Borel可测的.
+从而\(g(X)\)是Borel函数.
+
+其次, 由于\(X, Y\)是独立的, 对于\(\forall A\in \sigma(X)\), 
+$$
+\iint_A f(x,y) dP^{(X,Y)} = \int_A \int_{\mathbb{R}} f(x,y) dP_Y(y) dP_X(x) = \int_A \mathbb{E}\{f(x,Y)\} dP_X(x).
+$$
+由于\(f(X,Y) \in L^1\), 
+$$
+\int_A g(x) dP_X(x) = \int_A \mathbb{E}\{f(x,Y)\} dP_X(x) = \iint_A f(x,y) dP^{(X,Y)}.
+$$
+于是, 
+$$
+\mathbb{E}\{f(X,Y) \mid X\} = g(X).
+$$
+
 \end{proof}
 
 
+\begin{framed}
 \begin{exercise}
 设\(Y\)是\(L^2(\Omega, \mathcal{A}, P)\)上的随机变量, 假设\(\mathbb{E}\{Y^2 \mid X\} = X^2\)以及\(\mathbb{E}\{Y \mid X\} = X\).
 证明\(Y = X\) a.s.
 \end{exercise}
+\end{framed}
 
+\begin{proof}
+考察\(\mathbb{E}\{(Y-X)^2\}\), 
+由于\(\forall Z \in L^2(\Omega, \sigma(X), P)\), 
+$$
+\mathbb{E}\{Z(Y-X)\} = \mathbb{E}\{Z\mathbb{E}\{Y - \mathbb{E}(Y|X)\}\} = 0.
+$$
+以及
+$$
+\mathbb{E}\{Z(Y^2-X^2)\} = \mathbb{E}\{Z\mathbb{E}\{Y^2 - \mathbb{E}(Y^2|X)\}\} = 0.
+$$
+于是, 在第一个式子取\(Z = X\), 在第二个式子取\(Z = 1\),
+可得
+$$
+\mathbb{E}\{(X-Y)^2\} = 0.
+$$
+从而\(Y = X\) a.s.
+\end{proof}
+
+
+
+\begin{framed}
 \begin{exercise}
 设\(Y\)是指数分布随机变量满足\(P(Y > t) = e^{-t}, t >0\).
 计算\(\mathbb{E}\{Y \mid Y \wedge t\}\), 其中\(Y \wedge t = \min(t,Y)\).
 \end{exercise}
+\end{framed}
 
 
+\begin{proof}
+$$
+\mathbb{E}\{Y|Y \wedge t = y\} = 
+\begin{cases}
+    y, & \text{ if } y < t, \\
+    t+1, & \text{ if } y \geq t.
+\end{cases}
+$$
+这是因为
+$$
+\mathbb{E}\{Y|Y>t\} = \frac{\mathbb{E}\{Y\cdot \mathbb{I}(Y>t)\}}{P(Y > t)} = \frac{\mathbb{E}\{Y\cdot \mathbb{I}(Y>t)\}}{e^{-t}} = t+1.
+$$
+于是 
+$$
+\mathbb{E}\{Y|Y \wedge t\} = Y \mathbb{I}(Y < t) + (t+1) \mathbb{I}(Y \geq t).
+$$
+\end{proof}
+
+
+\begin{framed}
 \begin{exercise}[Chebyshev不等式]
 证明对于\(X \in L^2\), \(a > 0, P(|X| \geq a \mid \mathcal{G}) \leq \frac{\mathbb{E}\{X^2 \mid \mathcal{G}\}}{a^2}\).
 其中\(P(A\mid \mathcal{G}) = \mathbb{E}\{\mathbb{I}_A \mid \mathcal{G}\}\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+只需根据\(L^2\)情况下条件期望的单调性和线性性质:
+$$
+\mathbb{E}\{X^2 \mid \mathcal{G}\} \geq a^2 \mathbb{E}\{\mathbb{I}_{|X| \geq a} \mid \mathcal{G}\}.
+$$
+\end{proof}
 
 
+
+\begin{framed}
 \begin{exercise}[Cauchy-Schwarz不等式]
 对于\(X,Y \in L^2\), 证明: 
 $$(\mathbb{E}\{XY|\mathcal{G}\})^2\leq \mathbb{E}\{X^2|\mathcal{G}\}\mathbb{E}\{Y^2|\mathcal{G}\}.$$
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+取\(Z = X - \lambda Y\), 其中\(\lambda \in \mathbb{R}, Z^2 \geq 0 \),
+再根据\(\Delta \leq 0\)和线性性即可.
+\end{proof}
 
 
+
+\begin{framed}
 \begin{exercise}
     设\(X \in L^2\). 证明 $$\mathbb{E}\{(X-\mathbb{E}\{X|\mathcal{G}\})^2\}\leq \mathbb{E}\{(X-\mathbb{E}\{X\})^2\}.$$
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+对右边中间加一项减一项\(\mathbb{E}\{X | \mathcal{G}\}\).
+\end{proof}
 
 
 
 
+
+\begin{framed}
 \begin{exercise}
 设\(p \geq 1, r \geq p\).
 证明: 对于关于一个概率测度的期望来说\(L^p \supset L^r\). 
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+根据Liapunov不等式, 显然.
+\end{proof}
 
 
 
+\begin{framed}
 \begin{exercise}
 设\(Z\)是定义在\((\Omega, \mathcal{F}, P)\)上的随机变量, 其中\(Z \geq 0\), \(\mathbb{E}Z = 1\).
 定义一个新的概率测度\(Q\), 满足\(Q(\Lambda) = \mathbb{E}\{\mathbb{I}_{\Lambda} Z\}\).
@@ -242,37 +338,132 @@ $$
 \mathbb{E}_Q\{X \mid \mathcal{G}\} = \frac{\mathbb{E}\{XZ\mid \mathcal{G}\}}{U}, 
 $$
 其中\(X\)是任意的有界\(\mathcal{F}\)-可测随机变量.
-这里\(\mathcal{E}_Q\{X\mid \mathcal{G}\}\)表示随机变量\(X\)关于概率测度\(Q\)的条件期望.
+这里\(\mathbb{E}_Q\{X\mid \mathcal{G}\}\)表示随机变量\(X\)关于概率测度\(Q\)的条件期望.
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+    \(\forall G \in \mathcal{G}\), 
+一方面, 
+$$
+\int_G X dQ = \int_G XZ dP = \int_G \mathbb{E}\{XZ\mid \mathcal{G}\} dP .
+$$
+另一方面, 
+$$
+\int_G \frac{\mathbb{E}\{XZ|\mathcal{G}\}}{\mathbb{E}\{Z|\mathcal{G}\}} dQ = \int_G \frac{\mathbb{E}\{XZ|\mathcal{G}\}}{\mathbb{E}\{Z|\mathcal{G}\}} Z dP = \int_G \mathbb{E}\{XZ\mid \mathcal{G}\} dP.
+$$
+\end{proof}
 
 
 
 
+\begin{framed}
 \begin{exercise}
 证明: 赋范线性空间\(L^p(\Omega, \mathcal{F}, P)\)是完备的, 其中\(1\leq p < \infty\).
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+要证明\(L^p\)是完备的, 只需证明\(L^p\)中的柯西列收敛.
+设\(\{X_n\}_{n\geq 1}\)是\(L^p\)中的柯西列, 则对于\(\forall \varepsilon > 0\), 存在\(N\)使得当\(m,n > N\)时,
+$$
+\|X_n - X_m\|_p < \varepsilon.
+$$
+特别地, 取\(\varepsilon_k = \frac{1}{2^k}\), 
+则存在子列\(\{x_{x_k}\}\)满足
+$$
+\|x_{n_k} - x_{n_{k+1}}\|_p < \frac{1}{2^k}.
+$$
+
+定义\(Y_n =\sum_{k=1}^{n} |x_{n_k} - x_{n_{k+1}}|\), 
+则根据Minkowski不等式,
+$$
+\|Y_n\|_p \leq \sum_{k=1}^{n} \|x_{n_k} - x_{n_{k+1}}\|_p < \sum_{k=1}^{n} \frac{1}{2^k} = 1.
+$$
+且\(\{Y_n\}\)是单调递增的, 从而存在极限\(Y = \lim_{n\to \infty} Y_n\).
+此时
+$$
+\|Y\|_p = \lim_{n\to \infty} \|Y_n\|_p \leq 1. 
+$$
+即\(Y \in L^p\), 且\(Y < \infty\) a.s.
+于是子列\(\{X_{n_m} = X_{n_1} +\sum_{k=1}^{m} (X_{n_{k+1}} - X_{n_k})\}\)收敛到\(X\) a.s.
+最后, 对于一般的\(X_n\)
+$$
+\left\|X_n-X \right\|_p \leqslant \|X_n-X_{n_k}\|_p+\| X_{n_k}-X_n \|\rightarrow 0 .
+$$
+\end{proof}
 
 
 
+\begin{framed}
 \begin{exercise}
 设\(X \in L^1(\Omega, \mathcal{F}, P)\)以及\(\mathcal{G}, \mathcal{H}\)是\(\mathcal{F}\)的子\(\sigma\)-代数.
 进一步假设\(\mathcal{H}\)独立于\(\sigma(\sigma(X), \mathcal{G})\).
 证明: \(\mathbb{E}\{X\mid \mathcal{G}\} = \mathbb{E}\{X\mid \sigma(\mathcal{G}, \mathcal{H})\}\) a.s.
 \end{exercise}
+\end{framed}
+
+\begin{proof}
+Recall that a $\mathcal{E}$-measurable $L^2$-integrable random variable $Y$ equals $\mathbb{E}(X \mid \mathcal{E})$ if, and only if,
+
+$$
+\int_D X d \mathbb{P}=\int_D Y d \mathbb{P}
+$$
+
+for all $D \in \mathcal{D}$ where $\mathcal{D}$ is a $\cap$-stable generator of the sub-algebra $\mathcal{E}$.(根据单调类定理)
+
+$$
+\mathcal{E}:=\sigma(\mathcal{G}, \mathcal{H}) \quad \mathcal{D}:=\{G \cap H ; G \in \mathcal{G}, H \in \mathcal{H}\}
+$$
 
 
+First of all, we note that $\mathcal{D}$ is in fact a $\cap$-stable generator of $\mathcal{E}=\sigma(\mathcal{G}, \mathcal{H})$. Moreover, we have due to the independence of $\mathcal{H}$ and $\sigma(\sigma(X), \mathcal{G})$ :
+
+$$
+\begin{aligned}
+\int_{G \cap H} \mathbb{E}(X \mid \mathcal{G}) d \mathbb{P} & =\int 1_H \underbrace{\mathbb{E}\left(1_G X \mid \mathcal{G}\right)}_{\sigma(\sigma(X), \mathcal{G})-\text { measurable }} d \mathbb{P} \\
+& =\int 1_H d \mathbb{P} \cdot \int 1_G \mathbb{E}(X \mid \mathcal{G}) d \mathbb{P} \\
+& =\int 1_H d \mathbb{P} \int_G X d \mathbb{P} \\
+% & =\int 1_H d \mathbb{P} \int_G X d \mathbb{P} \\
+& =\int 1_G 1_H X d \mathbb{P} \\
+& =\int 1_{G \cap H} \mathbb{E}\{X|\mathcal{E}\} d \mathbb{P}
+\end{aligned}
+$$
+
+
+% This shows that (1) holds for any $D=G \cap H \in \mathcal{D}$. Consequently, the claim follows.
+\end{proof}
+
+
+\begin{framed}
 \begin{exercise}
 设\(\{X_n\}_{n\geq 1}\)独立同分布, 且是\(L^1\)上的随机变量.
 令\(S_n = X_1 + \cdots + X_n\), \(\mathcal{G}_n = \sigma(S_n, S_{n+1}, ...)\).
 证明: \(\mathbb{E}\{X_1 \mid \mathcal{G}_n\} = \mathbb{E}\{X_1 \mid S_n\}\), \(\mathbb{E}\{X_j \mid \mathcal{G}_n\} = \mathbb{E}\{X_j \mid S_n\}, 1 \leq j \leq n\).
 证明: \(\mathbb{E}\{X_j \mid \mathcal{G}_n\} = \mathbb{E}\{X_1 \mid S_n\}, 1 \leq j \leq n\).
 \end{exercise}
+\end{framed}
 \begin{remark}
 用习题23.16的结论.
 \end{remark}
 
+\begin{proof}
+注意到\(\mathcal{G}_n = \sigma(S_n, X_{n+1}, X_{n+2}, ...)\).
+且\(X_k \Perp \sigma(S_n, X_j), k > n, j \leq n\), 
+则根据习题23.16的结论,
+\(\mathbb{E}\{X_1 \mid \mathcal{G}_n\} = \mathbb{E}\{X_1 \mid S_n\}\), \(\mathbb{E}\{X_j \mid \mathcal{G}_n\} = \mathbb{E}\{X_j \mid S_n\}, 1 \leq j \leq n\).
+
+最后, 由于同分布, 从而\(\forall A \in \sigma(S_n)\), 
+$$
+\int_A X_j dP = \int_A X_1 dP, 1 \leq j \leq n.
+$$
+从而\(\mathbb{E}\{X_j \mid S_n\} = \mathbb{E}\{X_1 \mid S_n\}, 1 \leq j \leq n\).
+\end{proof}
 
 
+
+
+\begin{framed}
 \begin{exercise}
 设\(X_1, X_2, ..., X_n\)独立同分布, 且是\(L^1\)上的随机变量.
 证明对于每一个\(1 \leq j\leq n\), 有
@@ -280,10 +471,25 @@ $$
 \mathbb{E}\left\{X_j \mid \sum_{i = 1}^{n}X_i\right\} = \frac{1}{n} \sum_{i = 1}^{n} X_i.
 $$
 \end{exercise}
+\end{framed}
 
 \begin{remark}
 用定理23.2的结论, 对称性来源于独立同分布条件.
 \end{remark}
+
+\begin{proof}
+根据上一题的结论, 
+$$
+\mathbb{E}\left\{X_1 \mid \sum_{i = 1}^{n}X_i\right\} = ... = \mathbb{E}\left\{X_n \mid \sum_{i = 1}^{n}X_i\right\} ,
+$$
+且 
+$$
+\mathbb{E}\left\{\sum_{j=1}^{n}X_j \mid \sum_{i = 1}^{n}X_i\right\} = \sum_{j=1}^{n} X_j.
+$$
+立刻得出结论.
+\end{proof}
+
+
 
 
 % \medskip
