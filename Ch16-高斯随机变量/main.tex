@@ -34,7 +34,7 @@ $$
 \begin{framed}
 \begin{exercise}
 设\(a \in \mathbb{R}^n, a \neq 0, \mu \in \mathbb{R}^n\).
-设\(H\)是\(\mathbb{R}^n\)中的一个超平面，满足
+设\(H\)是\(\mathbb{R}^n\)中的一个超平面, 满足
 $$
 H=\left\{x \in \mathbf{R}^n:\langle x-\mu, a\rangle=0\right\} .
 $$
@@ -492,6 +492,7 @@ f_X(x) &= \int_{-\infty}^\infty f_{(X,Y)}(x, y) \, dy \\
 
 
 \begin{framed}
+以下摘抄自教材.
 设\(X, Y\)独立同\(\mathcal{N}(0, \sigma^2)\). 令\(Z = \sqrt{X^2+ Y^2}, W = \begin{cases}
     \frac{X}{Y}, & Y \neq 0, \\
     0, & Y = 0.
@@ -644,7 +645,7 @@ $$
 \end{framed}
 
 \begin{proof}
-由于\(1 = P(XY > 0) + P(XY < 0) + P(XY = 0) = P(XY < 0) + P(XY > 0)\). 以及
+由于\(1 = P(XY > 0) + P(XY < 0) + P(XY = 0) = P(XY < 0) + P(XY > 0)\). 以及根据上一题, 
 $$
 P(XY < 0) = P(X < 0, Y > 0) + P(X > 0,  Y < 0) = \frac{1}{2} - \frac{\arcsin(\rho)}{\pi}, 
 $$
@@ -678,18 +679,178 @@ $$
 证明:
 \begin{enumerate}[a)]
     \item \(\mathbb{E}\{XY\} = \rho \sigma_X \sigma_Y\).
-    \item \(\mathbb{E}\{X^2Y^2\} = \mathbb{E}\{X^2\}\mathbb{E}\{Y^2\} - 2 (\mathbb{E}\{XY\})^2\).
+    \item \(\mathbb{E}\{X^2Y^2\} = \mathbb{E}\{X^2\}\mathbb{E}\{Y^2\} {\color{red} + } 2 (\mathbb{E}\{XY\})^2\).
     \item \(\mathbb{E}\{|XY|\} = \frac{2\sigma_X \sigma_Y}{\pi}(\cos\alpha + \alpha \sin\alpha)\), 其中\(\alpha\)由\(\sin\alpha = \rho\left(-\frac{\pi}{2} \leq \alpha \leq \frac{\pi}{2}\right)\)给出.
 \end{enumerate}
 \end{exercise}
 \end{framed}
-
+\begin{remark}
+问题二涉及了高阶矩的计算.
+这个结果在概率论中叫Isserlis' theorem, 
+在量子场论中叫Wick's theorem.
+\end{remark}
 
 \begin{proof}
 \begin{enumerate}[a)]
     \item 由定义, \(\rho \sigma_X \sigma_Y = \operatorname{cov}(X,Y) = \mathbb{E}\{XY\} - \mathbb{E}\{X\} \mathbb{E}\{Y\} = \mathbb{E}\{XY\}\).
-    \item 证明需要用到特征函数.
-    \item 
+    \item 根据\((X,Y)\)的特征函数, 
+    $$
+    \begin{aligned}
+        \varphi_{(X,Y)}(t_1, t_2) = \mathbb{E}\{e^{i(t_1X + t_2Y)}\} &= \exp\left\{-\frac{1}{2} (\begin{matrix}
+            t_1 & t_2
+        \end{matrix})
+        \left(\begin{matrix}
+            \sigma_X^2 & \rho \sigma_X \sigma_Y \\
+            \rho \sigma_X \sigma_Y & \sigma_Y^2
+        \end{matrix}\right)
+        \left(\begin{matrix}
+            t_1 \\ t_2
+        \end{matrix}\right)
+        \right\}    \\
+        &= \exp\left\{-\frac{1}{2}\left(\sigma_X^2 t_1^2 + 2\rho \sigma_X \sigma_Y t_1 t_2 + \sigma_Y^2 t_2^2\right)\right\}. \\
+    \end{aligned}
+    $$
+    于是, 
+    $$
+    \begin{aligned}
+        \mathbb{E}\{X^2Y^2\} &= \left.\frac{\partial^4 \varphi_{(X,Y)}(t_1, t_2)}{\partial t_1^2 \partial t_2^2}\right|_{t_1 = t_2 = 0} \\
+        &= \left.\frac{\partial^4}{\partial t_1^2 \partial t_2^2}\exp\left\{-\frac{1}{2}\left(\sigma_X^2 t_1^2 + 2\rho \sigma_X \sigma_Y t_1 t_2 + \sigma_Y^2 t_2^2\right)\right\}\right|_{t_1 = t_2 = 0} \\
+    \end{aligned}
+    $$
+    记
+    $$
+f = \exp\left\{-\frac{1}{2}\left(\sigma_X^2 t_1^2 + 2\rho \sigma_X \sigma_Y t_1 t_2 + \sigma_Y^2 t_2^2\right)\right\},
+    $$
+    于是
+    $$
+    \begin{aligned}
+        \frac{\partial f}{\partial t_1} &= f \cdot \left(-\sigma_X^2 t_1 - \rho \sigma_X \sigma_Y t_2\right), 
+    \end{aligned}
+    $$
+再关于\(t_1\)求导,
+$$
+\frac{\partial^2 f}{\partial t_1^2} = \frac{\partial f}{\partial t_1} \cdot \left(-\sigma_X^2 t_1 - \rho \sigma_X \sigma_Y t_2\right) + f \cdot \left(-\sigma_X^2 \right) = f \cdot \left(\sigma_X^4 t_1^2 + 2\rho \sigma_X^3 \sigma_Y t_1 t_2 + \rho^2 \sigma_X^2 \sigma_Y^2 t_2^2 - \sigma_X^2\right).
+$$
+由于 
+$$
+\frac{\partial f}{\partial t_2} = f \cdot \left(-\rho \sigma_X \sigma_Y t_1 - \sigma_Y^2 t_2\right),
+$$
+于是, 
+$$
+\begin{aligned}
+    &\frac{\partial^3 f}{\partial t_1^2 t_2} \\
+    =& \frac{\partial f}{\partial t_2} \cdot \left(\sigma_X^4 t_1^2 + 2\rho \sigma_X^3 \sigma_Y t_1 t_2 + \rho^2 \sigma_X^2 \sigma_Y^2 t_2^2 - \sigma_X^2\right) + f \cdot \left( 2\rho \sigma_X^3 \sigma_Y t_1 + 2\rho^2 \sigma_X^2 \sigma_Y^2 t_2\right) \\
+    =& f \cdot \left(\sigma_X^4 t_1^2 + 2\rho \sigma_X^3 \sigma_Y t_1 t_2 + \rho^2 \sigma_X^2 \sigma_Y^2 t_2^2 - \sigma_X^2\right) \cdot \left(-\rho \sigma_X \sigma_Y t_1 - \sigma_Y^2 t_2\right) + f \cdot \left( 2\rho \sigma_X^3 \sigma_Y t_1 + 2\rho^2 \sigma_X^2 \sigma_Y^2 t_2\right) \\
+    =& f \cdot \left(-\rho \sigma_X^5 \sigma_Y t_1^3-\sigma_X^4 \sigma_Y^2 t_1^2 t_2-2 \rho^2 \sigma_X^4 \sigma_Y^2 t_1^2 t_2-2 \rho \sigma_X^3 \sigma_Y^3 t_1 t_2^2-\rho^3 \sigma_X^3 \sigma_Y^3 t_1 t_2^2-\rho^2 \sigma_X^2 \sigma_Y^4 t_2^3 \right. \\
+    & \left.+\rho \sigma_X^3 \sigma_Y t_1+\sigma_X^2 \sigma_Y^2 t_2 + 2\rho \sigma_X^3 \sigma_Y t_1 + 2\rho^2 \sigma_X^2 \sigma_Y^2 t_2\right) \\
+\end{aligned}
+$$
+最后,
+$$
+\begin{aligned}
+    &\frac{\partial^4 f}{\partial t_1^2 \partial t_2^2} \\
+    =& f \cdot \left(-\rho \sigma_X \sigma_Y t_1 - \sigma_Y^2 t_2\right) \cdot \left(-\rho \sigma_X^5 \sigma_Y t_1^3-\sigma_X^4 \sigma_Y^2 t_1^2 t_2-2 \rho^2 \sigma_X^4 \sigma_Y^2 t_1^2 t_2-2 \rho \sigma_X^3 \sigma_Y^3 t_1 t_2^2-\rho^3 \sigma_X^3 \sigma_Y^3 t_1 t_2^2-\rho^2 \sigma_X^2 \sigma_Y^4 t_2^3 \right. \\
+    & \left.+\rho \sigma_X^3 \sigma_Y t_1+\sigma_X^2 \sigma_Y^2 t_2 + 2\rho \sigma_X^3 \sigma_Y t_1 + 2\rho^2 \sigma_X^2 \sigma_Y^2 t_2\right) \\
+    & + f \cdot \left( g(t_1,t_2) + \sigma_X^2 \sigma_Y^2 + 2 \rho^2 \sigma_X^2 \sigma_Y^2\right) \\
+\end{aligned}
+$$
+综上所述, 我们有
+$$
+\mathbb{E}\{X^2Y^2\} = \left. \frac{\partial^4 f}{\partial t_1^2 \partial t_2^2} \right|_{t_1 = t_2 = 0} = \sigma_X^2 \sigma_Y^2 + 2 \rho^2 \sigma_X^2 \sigma_Y^2 = \mathbb{E}\{X^2\}\mathbb{E}\{Y^2\} {\color{red}+} 2 (\mathbb{E}\{XY\})^2.
+$$
+    \item 要计算 \(\mathbb{E}|XY|\), 其中 \((X, Y)\) 服从二元正态分布, 密度函数为: 
+
+    \[
+    f_{(X, Y)}(x, y) = \frac{1}{2 \pi \sigma_X \sigma_Y \sqrt{1-\rho^2}} e^{-\frac{1}{2(1-\rho^2)}\left(\frac{x^2}{\sigma_X^2} - \frac{2 \rho x y}{\sigma_X \sigma_Y} + \frac{y^2}{\sigma_Y^2}\right)}.
+    \]
+    
+    我们可以通过以下步骤计算 \(\mathbb{E}|XY|\): 
+    
+       设 \(U = \frac{X}{\sigma_X}\) 和 \(V = \frac{Y}{\sigma_Y}\), 则 \((U, V)\) 服从标准二元正态分布, 相关系数为 \(\rho\). 此时, 密度函数为: 
+    
+       \[
+       f_{(U, V)}(u, v) = \frac{1}{2 \pi \sqrt{1-\rho^2}} e^{-\frac{1}{2(1-\rho^2)}(u^2 - 2 \rho u v + v^2)}.
+       \]
+    
+       \(\mathbb{E}|XY|\) 可以表示为: 
+    
+       \[
+       \mathbb{E}|XY| = \sigma_X \sigma_Y \mathbb{E}|UV|.
+       \]
+
+       由于 \((U, V)\) 是标准二元正态分布, 我们可以利用其对称性和积分技巧来计算 \(\mathbb{E}|UV|\). 
+    
+       首先, 注意到: 
+    
+       \[
+       \mathbb{E}|UV| = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} |uv| f_{(U, V)}(u, v) \, du \, dv.
+       \]
+    
+       由于 \(f_{(U, V)}(u, v)\) 是关于 \(u\) 和 \(v\) 的偶函数, 且 \(|uv|\) 也是偶函数, 因此可以将积分限制在第一象限, 然后乘以 4: 
+    
+       \[
+       \mathbb{E}|UV| = 4 \int_{0}^{\infty} \int_{0}^{\infty} uv f_{(U, V)}(u, v) \, du \, dv.
+       \]
+    
+       为了简化积分, 我们可以进行极坐标变换. 设 \(u = r \cos \theta\) 和 \(v = r \sin \theta\), 其中 \(r \geq 0\) 且 \(0 \leq \theta \leq \frac{\pi}{2}\). 雅可比行列式为 \(r\), 因此积分变为: 
+    
+       \[
+       \mathbb{E}|UV| = 4 \int_{0}^{\frac{\pi}{2}} \int_{0}^{\infty} r^2 \cos \theta \sin \theta \cdot \frac{1}{2 \pi \sqrt{1-\rho^2}} e^{-\frac{r^2 (1 - \rho \sin 2\theta)}{2(1-\rho^2)}} r \, dr \, d\theta.
+       \]
+    
+       化简后得到: 
+    
+       \[
+       \mathbb{E}|UV| = \frac{2}{\pi \sqrt{1-\rho^2}} \int_{0}^{\frac{\pi}{2}} \cos \theta \sin \theta \int_{0}^{\infty} r^3 e^{-\frac{r^2 (1 - \rho \sin 2\theta)}{2(1-\rho^2)}} \, dr \, d\theta.
+       \]
+
+       内层积分是关于 \(r\) 的积分, 可以通过变量替换和伽马函数来计算. 设 \(s = \frac{r^2 (1 - \rho \sin 2\theta)}{2(1-\rho^2)}\), 则 \(ds = \frac{r (1 - \rho \sin 2\theta)}{1-\rho^2} dr\), 积分变为: 
+    
+       \[
+       \int_{0}^{\infty} r^3 e^{-\frac{r^2 (1 - \rho \sin 2\theta)}{2(1-\rho^2)}} \, dr = \frac{2(1-\rho^2)}{1 - \rho \sin 2\theta} \int_{0}^{\infty} s e^{-s} \, ds = \frac{2(1-\rho^2)}{1 - \rho \sin 2\theta}.
+       \]
+
+       将内层积分的结果代入外层积分, 得到: 
+    
+       \[
+       \mathbb{E}|UV| = \frac{2}{\pi \sqrt{1-\rho^2}} \int_{0}^{\frac{\pi}{2}} \cos \theta \sin \theta \cdot \frac{2(1-\rho^2)}{1 - \rho \sin 2\theta} \, d\theta.
+       \]
+    
+       化简后得到: 
+    
+       \[
+       \mathbb{E}|UV| = \frac{4(1-\rho^2)}{\pi \sqrt{1-\rho^2}} \int_{0}^{\frac{\pi}{2}} \frac{\cos \theta \sin \theta}{1 - \rho \sin 2\theta} \, d\theta.
+       \]
+
+       注意到 \(\sin 2\theta = 2 \sin \theta \cos \theta\), 因此可以将积分进一步简化为: 
+    
+       \[
+       \mathbb{E}|UV| = \frac{4(1-\rho^2)}{\pi \sqrt{1-\rho^2}} \int_{0}^{\frac{\pi}{2}} \frac{\sin \theta \cos \theta}{1 - 2 \rho \sin \theta \cos \theta} \, d\theta.
+       \]
+    
+       设 \(t = \sin \theta\), 则 \(dt = \cos \theta \, d\theta\), 积分变为: 
+    
+       \[
+       \mathbb{E}|UV| = \frac{4(1-\rho^2)}{\pi \sqrt{1-\rho^2}} \int_{0}^{1} \frac{t}{1 - 2 \rho t^2} \, dt.
+       \]
+    
+       这个积分可以通过部分分式分解或直接积分来计算. 最终结果为: 
+    
+       \[
+       \mathbb{E}|UV| = \frac{2}{\pi} \left( \frac{\rho}{\sqrt{1-\rho^2}} + \arcsin \rho \right).
+       \]
+
+       由于 \(\mathbb{E}|XY| = \sigma_X \sigma_Y \mathbb{E}|UV|\), 因此: 
+    
+       \[
+       \mathbb{E}|XY| = \sigma_X \sigma_Y \cdot \frac{2}{\pi} \left( \frac{\rho}{\sqrt{1-\rho^2}} + \arcsin \rho \right).
+       \]
+    
+    % 综上所述, \(\mathbb{E}|XY|\) 的最终表达式为: 
+    
+    % \[
+    % \mathbb{E}|XY| = \frac{2 \sigma_X \sigma_Y}{\pi} \left( \frac{\rho}{\sqrt{1-\rho^2}} + \arcsin \rho \right).
+    % \]
 \end{enumerate}
 \end{proof}
 
@@ -739,20 +900,40 @@ $$
 \end{proof}
 
 
-后面三道题是线性模型的一些应用, 与主干无关, 这里暂时跳过.
+% 后面三道题是线性模型的一些应用, 与主干无关, 这里暂时跳过.
+\begin{framed}
 \begin{exercise}
 设\(X_1, ..., X_n\)独立同\(\mathcal{N}(0, \sigma^2)\), 并且令
 $$
-\bar{x}=\frac{1}{n} \sum_{j=1}^n X_j \text { 和 } S^2=\frac{1}{n-1} \sum_{j=1}^n\left(X_j-\bar{x}\right)^2 .
+\bar{X}=\frac{1}{n} \sum_{j=1}^n X_j \text { 和 } S^2=\frac{1}{n-1} \sum_{j=1}^n\left(X_j-\bar{X}\right)^2 .
 $$
-在习题15.13中, 已经证明\(\bar{x}\)和\(S^2\)是独立的.
+在习题15.13中, 已经证明\(\bar{X}\)和\(S^2\)是独立的.
 证明: $$
-\sum_{j=1}^n X_j^2=\sum_{j=1}^n\left(X_j-\bar{x}\right)^2+n \bar{x}^2
+\sum_{j=1}^n X_j^2=\sum_{j=1}^n\left(X_j-\bar{X}\right)^2+n \bar{X}^2
 $$
-并推导出\(\frac{(n-1)S^2}{\sigma^2}\sim \chi_{n-1}^2\), \(\frac{n \bar{x}^2}{\sigma^2} \sim \chi_1^2\).
+并推导出\(\frac{(n-1)S^2}{\sigma^2}\sim \chi_{n-1}^2\), \(\frac{n \bar{X}^2}{\sigma^2} \sim \chi_1^2\).
 \end{exercise}
+\end{framed}
 
 
+\begin{proof}
+$$
+\begin{aligned}
+    \sum_{j=1}^n X_j^2 &= \sum_{j=1}^n \left\{(\bar{X} + X_j - \bar{X})^2\right\} \\
+    &= \sum_{j=1}^n \left\{(\bar{X}^2 + 2\bar{X}(X_j - \bar{X}) + (X_j - \bar{X})^2\right\} \\
+    &= n\bar{X}^2 + \sum_{j=1}^n (X_j - \bar{X})^2.
+\end{aligned}
+$$
+从而根据Cochran定理(或根据Fisher定理),
+$$
+\frac{(n-1)S^2}{\sigma^2} = \frac{1}{\sigma^2}\sum_{j=1}^n (X_j - \bar{X})^2 \sim \chi_{n-1}^2, \quad \frac{n\bar{X}^2}{\sigma^2} \sim \chi_1^2.
+$$
+\end{proof}
+
+
+
+
+\begin{framed}
 \begin{exercise}
 设\(\varepsilon_1,...,\varepsilon_n\)独立同\(\mathcal{N}(0, \sigma^2)\), 假设\(Y_i =  \alpha + \beta x_i + \varepsilon_i, 1 \leq i \leq n\).
 假设\(x_i\)不全相等, 令\(\bar{x} = \frac{1}{n}\sum_{i = 1}^n x_i\).
@@ -767,7 +948,45 @@ $$
 $$
 \end{enumerate}
 \end{exercise}
+\end{framed}
 
+\begin{proof}
+\begin{enumerate}[a)]
+    \item 
+    $$
+    \begin{aligned}
+        \mathbb{E}\{\hat{\varepsilon}_i\} &= \mathbb{E}\{Y_i - A - Bx_i\} \\
+        &= \mathbb{E}\{Y_i\} - A - Bx_i \\
+        &= \alpha + \beta x_i - \alpha - \beta x_i = 0.
+    \end{aligned}
+    $$
+    \item 由于 
+$$
+\begin{aligned}
+& \operatorname{var}\left(b_1\right)=\operatorname{var}\left(\sum_{i=1}^n k_i Y_i\right)=\sum_{i=1}^n k_i^2 \operatorname{var}\left(Y_i\right)=\sigma^2 \sum_{i=1}^n k_i^2=\frac{\sigma^2}{S S_{X X}} \\
+& \begin{aligned}
+\operatorname{cov}\left\{b_1, Y_i\right\}=\operatorname{cov}\left\{\sum_{i=1}^n k_i Y_i, Y_i\right\}=\sum_{j=1}^n \operatorname{cov}\left\{k_j Y_j, Y_i\right\}=\operatorname{cov}\left\{k_i Y_i, Y_i\right\}=k_i \sigma^2 \\
+\operatorname{cov}\left\{b_1, \bar{Y}\right\}=\operatorname{cov}\left\{b_1, \sum_{i=1}^n \frac{1}{n} Y_i\right\}=\frac{1}{n} \sum_{i=1}^n k_i \sigma^2=0
+\end{aligned} \\
+& \begin{aligned}
+\operatorname{var}\left\{b_0\right\} & =\operatorname{var}\left\{\bar{Y}-b_1 \bar{X}\right\}=\operatorname{var}\{\bar{Y}\}+\bar{X}^2 \operatorname{var}\left\{b_1\right\}-2 \bar{X} \operatorname{cov}\left\{\bar{Y}, b_1\right\}
+\end{aligned} \\
+& =\operatorname{var}\{\bar{Y}\}+\bar{X}^2 \operatorname{var}\left\{b_1\right\}=\sigma^2\left(\frac{1}{n}+\frac{\bar{X}^2}{S S_{X X}}\right)=\frac{\sum X_i^2}{n S S_{X X}} \sigma^2
+\end{aligned}
+$$
+    $$
+\begin{aligned}
+\quad \operatorname{Var}\left(\hat{\varepsilon}_i\right)=&\operatorname{Var}\left[Y_i-\bar{Y}-b_1\left(X_i-\bar{X}\right)\right] \\
+=&\operatorname{Var}\left(Y_i\right)+\operatorname{Var}(\bar{Y})+\operatorname{Var}\left(b_1\right)\left(X_i-\bar{X}\right)^2-2 \operatorname{cov}\left(Y_i, \bar{Y}\right)-2\left(X_i-\bar{X}\right)\left[\operatorname{cov}\left(Y_i, b_1\right)-\operatorname{cov}\left(\bar{Y}, b_1\right)\right] \\
+=&\sigma^2+\frac{\sigma^2}{n}+\frac{\left(X_i-\bar{X}\right)^2 \sigma^2}{S_{X X}}-\frac{2 \sigma^2}{n}-\frac{2\left(X_i-\bar{X}\right)^2 \sigma^2}{S_{X X}}+0 \\
+=&\frac{(n-1) \sigma^2}{n}-\frac{\left(X_i-\bar{X}\right)^2 \sigma^2}{S_{X X}}
+\end{aligned}
+$$
+\end{enumerate}
+\end{proof}
+
+
+\begin{framed}
 \begin{exercise}
 考虑习题16.19定义的误差和残差. 假设\(\sigma\)是已知的, 定义
 $$
@@ -775,15 +994,40 @@ $$
 $$
 证明: \(\mathbb{E}\{\hat{\sigma}^2\} = \frac{n-2}{n}\sigma^2\).
 \end{exercise}
+\end{framed}
 \begin{remark}
 由于\(\mathbb{E}\{\hat{\sigma}^2\} \neq \sigma^2\), 称\(\hat{\sigma}^2\)是\(\sigma^2\)的有偏估计.
 于是\(\sigma^2\)的无偏估计是\(\frac{n}{n-2}\hat{\sigma}^2\).
 \end{remark}
 
+\begin{proof}
+$$
+\begin{aligned}
+E(S S E)=E\left(\sum_{i=1}^n e_i^2\right)&=\sum_{i=1}^n E\left(e_i^2\right)=\sum_{i=1}^n \operatorname{var}\left(e_i\right) \\
+& =\sum_{i=1}^n\left[\frac{(n-1) \sigma^2}{n}-\frac{\left(X_i-\bar{X}\right)^2 \sigma^2}{S S_{X X}}\right]=(n-1) \sigma^2-\sigma^2=(n-2) \sigma^2 \\
+E(M S E)&=\frac{E(S S E)}{n-2}=\sigma^2
+\end{aligned}
+$$
+\end{proof}
 
+\begin{framed}
 \begin{exercise}
 在习题16.19, 16.20的条件下, 证明:\((A, B), S^2\)是独立的.
 \end{exercise}
+\end{framed}
+
+
+\begin{proof}
+$$
+\begin{aligned}
+\sum & \left(Y_i-\mu_i\right)^2=\sum\left[\left(Y_i-\hat{Y}_i\right)+\left(\hat{Y}_i-\mu_i\right)\right]^2 \\
+& =\sum\left(\hat{Y}_i-\mu_i\right)^2+\sum\left(Y_i-\hat{Y}_i\right)^2 \\
+& =\sum\left[\hat{\beta}_0^*+\hat{\beta}_1\left(X_i-\bar{X}\right)-\beta_0^*-\beta_1\left(X_i-\bar{X}\right)\right]^2+S S_E \\
+& =n\left(\hat{\beta}_0^*-\beta_0^*\right)^2+\left(\hat{\beta}_1-\beta_1\right)^2 S S_{X X}+n \hat{\sigma}^2
+\end{aligned}
+$$
+最后应用Cocharn定理即可.
+\end{proof}
 
 
 \begin{framed}
@@ -827,7 +1071,7 @@ v_0 & =0 \quad \sum_{i=1}^n v_i=0 \quad \text { and } \quad \sum_{i=1}^n v_i x_i
 $$
 可以证明: 在均方误差最小意义下, 解为 
 $$
-v_i = \frac{x_i - \bar{x}}{\sum_{j=1}^{n}(x_j - \bar{x})^2}, \quad u_i = \frac{1}{n} - \bar{x}v_i.
+v_i = \frac{x_i - \bar{X}}{\sum_{j=1}^{n}(x_j - \bar{x})^2}, \quad u_i = \frac{1}{n} - \bar{x}v_i.
 $$
 \end{framed}
 
