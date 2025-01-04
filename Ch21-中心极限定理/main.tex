@@ -40,7 +40,7 @@ $$
 
 \begin{proof}
 只需证\(\frac{Z_n}{\sqrt{n}} \xrightarrow{\mathcal{D}} \mathcal{N}(0, 1)\).
-事实上, 由于\(X_j\)是独立同分布的, 且\(\mathbb{E}\{X_j\} = \frac{1}{2}\), \(\mathbb{E}\{X_j^2\} = \frac{1}{4}\), 根据期望方差存在的独立同分布场合的中心极限定理, 有
+事实上, 由于\(X_j\)是独立同分布的, 且\(\mathbb{E}\{X_j\} = \frac{1}{2}\), \(Var\{X_j\} = \frac{1}{4}\), 根据期望方差存在的独立同分布场合的中心极限定理, 有
 $$
 \frac{S_n - \frac{1}{2}n}{\frac{1}{2}\sqrt{n}} = \frac{2S_n - n}{\sqrt{n}} \xrightarrow{\mathcal{D}} \mathcal{N}(0, 1), 
 $$
@@ -335,7 +335,7 @@ $$
 针对\(I_1\), 
 注意到
 $$
-\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \mathbb{E}\left\{g_t\left(\frac{S_n}{ \sqrt{n}}\right)\right\}\right| \leq \mathbb{E}\left|\frac{|S_n|}{\sqrt{n}} - g_t\left(\frac{|S_n|}{\sqrt{n}}\right)\right| = \mathbb{E}\left\{\frac{|S_n|}{\sqrt{n}} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\}.
+\left|\mathbb{E}\left\{\frac{|S_n|}{ \sqrt{n}}\right\} - \mathbb{E}\left\{g_t\left(\frac{S_n}{ \sqrt{n}}\right)\right\}\right| \leq \mathbb{E}\left|\frac{|S_n|}{\sqrt{n}} - g_t\left(\frac{|S_n|}{\sqrt{n}}\right)\right| \leq \mathbb{E}\left\{\frac{|S_n|}{\sqrt{n}} \mathbb{I}\left(\frac{|S_n|}{\sqrt{n}} \geq t\right)\right\}.
 $$
 以及 
 $$
@@ -466,7 +466,7 @@ $$
     $$
     从而 
     $$
-    \sum_{j=1}^{n}\log\left(\frac{\sin(ju/n^{3/2})}{ju/n^{3/2}}\right) = -\frac{u^2}{6n^3} \sum_{j=1}^{n}j^2 + o\left(\frac{1}{n}\right) = -\frac{u^2}{6n^3} \frac{n(n+1)(2n+1)}{6} + o\left(\frac{1}{n}\right)= -\frac{u^2}{18} + o\left(\frac{1}{n}\right).
+    \sum_{j=1}^{n}\log\left(\frac{\sin(ju/n^{3/2})}{ju/n^{3/2}}\right) = -\frac{u^2}{6n^3} \sum_{j=1}^{n}j^2 + o\left(1\right) = -\frac{u^2}{6n^3} \frac{n(n+1)(2n+1)}{6} + o\left(1\right)= -\frac{u^2}{18} + o\left(1\right).
     $$
     于是,
     $$
