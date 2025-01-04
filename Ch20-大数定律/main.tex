@@ -54,14 +54,15 @@ $$
 
 \begin{proof}
 \begin{enumerate}[a)]
-\item 考察\(\mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\}\), 有
-\begin{align*}
-    \mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\} &= \frac{1}{n^2}\mathbb{E}\left\{S_n^2\right\} = \frac{1}{n^2}\mathbb{E}\left\{\sum_{j=1}^{n}X_j^2 + 2\sum_{1\leq j < k \leq n}X_jX_k\right\} \\
-    &= \frac{1}{n^2}\sum_{j=1}^{n}\mathbb{E}\{X_j^2\} \leq \frac{c}{n}.
-\end{align*}
+\item 
 由Markov不等式, 对任意\(\varepsilon > 0\), 有
 \begin{align*}
     P\left(\left|\frac{1}{n}S_n\right| \geq \varepsilon\right) & \leq \frac{\mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\}}{\varepsilon^2} \leq \frac{c}{n\varepsilon^2}.
+\end{align*}
+\item 只需证\(L^2\)收敛, 考察\(\mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\}\), 有
+\begin{align*}
+    \mathbb{E}\left\{\left(\frac{1}{n}S_n\right)^2\right\} &= \frac{1}{n^2}\mathbb{E}\left\{S_n^2\right\} = \frac{1}{n^2}\mathbb{E}\left\{\sum_{j=1}^{n}X_j^2 + 2\sum_{1\leq j < k \leq n}X_jX_k\right\} \\
+    &= \frac{1}{n^2}\sum_{j=1}^{n}\mathbb{E}\{X_j^2\} \leq \frac{c}{n}.
 \end{align*}
 \end{enumerate}
 \end{proof}
