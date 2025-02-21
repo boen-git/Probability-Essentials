@@ -249,10 +249,9 @@ $$
 \begin{remark}
     注意, \(X_n \xrightarrow{\mathcal{D}} X, Y_n \xrightarrow{\mathcal{D}} Y\) 不能推出 \((X_n, Y_n) \xrightarrow{\mathcal{D}} (X, Y)\).
 以下是一个反例:
-设\(X, Y\)独立同分布服从\(\mathcal{N}(0,1)\), 
-设\((X_n, Y_n) \equiv (-Y,Y), \forall n\).
-则\((X_n, Y_n)\)依分布收敛到\((X, Y)\), 但是\(X_n + Y_n = 0\).
-取\(f(x,y) = x+y\), 则与依分布收敛的定义矛盾.
+设\(X_n \sim \mathcal{N}(0, 1), Y_n  = (-1)^n X_n\), 则当\(n\)为奇数时, \((X_n, Y_n)\)依分布收敛于\((X,X)\);
+当\(n\)为偶数时, \((X_n, Y_n)\)依分布收敛于\((X, -X)\), 这是两个不同的分布(因为分布函数不同).
+因此, 不存在\((X,Y)\)使得\((X_n, Y_n)\)依分布收敛于\((X, Y)\).
 
 此外, 依分布收敛的不同之处在于不满足一些运算法则, 只满足Slutsky定理.
 比如, 
